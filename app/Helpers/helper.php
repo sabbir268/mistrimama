@@ -400,3 +400,40 @@ function promocheck($id, $am)
         return 0.00;
     }
 }
+
+
+function csvToArray($filename = '', $delimiter = ',')
+{
+    if (!file_exists($filename) || !is_readable($filename))
+        return false;
+
+    $header = null;
+    $data = array();
+    if (($handle = fopen($filename, 'r')) !== false)
+    {
+        while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+        {
+            if (!$header){
+                $header = $row;
+            }
+            else{
+                $data[] = array_combine($header, $row);
+            }
+        }
+        fclose($handle);
+    }
+
+    return $data;
+}
+
+
+function totalBalance($id){
+   $balance = \App\Account::where('user_id', $id)->where('status', 'credit')->sum('amount') - \App\Account::where('user_id', $id)->where('status', 'debit')->sum('amount');
+
+   if($balance){
+    return round($balance);
+   }else{
+    $balance = 0; 
+   }
+   
+}

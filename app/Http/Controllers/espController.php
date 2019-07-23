@@ -360,14 +360,14 @@ class espController extends Controller
 
     public function incomeStatement()
     {
-        $balance = Account::where('user_id', Auth::user()->id)->where('status', 'credit')->sum('amount') - Account::where('status', 'debit')->sum('amount');
+        $balance = Account::where('user_id', Auth::user()->id)->where('status', 'credit')->sum('amount') - Account::where('user_id', Auth::user()->id)->where('status', 'debit')->sum('amount');
         // $lastServiceAmount = 
         $providers = User::find(Auth::user()->id)->serviceProvider->first();
         $lastServiceAmount = OrderDetails::where('sp_id', '=', $providers->id)->orderBy('id', 'desc')->first();
-        $lasServiceDetails = $lastServiceAmount->bookings;
+        $lasServiceDetails = $lastServiceAmount ? $lastServiceAmount->bookings : 0;
         //return $lastServiceAmount->total_price;
         $lastCashOut = Account::where('user_id', auth()->user()->id)->where('reason', 'cashout')->where('status', 'debit')->orderBy('id', 'desc')->first();
-        $lastRecharge = Account::where('user_id', auth()->user()->id)->where('details', 'recharge')->orderBy('id', 'desc')->first();
+        $lastRecharge = Account::where('user_id', auth()->user()->id)->where('reason', 'recharge')->orderBy('id', 'desc')->first();
         //return $lastRecharge;
         $todaysincome = Account::whereDate('created_at', Carbon::today())->where('status', 'credit')->first();
         $yesterdaysincome = Account::whereDate('created_at', Carbon::yesterday())->where('status', 'credit')->first();

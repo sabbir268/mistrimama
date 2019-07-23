@@ -32,7 +32,7 @@ class WithdrawRequestController extends Controller
         if ($request->has('amount')) {
             $wr->amount = $request->amount;
             $wr->details = "SP Cash out request";
-            $wr->type = "cash";
+            $wr->type =  $request->type;
             $wr->save();
             
             $account = new Account();
@@ -42,6 +42,7 @@ class WithdrawRequestController extends Controller
             $account->type = 'pending';
             $account->details = 'Withdraw Request';
             $account->ref = $wr->id;
+            $account->reason = 'pending_cashout';
             $account->status = 'debit';
             $account->save();
         }

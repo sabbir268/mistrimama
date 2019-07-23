@@ -36,7 +36,8 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">ব্যালেন্স</div>
-                                    <div class="amount-sm">উত্তোলনযোগ্য  ৳<?php echo e($balance > 500 ? $balance - 500 : 0); ?>/- </div>
+                                    <div class="amount-sm">উত্তোলনযোগ্য ৳<?php echo e($balance > 500 ? $balance - 500 : 0); ?>/-
+                                    </div>
                                 </div>
                             </div>
                             <div class="tbl-cell">
@@ -46,9 +47,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="<?php if($balance <= 1000): ?> #amount_withdraw <?php else: ?> # <?php endif; ?>"
+                    <a href="#" data-toggle="modal" data-target="<?php if($balance > 499): ?> #amount_withdraw <?php else: ?> # <?php endif; ?>"
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 999): ?> disabled <?php endif; ?> ">ক্যাশ আউট করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 499): ?> disabled <?php endif; ?> ">ক্যাশ
+                        আউট করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -68,7 +70,8 @@
                     </div>
                     <a href="#" data-toggle="modal" data-target=" <?php if($rp < 4000): ?> #rp_withdraw <?php endif; ?> "
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($rp < 3999 ): ?> disabled <?php endif; ?> ">ক্যাশে পরিবর্তন করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($rp < 3999 ): ?> disabled <?php endif; ?> ">ক্যাশে
+                        পরিবর্তন করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -127,7 +130,7 @@
     <div class="col-md-6 pr-2">
         <section class="box-typical box-typical-dashboard panel panel-default scrollable mb-3">
             <div class="card-header">
-                লেনদেন 
+                লেনদেন
             </div>
             <div class="box-typical-body panel-body ">
                 <?php if(count($miniStatements) !== 0): ?>
@@ -162,7 +165,8 @@
                     </tbody>
                 </table>
                 <?php else: ?>
-                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> এই মূহুর্তে কোনো লেনদেন নেই</div>
+                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> এই মূহুর্তে কোনো লেনদেন নেই
+                </div>
                 <?php endif; ?>
             </div>
             <!--.box-typical-body-->
@@ -174,62 +178,64 @@
             <div class="card-header">নতুন কাজ </div>
             <div class="box-typical-body panel-body" id="avail_able_order">
                 <?php if($balance >= 500): ?>
-                    <?php if(count($newOrders) != 0): ?>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div>অর্ডার নং #</div>
-                                </th>
-                                <th>
-                                    <div> সার্ভিস </div>
-                                </th>
-                                <th>
-                                    <div>এলাকা </div>
-                                </th>
-                                <th>
-                                    <div>সময় </div>
-                                </th>
-                                <th>
-                                    <div> বিবরণ </div>
-                                </th>
-                                <th>
-                                    <div> একশন </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $__currentLoopData = $newOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr>
-                                <td><?php echo e($order->order_no); ?></td>
-                                <td><?php echo e($order->category->name); ?></td>
-                                <td><?php echo e($order->area); ?></td>
-                                <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
-                                <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
-                                </td>
-                                <td>
-                                    <?php if($order->status == '0'): ?>
-                                    <button class="btn btn-sm btn-info" data-toggle="modal"
-                                        data-target="#allocate-<?php echo e($order->id); ?>"
-                                        data-item="<?php echo e($order->id); ?>">Allocate</button> <?php else: ?>
-                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>"
-                                        disabled> এলোকেটেড  </button> <?php endif; ?>
+                <?php if(count($newOrders) != 0): ?>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div>অর্ডার নং #</div>
+                            </th>
+                            <th>
+                                <div> সার্ভিস </div>
+                            </th>
+                            <th>
+                                <div>এলাকা </div>
+                            </th>
+                            <th>
+                                <div>সময় </div>
+                            </th>
+                            <th>
+                                <div> বিবরণ </div>
+                            </th>
+                            <th>
+                                <div> একশন </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $__currentLoopData = $newOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                            <td><?php echo e($order->order_no); ?></td>
+                            <td><?php echo e($order->category->name); ?></td>
+                            <td><?php echo e($order->area); ?></td>
+                            <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
+                            <td> <button class="btn btn-sm btn-success" data-toggle="modal"
+                                    data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
+                            </td>
+                            <td>
+                                <?php if($order->status == '0'): ?>
+                                <button class="btn btn-sm btn-info" data-toggle="modal"
+                                    data-target="#allocate-<?php echo e($order->id); ?>"
+                                    data-item="<?php echo e($order->id); ?>">Allocate</button> <?php else: ?>
+                                <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                    data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>" disabled>
+                                    এলোকেটেড </button> <?php endif; ?>
 
-                                </td>
-                            </tr>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        </tbody>
-                    </table>
-                    <?php else: ?>
-                    <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই ।</div>
-                    <?php endif; ?>
+                    </tbody>
+                </table>
                 <?php else: ?>
-                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন।  </div>    
+                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই
+                    ।</div>
                 <?php endif; ?>
-                
+                <?php else: ?>
+                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ
+                    করে কাজ অব্যাহত রাখুন। </div>
+                <?php endif; ?>
+
             </div>
             <!--.box-typical-body-->
         </section>
@@ -244,24 +250,28 @@
     <section class="box-typical box-typical-dashboard panel panel-default scrollable mb-0">
 
         <div class="card-header">
-            আপনার সার্ভিস সমূহ 
+            আপনার সার্ভিস সমূহ
         </div>
         <div class="card-body">
             <?php if($services): ?>
             <div class="btn-group special" role="group" aria-label="">
 
                 <button type="button"
-                    class="btn <?php if(in_array(1,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> "> ইলেকট্রিকাল  </button>
+                    class="btn <?php if(in_array(1,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> "> ইলেকট্রিকাল
+                </button>
                 <button type="button"
-                    class="btn <?php if(in_array(3,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?>"> প্লাম্বিং  </button>
+                    class="btn <?php if(in_array(3,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?>"> প্লাম্বিং
+                </button>
                 <button type="button"
                     class="btn <?php if(in_array(6,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> "> এসি </button>
                 <button type="button"
-                    class="btn <?php if(in_array(5,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> ">জেনারেটর </button>
+                    class="btn <?php if(in_array(5,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> ">জেনারেটর
+                </button>
                 <button type="button"
                     class="btn <?php if(in_array(4,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> ">আই টি </button>
                 <button type="button"
-                    class="btn <?php if(in_array(2,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> ">সিসিটিভি </button>
+                    class="btn <?php if(in_array(2,$services)): ?> btn-mm  <?php else: ?> btn-mm-outline  text-mm <?php endif; ?> ">সিসিটিভি
+                </button>
 
             </div>
             <?php endif; ?>
@@ -292,7 +302,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>সার্ভিস  </th>
+                                        <th>সার্ভিস </th>
                                         <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
                                         <th>মোট মূল্য </th>
@@ -456,8 +466,18 @@
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" min="500" name="amount" class="form-control" placeholder="500"
-                                required>
+                            <input type="number" min="500" max="<?php echo e($balance > 500 ? $balance - 500 : 0); ?>" name="amount"
+                                class="form-control" placeholder="500" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
+                        <div class="col-sm-10">
+                            <select name="type" id="type" class="form-control">
+                                <option value="bkash">Bkash</option>
+                                <option value="surecash">SureCash</option>
+                                <option value="rocket">Rocket</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group ">

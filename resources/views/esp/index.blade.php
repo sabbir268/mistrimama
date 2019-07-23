@@ -37,7 +37,8 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">ব্যালেন্স</div>
-                                    <div class="amount-sm">উত্তোলনযোগ্য  ৳{{$balance > 500 ? $balance - 500 : 0}}/- </div>
+                                    <div class="amount-sm">উত্তোলনযোগ্য ৳{{$balance > 500 ? $balance - 500 : 0}}/-
+                                    </div>
                                 </div>
                             </div>
                             <div class="tbl-cell">
@@ -47,9 +48,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="@if($balance <= 1000) #amount_withdraw @else # @endif"
+                    <a href="#" data-toggle="modal" data-target="@if($balance > 499) #amount_withdraw @else # @endif"
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 999) disabled @endif ">ক্যাশ আউট করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 499) disabled @endif ">ক্যাশ
+                        আউট করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -69,7 +71,8 @@
                     </div>
                     <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে পরিবর্তন করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে
+                        পরিবর্তন করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -183,7 +186,7 @@
     <div class="col-md-6 pr-2">
         <section class="box-typical box-typical-dashboard panel panel-default scrollable mb-3">
             <div class="card-header">
-                লেনদেন 
+                লেনদেন
             </div>
             <div class="box-typical-body panel-body ">
                 @if(count($miniStatements) !== 0)
@@ -218,7 +221,8 @@
                     </tbody>
                 </table>
                 @else
-                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> এই মূহুর্তে কোনো লেনদেন নেই</div>
+                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> এই মূহুর্তে কোনো লেনদেন নেই
+                </div>
                 @endif
             </div>
             <!--.box-typical-body-->
@@ -230,62 +234,64 @@
             <div class="card-header">নতুন কাজ </div>
             <div class="box-typical-body panel-body" id="avail_able_order">
                 @if($balance >= 500)
-                    @if(count($newOrders) != 0)
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div>অর্ডার নং #</div>
-                                </th>
-                                <th>
-                                    <div> সার্ভিস </div>
-                                </th>
-                                <th>
-                                    <div>এলাকা </div>
-                                </th>
-                                <th>
-                                    <div>সময় </div>
-                                </th>
-                                <th>
-                                    <div> বিবরণ </div>
-                                </th>
-                                <th>
-                                    <div> একশন </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($newOrders as $order)
-                            <tr>
-                                <td>{{$order->order_no}}</td>
-                                <td>{{$order->category->name}}</td>
-                                <td>{{$order->area}}</td>
-                                <td>{{$order->order_date}}/{{$order->order_time}}</td>
-                                <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
-                                </td>
-                                <td>
-                                    @if($order->status == '0')
-                                    <button class="btn btn-sm btn-info" data-toggle="modal"
-                                        data-target="#allocate-{{$order->id}}"
-                                        data-item="{{ $order->id }}">Allocate</button> @else
-                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}"
-                                        disabled> এলোকেটেড  </button> @endif
+                @if(count($newOrders) != 0)
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div>অর্ডার নং #</div>
+                            </th>
+                            <th>
+                                <div> সার্ভিস </div>
+                            </th>
+                            <th>
+                                <div>এলাকা </div>
+                            </th>
+                            <th>
+                                <div>সময় </div>
+                            </th>
+                            <th>
+                                <div> বিবরণ </div>
+                            </th>
+                            <th>
+                                <div> একশন </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($newOrders as $order)
+                        <tr>
+                            <td>{{$order->order_no}}</td>
+                            <td>{{$order->category->name}}</td>
+                            <td>{{$order->area}}</td>
+                            <td>{{$order->order_date}}/{{$order->order_time}}</td>
+                            <td> <button class="btn btn-sm btn-success" data-toggle="modal"
+                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                            </td>
+                            <td>
+                                @if($order->status == '0')
+                                <button class="btn btn-sm btn-info" data-toggle="modal"
+                                    data-target="#allocate-{{$order->id}}"
+                                    data-item="{{ $order->id }}">Allocate</button> @else
+                                <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                    data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}" disabled>
+                                    এলোকেটেড </button> @endif
 
-                                </td>
-                            </tr>
-                            @endforeach
+                            </td>
+                        </tr>
+                        @endforeach
 
-                        </tbody>
-                    </table>
-                    @else
-                    <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই ।</div>
-                    @endif
+                    </tbody>
+                </table>
                 @else
-                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন।  </div>    
+                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই
+                    ।</div>
                 @endif
-                
+                @else
+                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ
+                    করে কাজ অব্যাহত রাখুন। </div>
+                @endif
+
             </div>
             <!--.box-typical-body-->
         </section>
@@ -367,24 +373,28 @@
     <section class="box-typical box-typical-dashboard panel panel-default scrollable mb-0">
 
         <div class="card-header">
-            আপনার সার্ভিস সমূহ 
+            আপনার সার্ভিস সমূহ
         </div>
         <div class="card-body">
             @if($services)
             <div class="btn-group special" role="group" aria-label="">
 
                 <button type="button"
-                    class="btn @if(in_array(1,$services)) btn-mm  @else btn-mm-outline  text-mm @endif "> ইলেকট্রিকাল  </button>
+                    class="btn @if(in_array(1,$services)) btn-mm  @else btn-mm-outline  text-mm @endif "> ইলেকট্রিকাল
+                </button>
                 <button type="button"
-                    class="btn @if(in_array(3,$services)) btn-mm  @else btn-mm-outline  text-mm @endif"> প্লাম্বিং  </button>
+                    class="btn @if(in_array(3,$services)) btn-mm  @else btn-mm-outline  text-mm @endif"> প্লাম্বিং
+                </button>
                 <button type="button"
                     class="btn @if(in_array(6,$services)) btn-mm  @else btn-mm-outline  text-mm @endif "> এসি </button>
                 <button type="button"
-                    class="btn @if(in_array(5,$services)) btn-mm  @else btn-mm-outline  text-mm @endif ">জেনারেটর </button>
+                    class="btn @if(in_array(5,$services)) btn-mm  @else btn-mm-outline  text-mm @endif ">জেনারেটর
+                </button>
                 <button type="button"
                     class="btn @if(in_array(4,$services)) btn-mm  @else btn-mm-outline  text-mm @endif ">আই টি </button>
                 <button type="button"
-                    class="btn @if(in_array(2,$services)) btn-mm  @else btn-mm-outline  text-mm @endif ">সিসিটিভি </button>
+                    class="btn @if(in_array(2,$services)) btn-mm  @else btn-mm-outline  text-mm @endif ">সিসিটিভি
+                </button>
 
             </div>
             @endif
@@ -419,7 +429,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>সার্ভিস  </th>
+                                        <th>সার্ভিস </th>
                                         <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
                                         <th>মোট মূল্য </th>
@@ -582,8 +592,18 @@
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" min="500" name="amount" class="form-control" placeholder="500"
-                                required>
+                            <input type="number" min="500" max="{{$balance > 500 ? $balance - 500 : 0}}" name="amount"
+                                class="form-control" placeholder="500" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
+                        <div class="col-sm-10">
+                            <select name="type" id="type" class="form-control">
+                                <option value="bkash">Bkash</option>
+                                <option value="surecash">SureCash</option>
+                                <option value="rocket">Rocket</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group ">

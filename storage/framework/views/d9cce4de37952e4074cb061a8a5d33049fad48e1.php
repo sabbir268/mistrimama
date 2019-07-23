@@ -26,11 +26,14 @@
                     <thead class="flip-content">
                         <tr>
                             <th>SL</th>
+                            <th>Transaction Date</th>
+                            <th>Entry Date</th>
                             <th>Type</th>
+                            <th>Heading</th>
                             <th>Details</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th class="align-center">Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -41,14 +44,14 @@
                         <?php $__currentLoopData = $accounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $account): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($i); ?> <?php $i++ ?> </td>
+                            <td><?php echo e($account->date); ?></td>
+                            <td><?php echo e($account->created_at); ?></td>
                             <td><?php echo e($account->type); ?></td>
+                            <td><?php echo e($account->heading); ?></td>
                             <td><?php echo e($account->details); ?></td>
                             <td><?php echo e($account->amount); ?></td>
                             <td><?php echo e($account->status); ?></td>
-                            <td class="align-center">
-                                <a href="#" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
-                                <a href="#" class="btn btn-danger"> <i class="fa fa-trash"></i> </a>
-                            </td>
+                            
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
@@ -78,23 +81,35 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo e(route('admin.accounts.insert')); ?>" method="POST" >
+                <form action="<?php echo e(route('admin.accounts.insert')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control">
+                            <option value="debit">Expenses</option>
                             <option value="credit">Revenue</option>
-                            <option value="debit">Cost</option>
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="status">Hedings</label>
+                    <div class="form-group" id="expenses">
+                        <label for="status">Expenses Hedings</label>
                         <select name="heading" id="heading" class="form-control">
-                            <option value="credit">Revenue</option>
-                            <option value="debit">Cost</option>
+                            <?php $__currentLoopData = $headingsExpence; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $head): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($head->title); ?>"><?php echo e($head->title); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
+
+                    <div class="form-group" id="revenue" style="display:none">
+                        <label for="status">Revenue Hedings</label>
+                        <select name="heading" id="heading" class="form-control">
+                            <?php $__currentLoopData = $headingsRevenue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $head): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($head->title); ?>"><?php echo e($head->title); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+
+
 
                     <div class="form-group">
                         <label for="status">Amount</label>
@@ -113,7 +128,7 @@
 
                     <div class="form-group">
                         <label for="status">Details</label>
-                        
+
                         <textarea class="form-control" name="details" id="details" cols="30" rows="5"></textarea>
                     </div>
 
@@ -126,11 +141,21 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save </button>
-            </form>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    $('#status').change(function(){
+        if($(this).val() == 'credit'){
+            $('#expenses').hide();
+            $('#revenue').show();
+        }else{
+            $('#expenses').show();
+            $('#revenue').hide();
+        }
+    })
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

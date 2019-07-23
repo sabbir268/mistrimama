@@ -210,6 +210,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource("cms", "Admin\CmsController");
 
         Route::resource("service-provider", "Admin\ServiceProviderController");
+        Route::get("service-provider", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
+
+
         Route::post("add-mmfirst-balance", "Admin\ServiceProviderController@addAmount")->name('add.mmfirstbalance');
         //
         Route::resource("cms-attribute", "Admin\CmsAttributesController");
@@ -224,9 +227,27 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get("accounts", "Admin\AdminAccountsController@index")->name('admin.accounts');
         Route::post("accounts", "Admin\AdminAccountsController@insert")->name('admin.accounts.insert');
 
+        Route::get("accounts/headings", "Admin\AdminAccountsController@heading")->name('admin.accounts.headings');
+        Route::post("accounts/headings", "Admin\AdminAccountsController@headingInsert")->name('admin.accounts.heading.insert');
+        Route::get("accounts/headings/{id}", "Admin\AdminAccountsController@headingEdit")->name('admin.accounts.heading.edit');
+        Route::post("accounts/headings/update", "Admin\AdminAccountsController@headingUpdate")->name('admin.accounts.heading.update');
+        Route::get("accounts/headings/delete/{id}", "Admin\AdminAccountsController@headingDelete")->name('admin.accounts.heading.delete');
+
         Route::get("recharge_request", "Admin\AdminRechargeController@index")->name('admin.recharge.request');
+        Route::get("recharge_request/export", "Admin\AdminRechargeController@rechargeRequestExport")->name('admin.recharge.export');
+        
+        Route::post("recharge_request/import", "Admin\AdminRechargeController@rechargeRequestImport")->name('admin.recharge.import');
+       
 
         Route::post("recharge_request_approv", "Admin\AdminRechargeController@status")->name('admin.recharge.approve');
+
+        Route::post("withdraw_approve", "Admin\WithdrawController@approve")->name('admin.withdraw.approve');
+
+        Route::get("withdraw_request/export", "Admin\WithdrawController@withdrawRequestExport")->name('admin.withdraw.export');
+
+        Route::post("withdraw_request/import", "Admin\WithdrawController@withdrawRequestImport")->name('admin.withdraw.import');
+
+        
 
     });
 });

@@ -16,7 +16,13 @@
         <div class="portlet box green ">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i>All Recharge Request</div>
+                    <i class="fa fa-cogs"></i>
+                    All Recharge Request
+                </div>
+                
+                <a href="#" data-toggle="modal" data-target="#recharge_import" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Mass Import</a>
+                <a href="{{route('admin.recharge.export')}}" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Export CSV</a>
+                
             </div>
 
             <div class="portlet-body flip-scroll">
@@ -43,7 +49,7 @@
                             <td>{{$request->user ? $request->user->sp->name : ''}}</td>
                             <td>
                                 @if($request->user)
-                                  {{$request->user->sp->service_category == 20 ? 'Starter' : (($request->user->sp->service_category == 15) ? 'Expert' : 'Professional')  }}
+                                {{$request->user->sp->service_category == 20 ? 'Starter' : (($request->user->sp->service_category == 15) ? 'Expert' : 'Professional')  }}
                                 @endif
                             </td>
                             <td>{{$request->mfs}}</td>
@@ -59,21 +65,21 @@
                                         <button type="submit" class="btn btn-success">Approve</button>
                                     </form>
 
-                                         <form action="{{route('admin.recharge.approve')}}" method="POST">
-                                            @csrf
-                                            <input type="text" value="{{$request->id}}" name="id" hidden>
-                                            <input type="text" value="3" name="status" hidden>
-                                            <button type="submit" class="btn btn-danger">Decline</button>
-                                        </form>
+                                    <form action="{{route('admin.recharge.approve')}}" method="POST">
+                                        @csrf
+                                        <input type="text" value="{{$request->id}}" name="id" hidden>
+                                        <input type="text" value="3" name="status" hidden>
+                                        <button type="submit" class="btn btn-danger">Decline</button>
+                                    </form>
                                     @endif
 
-                                    
+
                                     @if($request->status == 1)
-                                        <button type="submit" class="btn btn-success">Approved</button>
+                                    <button type="submit" class="btn btn-success">Approved</button>
                                     @endif
 
-                               
-                            </div>
+
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -92,51 +98,22 @@
 {{-- modal sectitin --}}
 
 
-<div class="modal fade" id="newTransactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="recharge_import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Mass Import Recharge Request Data Cross macth</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('admin.accounts.insert')}}" method="POST">
+                <form action="{{route('admin.recharge.import')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="status">Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="credit">Revenue</option>
-                            <option value="debit">Cost</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Amount</label>
-                        <input type="number" class="form-control" name="amount">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Type</label>
-                        <select name="type" id="type" class="form-control">
-                            <option value="cash">Cash</option>
-                            <option value="check">Check</option>
-                            <option value="bank">Bank</option>
-                            <option value="other">Others</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Details</label>
-
-                        <textarea class="form-control" name="details" id="details" cols="30" rows="5"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Date</label>
-                        <input type="date" class="form-control" name="date">
+                        <label for="status">Upload CSV File</label>
+                        <input type="file" name="recharge_file" class="form-control">
                     </div>
 
             </div>

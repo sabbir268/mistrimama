@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Heading extends Model
 {
-    public $table = 'referrals';
+    public $table = 'account_headings';
     protected $guarded = [];
 }

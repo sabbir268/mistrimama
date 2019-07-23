@@ -56,6 +56,11 @@ class ServiceProviderController extends Controller
         return back();
     }
 
+    public function spAccounts(){
+        $ServiceProviders = ServiceProviders::paginate(10);
+        return view('admin.service-provider.accounts', compact('ServiceProviders'));
+    }
+
     //
     //    public function edit($id) {
     //        $model = service_providers::find($id);

@@ -26,9 +26,14 @@ class RechargeRequestController extends Controller
             $RechargeRequest->status = 0;
             $RechargeRequest->user_id = auth()->user()->id;
 
-            $RechargeRequest->save();
+           if($RechargeRequest->save()){
+           // $request->session()->flash('success', 'Profile has been Successfull update!');
+             return redirect()->back()->with('success','Recharge Request submited, wait for conformation!');
+           }else{
+            return redirect()->back()->with('error','Something went wrong!');
+           }
 
-            return redirect()->back();
+            
         }
     
     }

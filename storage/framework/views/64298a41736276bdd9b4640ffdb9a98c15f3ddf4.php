@@ -215,15 +215,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">কাস্টমারের বিবরণ :</h5>
-                        <h6 class="p-0 m-0 ">নাম : <?php echo e($lastServiceAmount->name); ?> </h5>
-                            <h6 class="p-0 m-0">ঠিকানা: <?php echo e($lastServiceAmount->address); ?> </h5>
+                        <h6 class="p-0 m-0 ">নাম : <?php echo e($lastServiceAmount ? $lastServiceAmount->name : 0); ?> </h5>
+                            <h6 class="p-0 m-0">ঠিকানা: <?php echo e($lastServiceAmount ?  $lastServiceAmount->address : 0); ?> </h5>
                     </div>
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">সহকর্মীর বিবরণ :</h5>
                         <h6 class="p-0 m-0 ">নাম :
-                            <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''); ?> </h5>
+                            <?php if($lastServiceAmount): ?> <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''); ?> <?php endif; ?> </h5>
                             <h6 class="p-0 m-0">ঠিকানা :
-                                <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''); ?> </h5>
+                                 <?php if($lastServiceAmount): ?> <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''); ?> <?php endif; ?> </h5>
                     </div>
                 </div>
 
@@ -247,6 +247,7 @@
                                 <?php
                                 $i = 1;
                                 ?>
+                                <?php if($lasServiceDetails): ?>
                                 <?php $__currentLoopData = $lasServiceDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lastService): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td> <?php echo e($i); ?> </td>
@@ -258,7 +259,7 @@
                                     <td> <?php echo e($lastService->total_price); ?> </td>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

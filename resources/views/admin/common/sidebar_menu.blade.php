@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                    <a href="{{route('admin.accounts.headings')}}" class="nav-link ">
                         <span class="title">New Headings</span>
                     </a>
                 </li>
@@ -50,10 +50,18 @@
         <li class="nav-item ">
             <a href="{{route('admin.withdraw')}}" class="nav-link">
                 <i class="fa fa-gear"></i>
-                <span class="title">Withdraw Request</span>
+                <span class="title">Cashout Request</span>
                 <span class="arrow "></span>
             </a>
         </li>
+
+        <li class="nav-item ">
+                <a href="{{route('admin.service_provider.accounts')}}" class="nav-link">
+                    <i class="fa fa-gear"></i>
+                    <span class="title">Service Providers Accouts</span>
+                    <span class="arrow "></span>
+                </a>
+            </li>
         @endif
 
         @if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') )

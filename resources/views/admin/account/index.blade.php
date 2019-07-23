@@ -27,11 +27,14 @@
                     <thead class="flip-content">
                         <tr>
                             <th>SL</th>
+                            <th>Transaction Date</th>
+                            <th>Entry Date</th>
                             <th>Type</th>
+                            <th>Heading</th>
                             <th>Details</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th class="align-center">Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -42,14 +45,17 @@
                         @foreach ($accounts as $account)
                         <tr>
                             <td>{{$i}} @php $i++ @endphp </td>
-                            <td>{{$account->type}}</td>
+                            <td>{{$account->date}}</td>
+                            <td>{{$account->created_at}}</td>
+                            <td>{{$account->type }}</td>
+                            <td>{{$account->heading }}</td>
                             <td>{{$account->details }}</td>
                             <td>{{$account->amount}}</td>
                             <td>{{$account->status}}</td>
-                            <td class="align-center">
+                            {{-- <td class="align-center">
                                 <a href="#" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
                                 <a href="#" class="btn btn-danger"> <i class="fa fa-trash"></i> </a>
-                            </td>
+                            </td> --}}
                         </tr>
                         @endforeach
                     </tbody>
@@ -78,23 +84,35 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('admin.accounts.insert')}}" method="POST" >
+                <form action="{{route('admin.accounts.insert')}}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control">
+                            <option value="debit">Expenses</option>
                             <option value="credit">Revenue</option>
-                            <option value="debit">Cost</option>
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="status">Hedings</label>
+                    <div class="form-group" id="expenses">
+                        <label for="status">Expenses Hedings</label>
                         <select name="heading" id="heading" class="form-control">
-                            <option value="credit">Revenue</option>
-                            <option value="debit">Cost</option>
+                            @foreach ($headingsExpence as $head)
+                            <option value="{{$head->title}}">{{$head->title}}</option>
+                            @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group" id="revenue" style="display:none">
+                        <label for="status">Revenue Hedings</label>
+                        <select name="heading" id="heading" class="form-control">
+                            @foreach ($headingsRevenue as $head)
+                            <option value="{{$head->title}}">{{$head->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
 
                     <div class="form-group">
                         <label for="status">Amount</label>
@@ -113,7 +131,7 @@
 
                     <div class="form-group">
                         <label for="status">Details</label>
-                        
+
                         <textarea class="form-control" name="details" id="details" cols="30" rows="5"></textarea>
                     </div>
 
@@ -126,10 +144,20 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save </button>
-            </form>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    $('#status').change(function(){
+        if($(this).val() == 'credit'){
+            $('#expenses').hide();
+            $('#revenue').show();
+        }else{
+            $('#expenses').show();
+            $('#revenue').hide();
+        }
+    })
+</script>
 @endsection

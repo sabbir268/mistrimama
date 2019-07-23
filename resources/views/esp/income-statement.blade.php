@@ -216,15 +216,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">কাস্টমারের বিবরণ :</h5>
-                        <h6 class="p-0 m-0 ">নাম : {{$lastServiceAmount->name}} </h5>
-                            <h6 class="p-0 m-0">ঠিকানা: {{$lastServiceAmount->address}} </h5>
+                        <h6 class="p-0 m-0 ">নাম : {{$lastServiceAmount ? $lastServiceAmount->name : 0}} </h5>
+                            <h6 class="p-0 m-0">ঠিকানা: {{$lastServiceAmount ?  $lastServiceAmount->address : 0}} </h5>
                     </div>
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">সহকর্মীর বিবরণ :</h5>
                         <h6 class="p-0 m-0 ">নাম :
-                            {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''}} </h5>
+                            @if ($lastServiceAmount) {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''}} @endif </h5>
                             <h6 class="p-0 m-0">ঠিকানা :
-                                {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''}} </h5>
+                                 @if ($lastServiceAmount) {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''}} @endif </h5>
                     </div>
                 </div>
 
@@ -248,6 +248,7 @@
                                 @php
                                 $i = 1;
                                 @endphp
+                                @if($lasServiceDetails)
                                 @foreach($lasServiceDetails as $lastService )
                                 <tr>
                                     <td> {{$i}} </td>
@@ -259,7 +260,7 @@
                                     <td> {{$lastService->total_price}} </td>
                                 </tr>
                                 @endforeach
-
+                                @endif
                             </tbody>
                         </table>
                     </div>

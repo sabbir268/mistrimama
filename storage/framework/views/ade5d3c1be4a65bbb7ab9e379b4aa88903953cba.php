@@ -1,16 +1,15 @@
-@extends('admin.cms.template')
-@section('body')
+<?php $__env->startSection('body'); ?>
 
 <h1 class="page-title">
     <small></small>
-    <!--    <a href="{{ route('cms.create') }}" class="btn btn-primary float-right"> Create </a>-->
+    <!--    <a href="<?php echo e(route('cms.create')); ?>" class="btn btn-primary float-right"> Create </a>-->
 </h1>
 <div class="row">
     <div class="col-md-12">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg) @if(Session::has('alert-' . $msg))
-        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
-        @endif
-        @endforeach
+        <?php $__currentLoopData = ['danger', 'warning', 'success', 'info']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $msg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <?php if(Session::has('alert-' . $msg)): ?>
+        <p class="alert alert-<?php echo e($msg); ?>"><?php echo e(Session::get('alert-' . $msg)); ?></p>
+        <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         <button class="btn btn-primary" data-target="#newHeading" data-toggle="modal">New Heading </button>
         <br>
@@ -33,26 +32,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($headings)
-                        @php
+                        <?php if($headings): ?>
+                        <?php
                         $i = 1;
-                        @endphp
-                        @foreach ($headings as $heading)
+                        ?>
+                        <?php $__currentLoopData = $headings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $heading): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>{{$i}} @php $i++ @endphp </td>
-                            <td>{{$heading->title}}</td>
-                            <td>{{$heading->type }}</td>
+                            <td><?php echo e($i); ?> <?php $i++ ?> </td>
+                            <td><?php echo e($heading->title); ?></td>
+                            <td><?php echo e($heading->type); ?></td>
                             <td class="align-center">
-                                <a href="{{route('admin.accounts.heading.edit',$heading->id)}}" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
-                                <a href="{{route('admin.accounts.heading.delete',$heading->id)}}" class="btn btn-danger"> <i class="fa fa-trash"></i> </a>
+                                <a href="<?php echo e(route('admin.accounts.heading.edit',$heading->id)); ?>" class="btn btn-primary"> <i class="fa fa-edit"></i> </a>
+                                <a href="<?php echo e(route('admin.accounts.heading.delete',$heading->id)); ?>" class="btn btn-danger"> <i class="fa fa-trash"></i> </a>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
-                {{$headings->links()}}
+                <?php echo e($headings->links()); ?>
 
-                @endif
+
+                <?php endif; ?>
 
             </div>
         </div>
@@ -60,7 +60,7 @@
 </div>
 
 
-{{-- modal sectitin --}}
+
 
 
 <div class="modal fade" id="newHeading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -74,8 +74,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('admin.accounts.heading.insert')}}" method="POST">
-                    @csrf
+                <form action="<?php echo e(route('admin.accounts.heading.insert')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
 
                     <div class="form-group">
                         <label for="status">Title </label>
@@ -100,4 +100,5 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

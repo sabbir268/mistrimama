@@ -49,7 +49,7 @@
                                 </div>
                                 <!-- <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"> -->
                                 <select class="form-control" name="mfs" id="mfs">
-                                    <option>নির্বাচন করুন </option>
+                                    <option value="">নির্বাচন করুন </option>
                                     <option value="bkash" style="background-image:url(<?php echo e(asset('images/bkash.png')); ?>);"><strong>বিকাশ</strong> </option>
                                     <option value="rocket"> <strong>রকেট  </strong></option>
                                     <option value="surecash"> <strong> শিওর ক্যাশ </strong></option>
