@@ -1,0 +1,141 @@
+@media all and (max-width:991px){
+	.select-area {
+		float: none;
+		display: flex;
+		justify-content: center;
+	}
+	/* .service-item2 {
+		width: 100%;
+		margin-left: 0;
+	} */
+}
+@media all and (max-width:767px){
+	.select-area form {
+		display: block;
+		width: 100%;
+	}
+	.select-item {
+		width: 100%;
+	}
+	.submit {
+		width: 100%;
+	}
+}
+@media all and (max-width:576px){
+	.item4 {
+		padding-left: 0;
+		margin-top: 8px;
+	}
+	.service-item  {
+		font-size: 16px;
+	}
+	.item3 {
+		margin-top: 4px;
+		padding-left: 0;
+	}
+}
+@media all and (max-width:450px){
+	.service-item2 span{
+		display:block;
+	}
+	.service-item2 {
+		padding-top: 30px;
+	}
+}
+@media (max-width: 767px){
+	.service-item2 {
+		margin-top: 10px;
+		margin-left: 9%;
+		width: 100%;
+	}
+	.heading-title, .description{
+		text-align: center;
+	}
+
+	  .select-area {
+		padding-top: 0px!important;
+	}
+	.services-style-01 .service-item_link {
+		position: absolute;
+		bottom: 160px;
+		right: 25px;
+		width: 80%;
+		background: #FBD232;
+		padding: 8px 20px;
+		text-align: right;
+	}
+	.service-item_img{
+		margin-left: 44px;
+	}
+	.col-img-test{
+		margin-bottom: 40px;
+	}
+	.service-content{
+		margin-top: 100px;
+	}
+	.our-works {
+		padding-top: 0px;
+	}
+	.filters-button-group{
+		margin-left: -43px;
+	}
+	.contact-form-btn{
+		width: 100%;
+		background: #fbd232;
+    	color: black;
+	}
+	.widget-tittle{
+		margin-top: 45px;
+	}
+	#fslider{
+		background: black no-repeat;
+	}
+	.hidden-sm{
+		display: none;
+	}
+}
+  @media (min-width: 768px) and  (max-width: 1200px){
+	.hidden-lg{
+		display: none;
+	}
+	.hidden-sm {
+		display: block;
+	  }
+  }
+  @media (max-width: 991px) and (min-width: 768px){
+	.hidden-sm {
+		display: block;
+		margin-left: 230px;
+	}
+  }
+  /* @media (max-width: 715px) and (min-width: 334px){
+	.hidden-sm {
+		display: block;
+	}
+	.hidden-lg {
+		display: none;
+	}
+  }
+  @media (min-width: 691px) and (max-width: 334px){
+	.hidden-sm {
+		display: block;
+	}
+	.hidden-lg {
+		display: none;
+	}
+  } */
+  /* @media (max-width: 991px){
+	.hidden-sm {
+		display: none;
+	}
+  } */
+  @media (min-width: 992px) and (max-width: 1199px) {
+	.hidden-md {
+	  display: none !important;
+	}
+  }
+  @media (min-width: 1200px) {
+	.hidden-lg {
+	  display: none !important;
+	}
+  }

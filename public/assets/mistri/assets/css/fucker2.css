@@ -1,0 +1,184 @@
+
+
+
+/********start map area*******/
+.map-service-area{
+	overflow:hidden;
+	background:url(../images/bg/bg.jpg) no-repeat 0 0 / 100% 100%;
+	background-color: gray;
+	position:relative;
+	z-index:999;
+	font-family: 'Montserrat', sans-serif;
+}
+.map-service-area:after{
+	content:"";
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	background-color: rgb(0, 0, 0);
+	opacity: 0.82;
+	z-index:-1;
+}
+.map-area{
+	overflow:hidden;
+}
+.map-area img{
+	width:100%;
+}
+.service-area{
+	overflow:hidden;
+}
+.select-area {
+	float: right;
+	padding: 3px 6px;
+	overflow: hidden;
+	padding-top: 50px;
+}
+.select-area form{
+	display:flex;
+}
+.select-item {
+	width: 230px;
+	position: relative;
+}
+.select-area select {
+	width: 100%;
+	-moz-appearance: none;
+	border-left: 4px solid #febf13;
+	border-right: 4px solid #febf13;
+	border-top: 4px solid #febf13;
+	border-bottom: 3px solid #febf13;
+	margin-left: -5px;
+	vertical-align: middle;
+	background: rgba(0,0,0,0.1);
+	color: #febf13;
+	font-weight: 500;
+	text-transform: uppercase;
+	font-size: 16px;
+	padding: 3px 0;
+	position: relative;
+	padding-left: 4px;
+}
+.select-area option{
+	color:#000000;
+}
+.select-item::before {
+	position: absolute;
+	content: "";
+	width: 10px;
+	height: 6px;
+	background: url(../images/bg/bg2.png) no-repeat 0 0 / 100% 100%;
+	top: 16px;
+	right: 15px;
+	z-index: 999;
+	pointer-events: none;
+}
+.submit {
+	background: #febf13;
+	border: none;
+	vertical-align: middle;
+	padding: 6px 20px;
+	margin-left: -5px;
+	font-weight: 600;
+	font-size: 16px;
+	cursor:pointer;
+}
+.service-item2 {
+	overflow: hidden;
+	width: 65%;
+	text-align: center;
+	padding-top: 60px;
+	margin-left: -60px;
+}
+.service-item2 p {
+	color: #febf13;
+	font-size: 18px;
+	font-weight: 500;
+}
+.item1 {
+	margin-bottom: -7px;
+}
+.item3 {
+	margin-top: -7px;
+	padding-left: 12px;
+}
+.item4 {
+	padding-left: 146px;
+	margin-top: -7px;
+}
+/*****update css*****/
+.service-item2 label {
+	margin-left: 6px;
+	margin-right: 6px;
+
+
+}
+.img1{
+	background:url(../images/service/service1.png) no-repeat;
+	display:block;
+}
+.img2{
+	background:url(../images/service/service2.png) no-repeat;
+	display:block;
+}
+.img3{
+	background:url(../images/service/service3.png) no-repeat;
+	display:block;
+}
+.img4{
+	background:url(../images/service/service4.png) no-repeat;
+	display:block;
+}
+.img5{
+	background:url(../images/service/service5.png) no-repeat;
+	display:block;
+}
+.img6{
+	background:url(../images/service/service6.png) no-repeat;
+	display:block;
+}
+
+p label:hover .hover-img{
+	
+	-ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* 
+
+Safari 3-8 */
+  transform: scale(1.1); 
+	
+}
+
+p label:hover{
+cursor: pointer;
+}
+label {
+	display: inline-block !important;
+}
+
+
+/*****map area****/
+.mapdiv{
+    width:100%;
+    margin: auto;
+    stroke:#febf13;
+}
+
+
+.mapdiv path {
+    fill: transparent;
+    stroke: #febf13;
+    stroke-width:2px;
+    transition: fill 0.3s;
+
+}
+
+
+.mapdiv path,text: {
+   cursor: pointer;
+
+}
+
+
+
+

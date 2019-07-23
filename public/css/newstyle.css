@@ -1,0 +1,65 @@
+.newstyle{
+	background: #ffffff;
+}
+.container.cms-page{
+	    font-size: 12px;
+    	margin-bottom: 15px;
+}
+.container.cms-page p{
+	color: #606060;
+     
+    font-weight: 400;
+    letter-spacing: .025em;
+    line-height: 20px;
+}
+.cms-page h2,
+.cms-page h3  {
+	font-weight: 300;
+	color: #000;
+    font-size: 30px;
+    font-weight: 100;
+    line-height: 30px;
+    margin: 40px 0 20px;
+    font-family: Heebo,sans-serif;
+}
+.barcode_link{
+   padding-top: 40px;
+}
+.cms-title h2{
+	margin: 20px 0;
+    text-align: center;
+    font-size: 72px;
+    font-weight: 100;
+    line-height: 1em;
+}
+button, input[type="button"], input[type="reset"], input[type="submit"]{
+    border-radius: 0px;
+}
+
+.cms-page td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+.address p, .phone p{
+    color: #fff
+}
+.about-point ul{
+    list-style-type: circle;
+}
+.error{
+    color: #f00;
+}
+.footer i.fa.fa-arrow-right{
+    padding-right: 5px
+}
+.footer .footer-title:after {
+    width: 70% !important;
+    
+}
+footer .footer{
+    font-size: 15px;
+}

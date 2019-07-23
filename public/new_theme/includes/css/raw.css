@@ -1,0 +1,66 @@
+div.order-form {
+    max-width: 600px;
+    position: absolute;
+    top: 36%;
+    right: 10%;
+    background: #ffffffdb;
+    padding: 50px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+div#show_subCategories {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+span#inputGroup-sizing-sm {
+  /* float: left; */
+  display: block;
+  padding: 10px 20px;
+  background: #e8e8e8;
+  /* margin: 5px; */
+  display: block;
+  text-align: center;
+}
+
+/* i.fa {
+  padding: 5px 10px;
+} */
+i.fa.fa-times {
+  display: none;
+}
+.raw-order-label{
+  font-size: 20px;
+}
+
+div#order-form-mobile{
+  display: none;
+  padding: 10px 20px;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    div.order-form {
+      display: none;
+  }
+
+  div#order-form-mobile{
+    display: block;
+    padding: 10px 20px;
+  }
+
+  .rawstyle{
+    margin-left: 0px !important;
+    margin:0px
+  }
+}
+
+/* @media only screen and (min-width: 600px) {
+  div.order-form-mobile{
+    display: none;
+  }
+
+} */

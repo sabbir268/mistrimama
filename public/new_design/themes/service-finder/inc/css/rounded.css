@@ -1,0 +1,515 @@
+.bg-gray {	background-color: #eff3f6; }
+
+.section-head p {	color: inherit;	font-size: 14px; }
+
+.section-full {	padding: 70px 0; }
+
+.rating-container .rating-stars {color: #FFD925;}
+
+.header-nav .nav>li .sub-menu {	border-radius: 5px;-webkit-right-radius: 5px;}
+
+.sf-advace-search .tooltip-inner {	border-radius: 3px;-webkit-border-radius: 3px;}
+
+
+
+.blog-post .post-date strong, 
+
+.header-nav .nav>li .sub-menu li:first-child, 
+
+.job_listing .meta>li:first-child, 
+
+.nav-tabs>li>a, 
+
+.pagination>li:first-child>a, 
+
+.wp-editor-tabs .wp-switch-editor {	border-top-left-radius: 5px;	border-top-right-radius: 5px;	-webkit-border-top-left-radius: 5px;	-webkit-border-top-right-radius: 5px;}
+
+
+
+.about-info .sf-provider-des, 
+
+.auther-pic-text, 
+
+.comment-respond, 
+
+.comments-area>.bg-white, 
+
+.gallery-thums2 .item .sf-thum-bx, 
+
+.gallery-thums2 .item .sf-thum-bx .overlay-bx, 
+
+.gallery-thums2 .item .sf-thum-bx img, 
+
+.job-manager-form, 
+
+.mfp-iframe-scaler, 
+
+.mfp-iframe-scaler iframe, 
+
+.modal-content, 
+
+.post-navigation, 
+
+.profile-form-bx, 
+
+.provider-details .provider-logo, 
+
+.sf-categories-girds, 
+
+.sf-featured-left .sf-featured-media, 
+
+.sf-featured-left .sf-overlay-box, 
+
+.sf-featured-listing, 
+
+.sf-pricing-highlight, 
+
+.sf-rouned-box, 
+
+.side-bar, 
+
+.sliderLarge .sf-thum-bx img, 
+
+.thumbnail-slider,
+
+.sf-thum-active::after, 
+
+.thumbnail-slider .sf-thum-bx img, 
+
+div.RWMB-drag-drop, 
+
+.sf-couponcode-popup {border-radius: 10px;	-webkit-border-radius: 10px;}
+
+
+
+
+
+
+
+.form-nav .nav li:first-child a {	border-top-left-radius: 10px;	-webkit-border-top-left-radius: 10px;}
+
+.panel-group .panel:last-child .panel-heading {margin-bottom: -1px;}
+
+.panel-group .panel:last-child .panel-collapse {margin-top: 1px;}
+
+.panel-group .panel:last-child .indicator {	border-bottom-right-radius: 10px;	-webkit-border-bottom-right-radius: 10px;}
+
+.blog-post .post-meta {	border-bottom: none;}
+
+
+
+.pagination>li:last-child>a, 
+
+.pagination>li:last-child>span, 
+
+ul.share-social-bx li:last-child {	border-top-right-radius: 5px;	border-bottom-right-radius: 5px;	-webkit-border-top-right-radius: 5px;	-webkit-border-bottom-right-radius: 5px;}
+
+
+
+.sf-show-rating .rating-container {font-size: 12px;}
+
+ul.job_listings {border-top: 0;}
+
+ul.job_listings li.job_listing {border-color: #e3e7eb;	padding: 25px}
+
+ul.job_listings li.job_listing:first-child {	border-top: 1px solid #e3e7eb;	border-radius: 10px 10px 0 0;	-webkit-border-radius: 10px 10px 0 0;}
+
+
+
+.owl-theme .owl-controls .owl-nav .owl-next, 
+
+.owl-theme .owl-controls .owl-nav .owl-prev {	text-align: center;	padding: 6px 11px}
+
+.owl-theme .owl-controls .owl-nav .owl-next i, 
+
+.owl-theme .owl-controls .owl-nav .owl-prev i {	vertical-align: middle}
+
+
+
+.rwmb-input.ui-sortable .show-embed {position: absolute;right: -2px;	top: 1px}
+
+table.booking-listing .provider-pic {	border: 1px solid #ddd;	padding: 5px}
+
+table.booking-listing .provider-pic img {	border: none;	padding: 0}
+
+.sf-search-result .sf-search-title {	display: none;	list-style: none;	margin: 0}
+
+.sf-search-result .sf-search-title li {	background-color: rgba(255,255,255,.3);	float: left;font-size: 20px;	color: #fff;	font-weight: 800;	border-radius: 10px 10px 0 0;	-webkit-border-radius: 10px 10px 0 0;	padding: 15px 20px}
+
+.sf-search-result .search-form {	padding: 15px}
+
+.sf-search-result .search-form>form {margin-bottom: 0}
+
+.sf-search-result .search-form:before {opacity: .3;	border-radius:0 10px 10px;	-webkit-border-radius: 0 10px 10px;}
+
+.sf-search-result .search-form.sf-empty-radius:before {	border-radius:10px;	-webkit-border-radius:10px;}
+
+.sf-search-result [class*=search-col-] {	border-right: 1px solid #e4e8eb;	padding: 0}
+
+.sf-search-result [class*=search-col-]:last-child {	border-right: none}
+
+
+
+.sf-search-result .btn-search-result, 
+
+.sf-search-result .form-control {	border-radius: 0;	-webkit-border-radius: 0;	border: none;	height: 50px;	padding: 13px 15px}
+
+
+
+@media only screen and (max-width:991px) {
+
+.sf-search-result .btn-search-result, 
+
+.sf-search-result .form-control {	border-radius: 5px;	-webkit-border-radius: 5px;}	
+
+}
+
+
+
+.sf-search-result .btn-search-result {	text-transform: uppercase;	font-weight: 600;}
+
+.sf-search-result .bootstrap-select.form-control {	height: 50px;	padding: 0;}
+
+.sf-search-result .bootstrap-select .btn {	height: 50px;	padding: 13px 25px 13px 15px}
+
+.sf-search-result .bootstrap-select .bs-searchbox .form-control {	height: 30px;	border: 1px solid #ddd;	padding: 7px 10px}
+
+.btn-advace-wrap .btn-advace-search {	left: -15px;	bottom: 15px;	border-radius: 10px 10px 0 0;	-webkit-border-radius: 10px 10px 0 0}
+
+
+
+#geolocation-button, 
+
+#gmap-full, 
+
+#gmap-next, 
+
+#gmap-prev, 
+
+#gmap_wrapper, 
+
+#gmapstreet, 
+
+#gmapzoomminus, 
+
+#gmapzoomplus, 
+
+#googleMap, 
+
+#infocloser, 
+
+#navigation .owl-stage-outer .projectitem, 
+
+#navigation .owl-stage-outer .projectitem img, 
+
+#slider .owl-stage-outer .projectitem, 
+
+#slider .owl-stage-outer .projectitem img, 
+
+.about-info .sf-provider-des .sf-thum-bx, 
+
+.about-info .sf-provider-des .sf-thum-bx img, 
+
+.about-info .shared-bx .sharebtn-bx li, 
+
+.alert, 
+
+.aon-service-bx, 
+
+.attachment-files .rwmb-image-bar, 
+
+.blog-post .post-date, 
+
+.btn, 
+
+.cal-month-box, 
+
+.cal-week-box, 
+
+.cal-year-box, 
+
+.comments-area .comment-form p input[type=text], 
+
+.comments-area .comment-form p input[type=submit], 
+
+.comments-area .comment-form p textarea, 
+
+.comments-area p::before, 
+
+.dataTable.favorites-listing, 
+
+.dropdown-menu, 
+
+.embed-responsive, 
+
+.form-control, 
+
+.gallery-images .rwmb-image-bar, 
+
+.icon-bx-lg, 
+
+.icon-bx-md, 
+
+.icon-bx-sm, 
+
+.icon-bx-xl, 
+
+.icon-bx-xs, 
+
+.info_details, 
+
+.job-manager-form fieldset .account-sign-in .button, 
+
+.job-manager-form fieldset .wp-editor-container, 
+
+.job-manager-form fieldset div.field, 
+
+.job-manager-form fieldset input.input-text, 
+
+.job-manager-form input[type=submit], 
+
+.job_filters .search_jobs input, 
+
+.load_more_jobs strong, 
+
+.overlay-black-light::after, 
+
+.owl-theme .owl-controls .owl-nav .owl-next, 
+
+.owl-theme .owl-controls .owl-nav .owl-prev, 
+
+.profile-pic-bx ul.rwmb-images li .rwmb-image-bar, 
+
+.provider-details .provider-logo img, 
+
+.provider-map, .provider-social .social-bx li a, 
+
+.recent-posts-entry .post-thum-bx, 
+
+.recent-posts-entry .post-thum-bx img, 
+
+.recent-services-bx .post-thum-bx, 
+
+.recent-services-bx .post-thum-bx img, 
+
+.rwmb-images li, 
+
+.rwmb-images li img, 
+
+.rwmb-map-canvas, 
+
+.search-result-listing .btn-advace-wrap .btn-advace-search, 
+
+.searchform input[type=text], .searchform input[type=submit], 
+
+.selected .aon-service-done, 
+
+.sf-card-group img, 
+
+.sf-card-my-account img, 
+
+.sf-documents-table .panel, 
+
+.sf-location-box, .sf-location-listing li a, 
+
+.sf-services-list .panel, .sf-video-box, 
+
+.sf-video-box .img-effect1::before, 
+
+.sf-video-box img, 
+
+.sf-videothumbs .rwmb-thumb-bar, 
+
+.sf-videothumbs ul.rwmb-video-thumb li, 
+
+.sf-videothumbs ul.rwmb-video-thumb li img, 
+
+.single_job_listing .application .application_button, 
+
+.social-bx li, 
+
+.table.job-manager-jobs, 
+
+.tooltip-inner, 
+
+.widget-title::after, 
+
+.widget_provider_search_form .btn-advace-wrap .btn-advace-search, 
+
+.wp-social-login-provider-list .wp-social-login-provider, 
+
+div.zabuto_calendar .table, 
+
+ol.comment-list li.comment .comment-body, 
+
+table.booking-listing .provider-pic, 
+
+table.dataTable, 
+
+ul.job_listings .job_listing .job-comapny-logo, 
+
+ul.job_listings .job_listing .job-comapny-logo img, 
+
+ul.protimelist li, 
+
+ul.sharebtn-bx li, 
+
+ul.timeslots li, 
+
+.sf-add-question-form, 
+
+.sf-certificates-list li .awards-pic img, 
+
+.side-bar .widget_tag_cloud a, 
+
+#walletwiredinfo {	border-radius: 5px;	-webkit-border-radius: 5px}
+
+
+
+.panel-group .panel:last-child, 
+
+.sf-services-list .panel {	overflow: hidden}
+
+
+
+.aon-service-price, 
+
+.blog-post .post-date span, 
+
+.header-nav .nav>li .sub-menu li:last-child, 
+
+.job_listing .meta>li:last-child, 
+
+.mce-flow-layout, 
+
+.pagination>li:first-child>span, 
+
+.tabbable .tab-content, 
+
+div.mce-panel, 
+
+div.mce-statusbar {	border-bottom-left-radius: 5px;	border-bottom-right-radius: 5px;	-webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px}
+
+
+
+.input-group-addon, 
+
+.pagination>li:first-child>a, 
+
+.pagination>li:first-child>span, 
+
+ul.share-social-bx li:first-child {	border-top-left-radius: 5px; border-bottom-left-radius: 5px;-webkit-border-top-left-radius: 5px; -webkit-border-bottom-left-radius: 5px}
+
+
+
+.sf-ques-ans-list li:last-child,
+
+.sf-qualification-acord .sf-panel:first-child,
+
+.sf-services-area > div:first-child,
+
+.sf-experience-acord .sf-panel:first-child,
+
+.sf-ques-header:first-child  { border-top-left-radius: 5px;	border-top-right-radius: 5px;	-webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px}
+
+
+
+.sf-ques-ans-list li:first-child,
+
+.sf-qualification-acord .sf-panel:last-child,
+
+.sf-services-area > div:last-child,
+
+.sf-experience-acord .sf-panel:last-child,
+
+.sf-ques-body:last-child { border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;-webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px}
+
+
+
+
+
+
+
+.auther-bx, .form-wizard, .modal-header, .panel-group .panel:first-child, .panel-group .panel:first-child .panel-heading, .post-thum, .post-thum img, .search_jobs, .sf-pricing-box-new .pricingtable-price {
+
+	border-top-left-radius: 10px;	border-top-right-radius: 10px;	-webkit-border-top-left-radius: 10px;	-webkit-border-top-right-radius: 10px}
+
+	
+
+.form-wizard, .form-wizard .tab-content, .form-wizard .wizard-actions, .modal-footer, .panel-group .panel:last-child, .post-info, .profile-menu ul, .profile-menu ul li:last-child, .sf-pricing-box-new 
+
+
+
+.pricingtable-footer {	border-bottom-left-radius: 10px;	border-bottom-right-radius: 10px;	-webkit-border-bottom-left-radius: 10px;	-webkit-border-bottom-right-radius: 10px}
+
+
+
+.form-nav .nav li:last-child a, .panel-group .panel:first-child .indicator {	border-top-right-radius: 10px;	-webkit-border-top-right-radius: 10px}
+
+
+
+.btn, .comments-area .comment-form p input[type=submit], .job-manager-form fieldset .account-sign-in .button, .job-manager-form input[type=submit], .load_more_jobs strong, .owl-theme .owl-controls .owl-nav .owl-next, .owl-theme .owl-controls .owl-nav .owl-prev, .searchform input[type=submit], .single_job_listing .application .application_button, ul.protimelist li, ul.timeslots li {	border: none}
+
+.btn-advace-wrap .btn-advace-search::after, 
+.sf-featured-top, 
+.sf-latest-news .post-thum,
+.sf-featured-media {	border-radius: 10px 10px 0 0;	-webkit-border-radius: 10px 10px 0 0}
+
+.sf-featured-bot, .sf-latest-news .post-info, ul.job_listings li.job_listing:last-child {	border-radius: 0 0 10px 10px;	-webkit-border-radius: 0 0 10px 10px}
+
+
+
+.sf-search-result [class*=search-col-]:first-child .btn, 
+
+.sf-search-result [class*=search-col-]:first-child .form-control, 
+
+.tabbable.tabs-left .nav-tabs li a {	border-radius: 5px 0 0 5px;	-webkit-border-radius: 5px 0 0 5px}
+
+
+
+.sf-search-result [class*=search-col-]:last-child .btn, 
+
+.sf-search-result [class*=search-col-]:last-child .form-control,
+
+ .tabbable.tabs-left .tab-content {	border-radius: 0 5px 5px 0;	-webkit-border-radius: 0 5px 5px 0}
+
+
+
+@media only screen and (max-width: 991px) {
+
+.sf-search-result .sf-search-form-element {margin:0 -7.5px}
+
+.sf-search-result [class*=search-col-] {padding-left:7.5px;padding-right:7.5px;border:none}
+
+.sf-search-result [class*=search-col-]:first-child .btn .sf-search-result [class*=search-col-]:last-child .form-control, 
+
+.sf-search-result [class*=search-col-]:first-child .form-control, 
+
+.sf-search-result [class*=search-col-]:last-child .btn {border-radius:5px}
+
+.sf-search-result {position:static;padding:0}
+
+}
+
+.sf-plan-left-block {    border-top-left-radius: 10px;	-webkit-border-top-left-radius: 10px;border-bottom-left-radius: 10px;	-webkit-border-bottom-left-radius: 10px;}
+
+.sf-plan-right-block {    border-top-right-radius: 10px;	-webkit-border-top-right-radius: 10px;	border-bottom-right-radius: 10px;	-webkit-border-bottom-right-radius: 10px;}
+
+.sf-plans-bx,
+
+.selected .sf-plans-done {    border-radius: 10px;	-webkit-border-radius: 10px;}
+
+
+
+@media only screen and (max-width: 767px) { 
+
+.sf-plan-left-block {  border-top-right-radius: 10px;	-webkit-border-top-right-radius: 10px;	border-bottom-left-radius: 0; -webkit-border-bottom-left-radius: 0;}
+
+.sf-plan-right-block { border-top-right-radius: 0;	-webkit-border-top-right-radius: 0;	border-bottom-left-radius: 10px;	-webkit-border-left-right-radius: 10px;}
+
+}
+
+
+
+
+

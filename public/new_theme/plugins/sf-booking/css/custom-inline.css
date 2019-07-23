@@ -1,0 +1,85 @@
+/*Inline CSS*/
+
+.default-hidden{ 
+
+	display:none;
+
+}
+
+
+
+.avl-min-hight{ 
+
+	min-height:360px;
+
+}
+
+
+
+.pro-bar-in{ 
+
+	width:25%;
+
+}
+
+
+
+.num-hrs-btn-in{ 
+
+	width:48%;
+
+}
+
+
+
+.business-hrs-min-in{ 
+
+	min-height:360px;
+
+}
+
+
+
+.pro-cat-img-in{
+
+	width:15px; vertical-align:baseline;
+
+}
+
+
+
+.invoice-margin-in,.profile-margin-in{
+
+	margin-bottom: 5px;
+
+}
+
+
+
+.map-canvas-in{
+
+	height:296px;width:709px;
+
+}
+
+
+
+.pro-map-outer-in{
+
+	overflow:hidden;
+
+	height:500px;
+
+	width:100%;
+
+}
+
+
+
+.pro-bg-in{
+
+	background:#F2F2F2;
+
+}
+
+

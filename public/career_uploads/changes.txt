@@ -1,0 +1,12 @@
+1. NID validation not working on service provider add page in admin
+2. Success notification should be visible with eye caching color.
+3. Show success message after add amount to esp.
+
+
+/*----------------*/
+
+1. Order cancelation process.
+2. User shoud not place order when an order allready palced.
+3. Refferal code share on social media and link should be workable.
+
+** ESP should know.
