@@ -38,13 +38,13 @@
                         <div>চার্জ </div>
                     </th>
                     <th>
-                        <div>জরুরী ফি </div>
+                        <div>জরুরী মূল্য </div>
                     </th>
                     <th>
-                        <div>মোট ফি </div>
+                        <div>মোট মূল্য </div>
                     </th>
                     <th>
-                        <div>উপার্জিত</div>
+                        <div>আয়</div>
                     </th>
                     <th>
                         <div>তারিখ</div>
@@ -53,7 +53,7 @@
                         <div>সময়</div>
                     </th>
                     <th>
-                        <div>অর্ডার সময় </div>
+                        <div>অর্ডারের সময় </div>
                     </th>
                     <th>
                         <div>কাস্টমার</div>
@@ -147,9 +147,9 @@
                     <thead>
                         <tr>
                             <td>সার্ভিস </td>
-                            <td>ফি </td>
-                            <td>অতিরিক্ত ফি </td>
-                            <td>মোট ফি </td>
+                            <td>মূল্য </td>
+                            <td>অতিরিক্ত মূল্য </td>
+                            <td>মোট মূল্য </td>
                         </tr>
                     </thead>
                     <tbody>

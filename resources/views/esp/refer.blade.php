@@ -18,90 +18,91 @@
 
 @section('content')
 <header class="page-content-header widgets-header mb-3">
-    <div class="container-fluid">
-        <div class="tbl tbl-outer">
-            <div class="tbl-row">
-                <div class="tbl-cell pb-0">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="">
-                                    <div class="title">ব্যালান্স</div>
-                                    <div class="amount-sm">উত্তোলনযোগ্য</div>
+        <div class="container-fluid">
+            <div class="tbl tbl-outer">
+                <div class="tbl-row">
+                    <div class="tbl-cell pb-0">
+                        <div class="tbl tbl-item">
+                            <div class="tbl-row">
+                                <div class="tbl-cell">
+                                    <div class="">
+                                        <div class="title">ব্যালেন্স</div>
+                                        <div class="amount-sm">উত্তোলনযোগ্য  ৳{{$balance > 500 ? $balance - 500 : 0}}/- </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong>৳&nbsp;{{$balance}}/- </strong> </header>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="@if($balance <= 1000) #amount_withdraw @else # @endif"
-                        style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 999) disabled @endif ">ক্যাশ আউট করুন </a>
-                </div>
-                <div class="tbl-cell pb-0">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="">
-                                    <div class="title">রিওয়ার্ড পয়েন্ট</div>
-                                    <div class="amount-sm">টাকা ৳{{$rp/20}}/-</div>
-                                </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong>{{$rp}}</strong> </header>
+                                <div class="tbl-cell">
+                                    <div class="col-md-4">
+                                        <header> <strong>৳&nbsp;{{$balance}}/- </strong> </header>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <a href="#" data-toggle="modal" data-target="@if($balance <= 1000) #amount_withdraw @else # @endif"
+                            style="width:100%"
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 999) disabled @endif ">ক্যাশ আউট করুন </a>
                     </div>
-                    <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
-                        style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে পরিবর্তন করুন </a>
-                </div>
-                <div class="tbl-cell pb-0">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="">
-                                    <div class="title">সহকারীর সংখ্যা</div>
-                                    <div class="amount-sm">এক্টিভ - {{count($comrades)}} / এক্টিভ নয় -
-                                        {{count($totalcomrades) - count($comrades)}}</div>
+                    <div class="tbl-cell pb-0">
+                        <div class="tbl tbl-item">
+                            <div class="tbl-row">
+                                <div class="tbl-cell">
+                                    <div class="">
+                                        <div class="title">রিওয়ার্ড পয়েন্ট</div>
+                                        <div class="amount-sm">টাকা ৳{{$rp/20}}/-</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong>{{count($totalcomrades)}}</strong> </header>
+                                <div class="tbl-cell">
+                                    <div class="col-md-4">
+                                        <header> <strong>{{$rp}}</strong> </header>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
+                            style="width:100%"
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে পরিবর্তন করুন </a>
                     </div>
-                    <a href="{{route('esp.comrade')}}" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
-                </div>
-                <div class="tbl-cell">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="title">রেটিং </div>
+                    <div class="tbl-cell pb-0">
+                        <div class="tbl tbl-item">
+                            <div class="tbl-row">
+                                <div class="tbl-cell">
+                                    <div class="">
+                                        <div class="title">সহকারীর সংখ্যা</div>
+                                        <div class="amount-sm">এক্টিভ - {{count($comrades)}} / এক্টিভ নয় -
+                                            {{count($totalcomrades) - count($comrades)}}</div>
+                                    </div>
+                                </div>
+                                <div class="tbl-cell">
+                                    <div class="col-md-4">
+                                        <header> <strong>{{count($totalcomrades)}}</strong> </header>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tbl-cell tbl-cell-progress">
-                                <div class="circle-progress-bar-typical size-56 pieProgress pie_progress"
-                                    role="progressbar" data-goal="75" data-barcolor="#929faa" data-barsize="10"
-                                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
-                                    <span class="pie_progress__number text-secondary">{{$ratings}} <i
-                                            class="fa fa-star "></i> </span>
-                                    <div class="pie_progress__svg"><svg version="1.1"
-                                            preserveAspectRatio="xMinYMin meet" viewBox="0 0 160 160">
-                                            <ellipse rx="75" ry="75" cx="80" cy="80" stroke="#f2f2f2" fill="none"
-                                                stroke-width="10"></ellipse>
-                                            <path fill="none" stroke-width="10" stroke="#929faa"
-                                                d="M80,5 A75,75 0 1 1 5,80.00000000000001"
-                                                style="stroke-dasharray: 353.479, 353.479; stroke-dashoffset: 0;">
-                                            </path>
-                                        </svg></div>
+                        </div>
+                        <a href="{{route('esp.comrade')}}" style="width:100%"
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                    </div>
+                    <div class="tbl-cell">
+                        <div class="tbl tbl-item">
+                            <div class="tbl-row">
+                                <div class="tbl-cell">
+                                    <div class="title">রেটিং </div>
+                                </div>
+                                <div class="tbl-cell tbl-cell-progress">
+                                    <div class="circle-progress-bar-typical size-56 pieProgress pie_progress"
+                                        role="progressbar" data-goal="75" data-barcolor="#929faa" data-barsize="10"
+                                        aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
+                                        <span class="pie_progress__number text-secondary">{{$ratings}} <i
+                                                class="fa fa-star "></i> </span>
+                                        <div class="pie_progress__svg"><svg version="1.1"
+                                                preserveAspectRatio="xMinYMin meet" viewBox="0 0 160 160">
+                                                <ellipse rx="75" ry="75" cx="80" cy="80" stroke="#f2f2f2" fill="none"
+                                                    stroke-width="10"></ellipse>
+                                                <path fill="none" stroke-width="10" stroke="#929faa"
+                                                    d="M80,5 A75,75 0 1 1 5,80.00000000000001"
+                                                    style="stroke-dasharray: 353.479, 353.479; stroke-dashoffset: 0;">
+                                                </path>
+                                            </svg></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,9 +110,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</header>
-
+    </header>
 
 <div class="row">
     <div class="col-xl-6">
@@ -174,7 +173,7 @@
                                 <th>তারিখ</th>
                                 <th>বিস্তারিত</th>
                                 <th>রিওয়ার্ড পয়েন্ট</th>
-                                <th>স্ট্যাটাস</th>
+                                <th>অবস্থা</th>
                             </tr>
                         </thead>
                         <tbody>

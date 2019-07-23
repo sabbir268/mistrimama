@@ -32,14 +32,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" role="tab" data-toggle="tab" aria-selected="false"  style="cursor: not-allowed">
-                                <span class="nav-link-in">
-                                    <span class="font-icon font-icon-player-subtitres"></span>
-                                    কার্ড পেমেন্ট
-                                </span>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -52,20 +45,21 @@
                             <?php echo csrf_field(); ?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">MFS</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">মাধ্যম <span class="invisible">পরিমান</span></span>
                                 </div>
                                 <!-- <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"> -->
                                 <select class="form-control" name="mfs" id="mfs">
                                     <option>নির্বাচন করুন </option>
-                                    <option value="bkash" style="background-image:url(<?php echo e(asset('images/bkash.png')); ?>);"><strong>Bkash (Txn Fee-1.8%)</strong> </option>
-                                    <option value="rocket"> <strong> Rocket (Txn Fee- 2%) </strong></option>
-                                    <option value="surecash"> <strong> Sure Cash (Txn Fee- 2%) </strong></option>
-                                    <option value="bank"> <strong> Bank Deposit (Txn Fee- 0%) </strong></option>
+                                    <option value="bkash" style="background-image:url(<?php echo e(asset('images/bkash.png')); ?>);"><strong>বিকাশ</strong> </option>
+                                    <option value="rocket"> <strong>রকেট  </strong></option>
+                                    <option value="surecash"> <strong> শিওর ক্যাশ </strong></option>
+                                    <option value="bank"> <strong> ব্যাংক ডিপোজিট  </strong></option>
+                                    <option value="cash_agent"> <strong> মিস্ত্রিমামা এজেন্ট ডিপোজিট </strong></option>
                                 </select>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Transaction Id</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">TXN ID <span class="invisible">পরিমান</span> </span>
                                 </div>
                                 <input type="text" name="trxn" minlength="15" maxlength="15" class="form-control"
                                     placeholder="xxxxxxxx" required>
@@ -73,12 +67,9 @@
                             
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">টাকা </span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">টাকার পরিমান  </span>
                                 </div>
-                                <input type="number"  id="amount_place" max="99999" minlength="2" maxlength="5" class="form-control">
-                                <div class="input-group-append">
-                                    <input type="number" name="amount" id="amount" max="99999" minlength="2" maxlength="5" class="form-control rounded-0 " readonly>
-                                </div>
+                                <input type="number" name="amount"   max="99999" minlength="2" maxlength="5" class="form-control">
                             </div>
 
 
