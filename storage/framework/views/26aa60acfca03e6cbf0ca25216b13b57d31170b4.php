@@ -225,11 +225,9 @@
                                         <i class="input-group-addon fa fa-user"></i>
                                         
                                         <select class="form-control" name="user_type" placeholder="Choose User Type"
-                                            id="user_type" required>
+                                            id="user_type" required readonly>
                                             <option value="user">User</option>
-                                            <option value="esp">ESP</option>
-                                            <option value="fsp">FSP</option>
-                                            <option value="comrade">Comrade</option>
+                                            
                                         </select>
                                     </div>
                                 </div>

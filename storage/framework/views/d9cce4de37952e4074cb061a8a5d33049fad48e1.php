@@ -11,7 +11,7 @@
         <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        <button class="btn btn-primary" data-target="#newTransactionModal" data-toggle="modal">New Transaction</button>
+        <button class="btn btn-primary" data-target="#newTransactionModal" data-toggle="modal">New Entry </button>
         <br>
         <br>
 
@@ -83,6 +83,14 @@
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control">
+                            <option value="credit">Revenue</option>
+                            <option value="debit">Cost</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Hedings</label>
+                        <select name="heading" id="heading" class="form-control">
                             <option value="credit">Revenue</option>
                             <option value="debit">Cost</option>
                         </select>

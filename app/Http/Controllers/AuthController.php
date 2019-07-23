@@ -78,16 +78,40 @@ class AuthController extends Controller
             } else {
                 switch ($userType) {
                     case "user":
-                        return redirect()->intended(route('dashboard'));
+                        if (checkRole(auth()->user()->id, 'user')) {
+                            return redirect()->intended(route('dashboard'));
+                        } else {
+                            auth()->logout();
+                            $errors = new MessageBag(['message' => ['Not authorized']]);
+                            return redirect()->back()->withErrors($errors);
+                        }
                         break;
                     case "esp":
-                        return redirect()->intended(route('esp-dashboard'));
+                        if (checkRole(auth()->user()->id, 'esp')) {
+                            return redirect()->intended(route('esp-dashboard'));
+                        } else {
+                            auth()->logout();
+                            $errors = new MessageBag(['message' => ['Not authorized']]);
+                            return redirect()->back()->withErrors($errors);
+                        }
                         break;
                     case "fsp":
-                        return redirect()->intended(route('fsp-dashboard'));
+                        if (checkRole(auth()->user()->id, 'fsp')) {
+                            return redirect()->intended(route('fsp-dashboard'));
+                        } else {
+                            auth()->logout();
+                            $errors = new MessageBag(['message' => ['Not authorized']]);
+                            return redirect()->back()->withErrors($errors);
+                        }
                         break;
                     case "comrade":
-                        return redirect()->intended(route('comrade-dashboard'));
+                        if (checkRole(auth()->user()->id, 'comrade')) {
+                            return redirect()->intended(route('comrade-dashboard'));
+                        } else {
+                            auth()->logout();
+                            $errors = new MessageBag(['message' => ['Not authorized']]);
+                            return redirect()->back()->withErrors($errors);
+                        }
                         break;
                     default:
                         return redirect()->intended(route('dashboard'));

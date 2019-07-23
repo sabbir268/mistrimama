@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\WithdrawRequest;
 use App\Account;
+use App\Heading;
 
 class AdminAccountsController extends Controller {
     public function index() {
@@ -31,9 +32,11 @@ class AdminAccountsController extends Controller {
         }
     }     
 
-    public function insertHeading(Request $request) {
-        
-    }   
+    public function insertHeading(Heading $heading , Request $request) {
+        $heading->title = $request->title;
+        $heading->description = $request->description;
+        $heading->save();
+    }
 
 
 }
