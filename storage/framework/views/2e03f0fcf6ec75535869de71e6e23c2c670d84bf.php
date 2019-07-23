@@ -36,7 +36,7 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">ব্যালেন্স</div>
-                                    <div class="amount-sm">উত্তোলনযোগ্য</div>
+                                    <div class="amount-sm">উত্তোলনযোগ্য  ৳<?php echo e($balance > 500 ? $balance - 500 : 0); ?>/- </div>
                                 </div>
                             </div>
                             <div class="tbl-cell">
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বর্ননা </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
                 </div>
                 <div class="tbl-cell">
                     <div class="tbl tbl-item">
@@ -135,7 +135,7 @@
                     <thead>
                         <tr>
                             <th>তারিখ </th>
-                            <th>বর্ননা </th>
+                            <th>বিবরণ </th>
                             <th>TXN ID</th>
                             <th class="text-center">পরিমান </th>
                         </tr>
@@ -191,7 +191,7 @@
                                     <div>সময় </div>
                                 </th>
                                 <th>
-                                    <div> বর্ননা </div>
+                                    <div> বিবরণ </div>
                                 </th>
                                 <th>
                                     <div> একশন </div>
@@ -206,7 +206,7 @@
                                 <td><?php echo e($order->area); ?></td>
                                 <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
                                 <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বর্ননা </button>
+                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
                                 </td>
                                 <td>
                                     <?php if($order->status == '0'): ?>
@@ -280,7 +280,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বর্ননা </h4>
+                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">

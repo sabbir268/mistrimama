@@ -364,8 +364,9 @@ class espController extends Controller
         // $lastServiceAmount = 
         $providers = User::find(Auth::user()->id)->serviceProvider->first();
         $lastServiceAmount = OrderDetails::where('sp_id', '=', $providers->id)->orderBy('id', 'desc')->first();
+        $lasServiceDetails = $lastServiceAmount->bookings;
         //return $lastServiceAmount->total_price;
-        $lastCashOut = Account::where('user_id', auth()->user()->id)->where('details', 'cashout')->orderBy('id', 'desc')->first();
+        $lastCashOut = Account::where('user_id', auth()->user()->id)->where('reason', 'cashout')->where('status', 'debit')->orderBy('id', 'desc')->first();
         $lastRecharge = Account::where('user_id', auth()->user()->id)->where('details', 'recharge')->orderBy('id', 'desc')->first();
         //return $lastRecharge;
         $todaysincome = Account::whereDate('created_at', Carbon::today())->where('status', 'credit')->first();
@@ -386,7 +387,10 @@ class espController extends Controller
 
          $statements = auth()->user()->account()->where('status','!=','income')->orderBy('id','DESC')->paginate(20);
 
-        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome','statements'));
+         
+         //return $lastServiceAmount;
+
+        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome','statements','lasServiceDetails'));
     }
 
     // public function cashout()

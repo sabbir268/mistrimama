@@ -1,9 +1,8 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
 
 <style>
     .tabs-section-nav .nav-link.active .nav-link-in {
@@ -11,19 +10,19 @@
     }
 
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
-
-
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
 <header class="page-content-header widgets-header mb-3">
     <div class="container-fluid">
         <div class="tbl tbl-outer">
@@ -42,9 +41,10 @@
                                 <div class="col-md-4  text-success">
                                     <header>
                                         <h2><strong class="rounded border p-2 bg-mm-light text-mm">
-                                                {{-- @if($ongonigOrder) --}}
-                                                {{count($ongonigOrder)}}
-                                                {{-- @else 0 @endif  --}}
+                                                
+                                                <?php echo e(count($ongonigOrder)); ?>
+
+                                                
                                             </strong></h2>
                                     </header>
                                 </div>
@@ -85,8 +85,8 @@
                             <div class="tbl-cell">
                                 <div class="col-md-4  text-success">
                                     <header>
-                                        <h2><strong class="rounded border p-2 bg-mm-light text-mm">@if($activeOrders)
-                                                {{count($activeOrders)}} @else 0 @endif </strong></h2>
+                                        <h2><strong class="rounded border p-2 bg-mm-light text-mm"><?php if($activeOrders): ?>
+                                                <?php echo e(count($activeOrders)); ?> <?php else: ?> 0 <?php endif; ?> </strong></h2>
                                     </header>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
 
 
 <style>
-@if($balance >= 500)
+<?php if($balance >= 500): ?>
 #jobs_get{
     display: block;
 }
@@ -109,7 +109,7 @@
     display: none;
 }
 
-@else 
+<?php else: ?> 
 #jobs_get{
     display: none;
 }
@@ -117,7 +117,7 @@
 #get_order_alert{
     display: block;
 }
-@endif
+<?php endif; ?>
 
 </style>
 
@@ -180,31 +180,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($newOrdersRequests)
-                            @foreach ($newOrdersRequests as $order)
+                            <?php if($newOrdersRequests): ?>
+                            <?php $__currentLoopData = $newOrdersRequests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td>{{$order->order->order_no}}</td>
-                                <td>{{$order->order->category->name}}</td>
-                                <td>{{$order->order->area}}</td>
-                                <td>{{date('d-m-Y',strtotime($order->order->order_date))}}/{{$order->order->order_time}}
+                                <td><?php echo e($order->order->order_no); ?></td>
+                                <td><?php echo e($order->order->category->name); ?></td>
+                                <td><?php echo e($order->order->area); ?></td>
+                                <td><?php echo e(date('d-m-Y',strtotime($order->order->order_date))); ?>/<?php echo e($order->order->order_time); ?>
+
                                 </td>
                                 <td> <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
                                 </td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-success" data-toggle="modal"
-                                            data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}"><i
+                                            data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>"><i
                                                 data-toggle="tooltip" data-placement="top" title="Accept & Allowcate"
                                                 class="fa fa-check"></i></button>
-                                        <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}"> <i
+                                        <button class="btn btn-sm btn-danger" data-item="<?php echo e($order->id); ?>"> <i
                                                 data-toggle="tooltip" data-placement="top" title="Reject"
                                                 class="fa fa-times"></i> </button>
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
-                            @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -244,99 +245,84 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($activeOrders as $actord)
+                            <?php $__currentLoopData = $activeOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $actord): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td>{{$actord->orders_no}}</td>
-                                <td>{{$actord->category->name}}</td>
-                                <td>{{$actord->name}}</td>
-                                <td>{{$actord->comrade ? $actord->comrade->c_name : 'No Comrade assign yet.'}}</td>
+                                <td><?php echo e($actord->orders_no); ?></td>
+                                <td><?php echo e($actord->category->name); ?></td>
+                                <td><?php echo e($actord->name); ?></td>
+                                <td><?php echo e($actord->comrade ? $actord->comrade->c_name : 'No Comrade assign yet.'); ?></td>
                                 <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-act-{{$actord->id}}"
-                                        data-item="{{ $actord->id }}">বিবরণ </button>
+                                        data-target="#view-act-<?php echo e($actord->id); ?>"
+                                        data-item="<?php echo e($actord->id); ?>">বিবরণ </button>
                                 </td>
                                 <td>
-                                    @if($actord->comrade)
-                                    @if($actord->status == 1)
+                                    <?php if($actord->comrade): ?>
+                                    <?php if($actord->status == 1): ?>
                                     <span class="text-warning">সহকারী যাচ্ছে </span>
-                                    @endif
-                                    @if($actord->status == 2)
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 2): ?>
                                     <span class="text-danger">সহকারী কাজ করছে</span>
-                                    @endif
-                                    @if($actord->status == 3)
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 3): ?>
                                     <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য অপেক্ষামান</span>
-                                    @endif
-                                    @if($actord->status == 4)
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 4): ?>
                                     <span class="text-success"> সহকারী পেমেন্ট গ্রহন করেছে </span>
-                                    @endif
-                                    @else
+                                    <?php endif; ?>
+                                    <?php else: ?>
                                     <button class="btn btn-sm btn-info" data-toggle="modal"
-                                        data-target="#allocate-{{$actord->id}}"
-                                        data-item="{{ $actord->id }}">Allocate</button>
-                                    @endif
+                                        data-target="#allocate-<?php echo e($actord->id); ?>"
+                                        data-item="<?php echo e($actord->id); ?>">Allocate</button>
+                                    <?php endif; ?>
                                 </td>
 
                                 <td>
-                                    <form action="{{route('service-update-sts')}}" method="post">
-                                        @csrf
+                                    <form action="<?php echo e(route('service-update-sts')); ?>" method="post">
+                                        <?php echo csrf_field(); ?>
                                         <!-- -->
-                                        <input type="text" value="{{$actord->id}}" name="order_id" hidden>
-                                        <input type="text" value="{{$actord->serviceSystem->id}}" name="s_sys_id" hidden>
-                                        @switch($actord->status)
-                                        @case(1)
+                                        <input type="text" value="<?php echo e($actord->id); ?>" name="order_id" hidden>
+                                        <input type="text" value="<?php echo e($actord->serviceSystem->id); ?>" name="s_sys_id" hidden>
+                                        <?php switch($actord->status):
+                                        case (1): ?>
                                         <input type="text" value="2" name="status" hidden>
-                                        <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু  </button> @break
-                                        @case(2)
+                                        <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু  </button> <?php break; ?>
+                                        <?php case (2): ?>
                                         <input type="text" value="3" name="status" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%"> কাজ শেষ </button>
-                                        @break
-                                        @case(3)
-                                        @if($actord->type == 'self')
+                                        <?php break; ?>
+                                        <?php case (3): ?>
+                                        <?php if($actord->type == 'self'): ?>
                                             <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য অপেক্ষামান </button>
 
-                                        @else 
+                                        <?php else: ?> 
                                             <input type="text" value="5" name="status" hidden>
-                                            <input type="text" value="{{ (($actord->total_price + $actord->extra_price) - $actord->disc)  }}" name="amount" hidden>
-                                            <input type="text" value="{{$actord->sp_id}}"  name="service_provider_id" hidden>
-                                            <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
+                                            <input type="text" value="<?php echo e((($actord->total_price + $actord->extra_price) - $actord->disc)); ?>" name="amount" hidden>
+                                            <input type="text" value="<?php echo e($actord->sp_id); ?>"  name="service_provider_id" hidden>
+                                            <input type="text" value="<?php echo e($actord->user_id); ?>" name="client_id" hidden>
                                             <button type="submit" class="btn  btn-success" style="width:100%"> পেমেন্ট সংগ্রহ  </button>
-                                        @endif
+                                        <?php endif; ?>
 
-                                        @break
-                                        @case(4)
-                                        {{-- <ul class="list-group mb-2">
-                                            <li class="list-group-item p-0 m-0 border-0 ">User Paid: <span
-                                                    class="invisible">1232</span>
-                                                <strong>{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
-                                                    টাকা</strong></li>
-                                            <li class="list-group-item p-0 m-0 border-0 "> ডিসকাউন্ট :
-                                                <strong>{{$sumOrder->disc  }} টাকা</strong></li>
-                                            <li class="list-group-item p-0 m-0"></li>
-                                            <li class="list-group-item p-0 m-0 border-0 "> ইনকাম : <span
-                                                    class="invisible">123s2</span>
-                                                <strong>{{(($sumOrder->total_price + $sumOrder->extra_price) ) }}
-                                                    টাকা</strong>
-                                            </li>
-                                        </ul> --}}
+                                        <?php break; ?>
+                                        <?php case (4): ?>
+                                        
                                         <input type="text" value="5" name="status" hidden>
-                                        {{-- <input type="text"
-                                            value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
-                                            name="amount" hidden> --}}
-                                        <input type="text" value="{{$actord->sp_id}}"
+                                        
+                                        <input type="text" value="<?php echo e($actord->sp_id); ?>"
                                             name="service_provider_id" hidden>
-                                        <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
+                                        <input type="text" value="<?php echo e($actord->user_id); ?>" name="client_id" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন</button>
-                                        @break
-                                        @default
-                                        <input type="text" value="" name="status" hidden> @endswitch
+                                        <?php break; ?>
+                                        <?php default: ?>
+                                        <input type="text" value="" name="status" hidden> <?php endswitch; ?>
                                     </form>
                                 </td>
 
                                 <td>
                                     <button class="btn btn-sm btn-info" data-toggle="modal"
-                                        data-target="#allocate-{{$actord->id}}" data-item="{{ $actord->id }}">সহকারী পরিবর্তন</button>
+                                        data-target="#allocate-<?php echo e($actord->id); ?>" data-item="<?php echo e($actord->id); ?>">সহকারী পরিবর্তন</button>
                                 </td>
                             </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -349,9 +335,9 @@
 
 
 <!-- Modals section for allocate order and view details order -->
-@if ($newOrders)
-@foreach ($newOrders as $order)
-<div class="modal fade" id="view-{{$order->id}}" role="dialog">
+<?php if($newOrders): ?>
+<?php $__currentLoopData = $newOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<div class="modal fade" id="view-<?php echo e($order->id); ?>" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -362,11 +348,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-header">
-                                {{-- <u><strong><span class="m-0 typical-header">Client Info</span></strong></u><br>
-                                নাম:<strong>{{$actOrder->order->user->name}}</strong><br> Phone:
-                                <strong>{{$actOrder->order->user->phone_no}}</strong><br>
-                                এলাকা: <strong>{{$actOrder->order->area}}</strong><br>
-                                ঠিকানা : <strong>{{$actOrder->order->user->address}}</strong> --}}
+                                
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -378,15 +360,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($order->bookings as $booking)
+                                    <?php $__currentLoopData = $order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{$booking->service_name}}</td>
-                                        <td>{{$booking->price}}</td>
-                                        <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                            - 1)) }} @endif</td>
+                                        <td><?php echo e($booking->service_name); ?></td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->quantity); ?></td>
+                                        <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
+                                            - 1))); ?> <?php endif; ?></td>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -394,8 +376,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-toggle="modal" data-target="#allocate-{{$order->id}}"
-                    data-item="{{ $order->id }}" class="btn btn-primary">Allocate</button>
+                <button type="button" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
+                    data-item="<?php echo e($order->id); ?>" class="btn btn-primary">Allocate</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -404,19 +386,20 @@
 </div>
 <!-- View Details Modal end -->
 
-{{-- <br> --}}
+
 
 <!-- View Details Modal end -->
-<div class="modal fade" id="allocate-{{$order->id}}" role="dialog">
+<div class="modal fade" id="allocate-<?php echo e($order->id); ?>" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
             </div>
-            <form method="post" action="{{ route('service_provider_allocate') }}">
-                {{csrf_field()}}
-                <input type="hidden" name="order_id" value="{{$order->id}}" />
-                <input type="hidden" name="service_provider_id" value="{{$providers->first()->id}}" />
+            <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
+                <?php echo e(csrf_field()); ?>
+
+                <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>" />
+                <input type="hidden" name="service_provider_id" value="<?php echo e($providers->first()->id); ?>" />
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
@@ -425,16 +408,16 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach ($comrades as $comrade)
-                                        <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Client:</label> <strong>
-                                        {{ $order->user ? $order->user->name : '-' }}</strong>
+                                        <?php echo e($order->user ? $order->user->name : '-'); ?></strong>
                                     <input type="text" name="user_id"
-                                        value="{{ $order->user ? $order->user->id : '-' }}" hidden>
+                                        value="<?php echo e($order->user ? $order->user->id : '-'); ?>" hidden>
                                 </div>
                             </div>
                         </div>
@@ -450,12 +433,12 @@
     </div>
 </div>
 
-@endforeach
-@endif
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endif; ?>
 
-@if ($newOrdersRequests)
-@foreach ($newOrdersRequests as $order)
-<div class="modal fade" id="view-{{$order->order->id}}" role="dialog">
+<?php if($newOrdersRequests): ?>
+<?php $__currentLoopData = $newOrdersRequests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<div class="modal fade" id="view-<?php echo e($order->order->id); ?>" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -466,11 +449,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-header">
-                                {{-- <u><strong><span class="m-0 typical-header">Client Info</span></strong></u><br>
-                                Name:<strong>{{$actOrder->order->user->name}}</strong><br> Phone:
-                                <strong>{{$actOrder->order->user->phone_no}}</strong><br>
-                                Area: <strong>{{$actOrder->order->area}}</strong><br>
-                                Address: <strong>{{$actOrder->order->user->address}}</strong> --}}
+                                
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -482,15 +461,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($order->bookings as $booking)
+                                    <?php $__currentLoopData = $order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{$booking->service_name}}</td>
-                                        <td>{{$booking->price}}</td>
-                                        <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                            - 1)) }} @endif</td>
+                                        <td><?php echo e($booking->service_name); ?></td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->quantity); ?></td>
+                                        <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
+                                            - 1))); ?> <?php endif; ?></td>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -498,8 +477,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-toggle="modal" data-target="#allocate-{{$order->order->id}}"
-                    data-item="{{ $order->order->id }}" class="btn btn-primary">এলোকেট </button>
+                <button type="button" data-toggle="modal" data-target="#allocate-<?php echo e($order->order->id); ?>"
+                    data-item="<?php echo e($order->order->id); ?>" class="btn btn-primary">এলোকেট </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
             </div>
         </div>
@@ -508,19 +487,20 @@
 </div>
 <!-- View Details Modal end -->
 
-{{-- <br> --}}
+
 
 <!-- View Details Modal end -->
-<div class="modal fade" id="allocate-{{$order->order->id}}" role="dialog">
+<div class="modal fade" id="allocate-<?php echo e($order->order->id); ?>" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
             </div>
-            <form method="post" action="{{ route('service_provider_allocate') }}">
-                {{csrf_field()}}
-                <input type="hidden" name="order_id" value="{{$order->order->id}}" />
-                <input type="hidden" name="service_provider_id" value="{{$providers->first()->id}}" />
+            <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
+                <?php echo e(csrf_field()); ?>
+
+                <input type="hidden" name="order_id" value="<?php echo e($order->order->id); ?>" />
+                <input type="hidden" name="service_provider_id" value="<?php echo e($providers->first()->id); ?>" />
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
@@ -529,16 +509,16 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন</option>
-                                        @foreach ($comrades as $comrade)
-                                        <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Client:</label> <strong>
-                                        {{ $order->user ? $order->user->name : '-' }}</strong>
+                                        <?php echo e($order->user ? $order->user->name : '-'); ?></strong>
                                     <input type="text" name="user_id"
-                                        value="{{ $order->user ? $order->user->id : '-' }}" hidden>
+                                        value="<?php echo e($order->user ? $order->user->id : '-'); ?>" hidden>
                                 </div>
                             </div>
                         </div>
@@ -554,12 +534,12 @@
     </div>
 </div>
 
-@endforeach
-@endif
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endif; ?>
 
-@if ($activeOrders)
-@foreach ($activeOrders as $actOrder)
-<div class="modal fade" id="view-act-{{$actOrder->id}}" role="dialog">
+<?php if($activeOrders): ?>
+<?php $__currentLoopData = $activeOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $actOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<div class="modal fade" id="view-act-<?php echo e($actOrder->id); ?>" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -572,16 +552,16 @@
                             <div class="row">
                                 <div class="card-header col-md-6">
                                     <u><strong><span class="m-0 typical-header">কাস্টমার এর বিবরণ </span></strong></u><br>
-                                    নাম :<strong>{{$actOrder->name}}</strong><br> ফোন:
-                                    <strong>{{$actOrder->phone}}</strong><br>
-                                    এলাকা : <strong>{{$actOrder->area}}</strong><br>
-                                    ঠিকানা: <strong>{{$actOrder->address}}</strong>
+                                    নাম :<strong><?php echo e($actOrder->name); ?></strong><br> ফোন:
+                                    <strong><?php echo e($actOrder->phone); ?></strong><br>
+                                    এলাকা : <strong><?php echo e($actOrder->area); ?></strong><br>
+                                    ঠিকানা: <strong><?php echo e($actOrder->address); ?></strong>
                                 </div>
                                 <div class="card-header col-md-6">
                                     <u><strong><span class="m-0 typical-header">সহকারী </span></strong></u><br>
-                                    নাম :<strong>{{$actOrder->comrade ? $actOrder->comrade->c_name : 'No comrade allowcated'}}</strong><br>
+                                    নাম :<strong><?php echo e($actOrder->comrade ? $actOrder->comrade->c_name : 'No comrade allowcated'); ?></strong><br>
                                     ফোন :
-                                    <strong>{{$actOrder->comrade ? $actOrder->comrade->c_phone_no : '-'}}</strong>
+                                    <strong><?php echo e($actOrder->comrade ? $actOrder->comrade->c_phone_no : '-'); ?></strong>
                                 </div>
                             </div>
                             <table class="table table-striped">
@@ -594,15 +574,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($actOrder->bookings as $booking)
+                                    <?php $__currentLoopData = $actOrder->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{$booking->service_name}}</td>
-                                        <td>{{$booking->price}}</td>
-                                        <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                                - 1)) }} @endif</td>
+                                        <td><?php echo e($booking->service_name); ?></td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->quantity); ?></td>
+                                        <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
+                                                - 1))); ?> <?php endif; ?></td>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -618,17 +598,18 @@
 </div>
 
 
-<div class="modal fade" id="allocate-{{$actord->id}}" role="dialog">
+<div class="modal fade" id="allocate-<?php echo e($actord->id); ?>" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
             </div>
-            <form method="post" action="{{ route('service_provider_allocate') }}">
-                {{csrf_field()}}
-                <input type="hidden" name="order_id" value="{{$actord->id}}" />
+            <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
+                <?php echo e(csrf_field()); ?>
 
-                <input type="hidden" name="service_provider_id" value="{{$providers->first()->id}}" />
+                <input type="hidden" name="order_id" value="<?php echo e($actord->id); ?>" />
+
+                <input type="hidden" name="service_provider_id" value="<?php echo e($providers->first()->id); ?>" />
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
@@ -637,16 +618,16 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach ($comrades as $comrade)
-                                        <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>কাস্টমার :</label> <strong>
-                                        {{ $actord->user ? $actord->user->name : '-' }}</strong>
+                                        <?php echo e($actord->user ? $actord->user->name : '-'); ?></strong>
                                     <input type="text" name="user_id"
-                                        value="{{ $actord->user ? $actord->user->id : '-' }}" hidden>
+                                        value="<?php echo e($actord->user ? $actord->user->id : '-'); ?>" hidden>
                                 </div>
                             </div>
                         </div>
@@ -661,15 +642,15 @@
 
     </div>
 </div>
-@endforeach
-@endif
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 
 <script>
     $(document).ready(function() {
@@ -677,4 +658,5 @@
     });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

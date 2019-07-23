@@ -1,23 +1,21 @@
-@extends('layouts.main-dash')
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
 
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
+<?php $__env->stopSection(); ?>
 
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
-
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <header class="page-content-header widgets-header mb-3">
     <div class="container-fluid">
         <div class="tbl tbl-outer">
@@ -36,7 +34,7 @@
                                 <div class="col-md-4  text-success">
                                     <header>
                                         <h2><strong
-                                                class="rounded border p-2 bg-mm-light text-mm">{{count($services)}}</strong>
+                                                class="rounded border p-2 bg-mm-light text-mm"><?php echo e(count($services)); ?></strong>
                                         </h2>
                                     </header>
                                 </div>
@@ -58,7 +56,7 @@
                                 <div class="col-md-4  text-success">
                                     <header>
                                         <h2><strong class="rounded border p-2 bg-mm-light text-mm">
-                                                {{count($subService)}} </strong></h2>
+                                                <?php echo e(count($subService)); ?> </strong></h2>
                                     </header>
                                 </div>
                             </div>
@@ -79,17 +77,17 @@
                                 <div class="col-md-4  text-success">
                                     <header>
                                         <h2 class="text-center text-mm">
-                                            @if ($providers->first()->service_category == 20)
+                                            <?php if($providers->first()->service_category == 20): ?>
                                             স্টার্টার (20%)
-                                            @endif
+                                            <?php endif; ?>
 
-                                            @if ($providers->first()->service_category == 15)
+                                            <?php if($providers->first()->service_category == 15): ?>
                                             এক্সপার্ট (15%)
-                                            @endif
+                                            <?php endif; ?>
 
-                                            @if ($providers->first()->service_category == 10)
+                                            <?php if($providers->first()->service_category == 10): ?>
                                             প্রফেশনাল (10%)
-                                            @endif
+                                            <?php endif; ?>
 
                                         </h2>
                                     </header>
@@ -129,46 +127,48 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
+                            <?php
                             $i = 1;
-                            @endphp
+                            ?>
 
-                            @foreach ($subServiceDetails as $service )
+                            <?php $__currentLoopData = $subServiceDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td>{{$i}} @php $i++ @endphp </td>
-                                <td>{{$service->sub_category->first()->category->name}}</td>
-                                <td>{{$service->sub_category->first()->name}}</td>
-                                <td>{{$service->name}}</td>
-                                <td>{{$service->price}}</td>
-                                @php
+                                <td><?php echo e($i); ?> <?php $i++ ?> </td>
+                                <td><?php echo e($service->sub_category->first()->category->name); ?></td>
+                                <td><?php echo e($service->sub_category->first()->name); ?></td>
+                                <td><?php echo e($service->name); ?></td>
+                                <td><?php echo e($service->price); ?></td>
+                                <?php
                                 $mmam = ($service->price * $providers->first()->service_category)/100;
                                 $spam = ($service->price - $mmam );
-                                @endphp
-                                <td>{{$spam}}</td>
-                                <td>{{$mmam}}</td>
-                                @php
+                                ?>
+                                <td><?php echo e($spam); ?></td>
+                                <td><?php echo e($mmam); ?></td>
+                                <?php
                                 $ammam = ($service->additional_price * $providers->first()->service_category)/100;
                                 $aspam = ($service->additional_price - $ammam );
-                                @endphp
-                                <td>{{$service->additional_price}}</td>
-                                <td>{{$aspam}}</td>
-                                <td>{{$ammam}}</td>
+                                ?>
+                                <td><?php echo e($service->additional_price); ?></td>
+                                <td><?php echo e($aspam); ?></td>
+                                <td><?php echo e($ammam); ?></td>
                             </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
-                {{$subServiceDetails->links()}}
+                <?php echo e($subServiceDetails->links()); ?>
+
             </div>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

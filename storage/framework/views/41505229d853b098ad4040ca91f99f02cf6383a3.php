@@ -1,26 +1,25 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
-@endsection
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col-md-12">
 
         <ol class="breadcrumb bg-white mb-1">
-            <li><a href="{{route('esp-dashboard')}}">ড্যাশবোর্ড </a></li>
+            <li><a href="<?php echo e(route('esp-dashboard')); ?>">ড্যাশবোর্ড </a></li>
             <li><a href="#">কমরেড </a></li>
         </ol>
 
@@ -67,34 +66,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($comrades as $comrade)
+                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><img style="height:50px;width:50px" src="{{$comrade->c_pic}}"
+                            <td><img style="height:50px;width:50px" src="<?php echo e($comrade->c_pic); ?>"
                                     class="rounded-circle" alt="some"></td>
-                            <td>{{$comrade->c_name}}</td>
-                            <td>{{$comrade->c_phone_no}}</td>
-                            <td>{{$comrade->email}}</td>
-                            <td>{{$comrade->c_nid}}</td>
+                            <td><?php echo e($comrade->c_name); ?></td>
+                            <td><?php echo e($comrade->c_phone_no); ?></td>
+                            <td><?php echo e($comrade->email); ?></td>
+                            <td><?php echo e($comrade->c_nid); ?></td>
                             <td>
                                 <div class="btn-gorup">
                                     <button class="btn btn-sm btn-success sr-only"><i class="fa fa-eye"></i></button>
-                                    <a href="/esp/comrade/{{$comrade->id}}" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
-                                    @if($comrade->status == 1)
-                                    <a href="/esp/comrade/ban/{{$comrade->id}}" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
-                                    @else 
-                                        <a href="/esp/comrade/ban/{{$comrade->id}}" class="btn btn-sm btn-info "><i class="fa fa-check-square"></i></a>
-                                    @endif
+                                    <a href="/esp/comrade/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
+                                    <?php if($comrade->status == 1): ?>
+                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
+                                    <?php else: ?> 
+                                        <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-info "><i class="fa fa-check-square"></i></a>
+                                    <?php endif; ?>
                                     
                                     <button class="btn btn-sm btn-danger sr-only"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
             <!--.box-typical-body-->
-            {{$comrades->links()}}
+            <?php echo e($comrades->links()); ?>
+
         </section>
         <!--.box-typical-dashboard-->
         </section>
@@ -113,8 +113,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('comrade-insert')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                <form action="<?php echo e(route('comrade-insert')); ?>" method="POST" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-1">
@@ -132,14 +132,7 @@
                                         placeholder="Ex: 01775280411" required>
                                 </div>
                             </div>
-                            {{-- <div class="form-group mb-1">
-                                <label class="control-label" for="c_alt_phone_no">Alternatove Phone:</label>
-                                <div class="input-group">
-                                    <span class="input-group-text rounded-0 bg-white">+88</span>
-                                    <input type="tel" name="c_alt_phone_no" pattern="+[0-9]{11}" class="form-control"
-                                        placeholder="Ex: 01775280411">
-                                </div>
-                            </div> --}}
+                            
 
                             <div class="form-group mb-1">
                                 <label class="control-label" for="email">ইমেইল :</label>
@@ -157,7 +150,7 @@
                             </div>
 
                         </div>
-                        {{-- openKCFinder --}}
+                        
                         <div class="col-md-6">
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nid">NID নাম্বার :</label>
@@ -205,9 +198,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 
 <script>
     $('.custom-file-input').on('change',function(){
@@ -218,4 +211,5 @@
         })
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

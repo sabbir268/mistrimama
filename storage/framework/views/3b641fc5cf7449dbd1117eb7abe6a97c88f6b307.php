@@ -51,20 +51,20 @@
                         
                         
                     
-                        <a class="btn btn-nav btn-mm-outline text-mm  btn-rounded btn-primary-outline" href="<?php echo e(route('esp-dashboard')); ?>">
+                        <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp-dashboard' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?>   btn-rounded btn-primary-outline" href="<?php echo e(route('esp-dashboard')); ?>">
                             মূল মেন্যু 
                         </a>
-                        <a class="btn btn-nav btn-mm-outline text-mm btn-rounded" href="<?php echo e(route('esp-jobs')); ?>">
+                        <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp-jobs' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?>  btn-rounded" href="<?php echo e(route('esp-jobs')); ?>">
                             সকল কাজ
                         </a>
-                        <a class="btn btn-nav btn-mm-outline text-mm btn-rounded" href="<?php echo e(route('esp.comrade')); ?>">
+                        <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.comrade' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.comrade')); ?>">
                             সহকর্মী
                         </a>
-                        <a class="btn btn-nav btn-mm-outline text-mm btn-rounded" href="<?php echo e(route('esp.services')); ?>">
+                        <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.services' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.services')); ?>">
                             সেবা সমূহ
                         </a>
-                        <a class="btn btn-nav btn-mm-outline text-mm btn-rounded" href="<?php echo e(route('esp.incomestmnt')); ?>">
-                            আয়ের বিবরন
+                        <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.incomestmnt' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.incomestmnt')); ?>">
+                            আয়ের বিবরণী
                         </a>
                     
                     

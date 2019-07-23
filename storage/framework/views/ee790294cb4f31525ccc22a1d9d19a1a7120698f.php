@@ -1,22 +1,21 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
-@endsection
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
-
-
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
 <header class="page-content-header widgets-header mb-3">
     <div class="container-fluid">
         <div class="tbl tbl-outer">
@@ -32,14 +31,14 @@
                             </div>
                             <div class="tbl-cell">
                                 <div class="col-md-4">
-                                    <header> <strong>৳&nbsp;{{$balance}}/- </strong> </header>
+                                    <header> <strong>৳&nbsp;<?php echo e($balance); ?>/- </strong> </header>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="@if($balance <= 1000) #amount_withdraw @else # @endif"
+                    <a href="#" data-toggle="modal" data-target="<?php if($balance <= 1000): ?> #amount_withdraw <?php else: ?> # <?php endif; ?>"
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 999) disabled @endif ">ক্যাশ আউট করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 999): ?> disabled <?php endif; ?> ">ক্যাশ আউট করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -47,19 +46,19 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">রিওয়ার্ড পয়েন্ট</div>
-                                    <div class="amount-sm">টাকা ৳{{$rp/20}}/-</div>
+                                    <div class="amount-sm">টাকা ৳<?php echo e($rp/20); ?>/-</div>
                                 </div>
                             </div>
                             <div class="tbl-cell">
                                 <div class="col-md-4">
-                                    <header> <strong>{{$rp}}</strong> </header>
+                                    <header> <strong><?php echo e($rp); ?></strong> </header>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
+                    <a href="#" data-toggle="modal" data-target=" <?php if($rp < 4000): ?> #rp_withdraw <?php endif; ?> "
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে পরিবর্তন করুন </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($rp < 3999 ): ?> disabled <?php endif; ?> ">ক্যাশে পরিবর্তন করুন </a>
                 </div>
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
@@ -67,18 +66,18 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">সহকারীর সংখ্যা</div>
-                                    <div class="amount-sm">এক্টিভ - {{count($comrades)}} / এক্টিভ নয় -
-                                        {{count($totalcomrades) - count($comrades)}}</div>
+                                    <div class="amount-sm">এক্টিভ - <?php echo e(count($comrades)); ?> / এক্টিভ নয় -
+                                        <?php echo e(count($totalcomrades) - count($comrades)); ?></div>
                                 </div>
                             </div>
                             <div class="tbl-cell">
                                 <div class="col-md-4">
-                                    <header> <strong>{{count($totalcomrades)}}</strong> </header>
+                                    <header> <strong><?php echo e(count($totalcomrades)); ?></strong> </header>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a href="{{route('esp.comrade')}}" style="width:100%"
+                    <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
                         class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
                 </div>
                 <div class="tbl-cell">
@@ -91,7 +90,7 @@
                                 <div class="circle-progress-bar-typical size-56 pieProgress pie_progress"
                                     role="progressbar" data-goal="75" data-barcolor="#929faa" data-barsize="10"
                                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
-                                    <span class="pie_progress__number text-secondary">{{$ratings}} <i
+                                    <span class="pie_progress__number text-secondary"><?php echo e($ratings); ?> <i
                                             class="fa fa-star "></i> </span>
                                     <div class="pie_progress__svg"><svg version="1.1"
                                             preserveAspectRatio="xMinYMin meet" viewBox="0 0 160 160">
@@ -121,20 +120,20 @@
             </div>
             <div class="card-body">
                 <div class="col-md-4 offset-md-4 bg-light text-success p-4 border rounded">
-                    <span class="font-weight-bold">{{$refcode}}</span>
+                    <span class="font-weight-bold"><?php echo e($refcode); ?></span>
                 </div>
                 <div class="input-group mb-2 mt-3">
                     <input type="text" id="ref-link" style="color: #fff !important;"
                         class="form-control bg-secondary border-secondary text-white"
-                        value="{{asset('/order/refer/')}}/{{$refcode}}" aria-describedby="basic-addon2" readonly>
+                        value="<?php echo e(asset('/order/refer/')); ?>/<?php echo e($refcode); ?>" aria-describedby="basic-addon2" readonly>
                     <div class="input-group-append">
                         <span class="btn btn-secondary-outline" id="copyReflink">Copy</span>
                     </div>
                 </div>
                 <div class="row p-3">
                     <div class="col-md-10 offset-md-1">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{asset('/order/refer/')}}/{{$refcode}}" target="_blank" class="btn btn-primary"><i class="fa fa-facebook"></i> Share on Facebook</a>
-                        <a href="https://twitter.com/intent/tweet?text={{asset('/order/refer/')}}/{{$refcode}}" target="_blank"  class="btn btn-primary"><i class="fa fa-twitter"></i> Share on Twitter</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(asset('/order/refer/')); ?>/<?php echo e($refcode); ?>" target="_blank" class="btn btn-primary"><i class="fa fa-facebook"></i> Share on Facebook</a>
+                        <a href="https://twitter.com/intent/tweet?text=<?php echo e(asset('/order/refer/')); ?>/<?php echo e($refcode); ?>" target="_blank"  class="btn btn-primary"><i class="fa fa-twitter"></i> Share on Twitter</a>
                     </div>
                 </div>
             </div>
@@ -150,14 +149,15 @@
                 <div class="card-body">
                     <div class="p-2 text-center">
                         <div style="height:100px" class="col-md-4 border rounded d-inline-block ">
-                            <img src="{{asset('dashboard/img/newlogokom.png')}}" style="height:80px;width:80px" alt="Image">
+                            <img src="<?php echo e(asset('dashboard/img/newlogokom.png')); ?>" style="height:80px;width:80px" alt="Image">
                         </div>
                         <br>
-                        <h3> @if ($topRferer != null)
-                            {{$topRferer->name}}
-                            @else
+                        <h3> <?php if($topRferer != null): ?>
+                            <?php echo e($topRferer->name); ?>
+
+                            <?php else: ?>
                             কোন রেফারার এখন বিদ্যমান নেই
-                            @endif
+                            <?php endif; ?>
                         </h3>
                     </div>
                 </div>
@@ -178,16 +178,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($referHistory != null)
-                                @foreach ($referHistory as $refhis)
+                            <?php if($referHistory != null): ?>
+                                <?php $__currentLoopData = $referHistory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $refhis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{$refhis->created_at}}</td>
-                                    <td>{{$refhis->details}}</td>
-                                    <td>{{$refhis->rp}}</td>
-                                    <td>{{$refhis->status}}</td>
+                                    <td><?php echo e($refhis->created_at); ?></td>
+                                    <td><?php echo e($refhis->details); ?></td>
+                                    <td><?php echo e($refhis->rp); ?></td>
+                                    <td><?php echo e($refhis->status); ?></td>
                                 </tr>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -199,12 +199,12 @@
 <!--.row-->
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 
 
@@ -225,4 +225,5 @@
     });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

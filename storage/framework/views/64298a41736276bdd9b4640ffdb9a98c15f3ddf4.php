@@ -1,32 +1,30 @@
-@extends('layouts.main-dash')
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
 
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
+<?php $__env->stopSection(); ?>
 
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
-
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
             <div class="col-xl-3">
                 <section class="widget widget-simple-sm">
                     <div class="widget-simple-sm-statistic">
-                        <div class="number">টাকা {{$balance ? $balance : 0}}/-</div>
+                        <div class="number">টাকা <?php echo e($balance ? $balance : 0); ?>/-</div>
                         <div class="caption color-purple text-mm ">উত্তোলনযোগ্য
-                            ৳{{$balance > 500 ? $balance - 500 : 0}}/-</div>
+                            ৳<?php echo e($balance > 500 ? $balance - 500 : 0); ?>/-</div>
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
                         <strong>বর্তমান একাউন্ট ব্যালেন্স</strong></div>
@@ -45,7 +43,7 @@
                                 $spam = 0;
                             }
                         ?>
-                        <div class="number">টাকা {{$spam}}/-
+                        <div class="number">টাকা <?php echo e($spam); ?>/-
                         </div>
                         <div class="caption color-purple btn-link text-mm " data-toggle="modal"
                             data-target="#lastServiceModal">View Details</div>
@@ -59,7 +57,7 @@
             <div class="col-xl-3">
                 <section class="widget widget-simple-sm">
                     <div class="widget-simple-sm-statistic">
-                        <div class="number">টাকা {{$lastCashOut ? $lastCashOut->amount : 0}} /-</div>
+                        <div class="number">টাকা <?php echo e($lastCashOut ? $lastCashOut->amount : 0); ?> /-</div>
                         <div class="caption color-purple btn-link text-mm" data-toggle="modal"
                             data-target="#lastCashOutModal">View Details</div>
                     </div>
@@ -71,7 +69,7 @@
             <div class="col-xl-3">
                 <section class="widget widget-simple-sm">
                     <div class="widget-simple-sm-statistic">
-                        <div class="number">টাকা {{ $lastRecharge ? $lastRecharge->amount : 0}}/-</div>
+                        <div class="number">টাকা <?php echo e($lastRecharge ? $lastRecharge->amount : 0); ?>/-</div>
                         <div class="caption color-purple btn-link text-mm" data-toggle="modal"
                             data-target="#lastRechargeModal">View Details</div>
                     </div>
@@ -87,9 +85,9 @@
                 <section class="widget widget-simple-sm">
                     <div class="widget-simple-sm-statistic text-left">
                         <div class="number pt-2 pb-2"> <span class="text-mm">Todays Income:</span>
-                            BDT{{$todaysincome ? $todaysincome->amount : 0}}/-</div>
+                            BDT<?php echo e($todaysincome ? $todaysincome->amount : 0); ?>/-</div>
                         <div class="number pt-2 pb-2"> <span class="text-mm">Yesterdays Income:</span>
-                            BDT{{$yesterdaysincome ? $yesterdaysincome->amount : 0}}/-</div>
+                            BDT<?php echo e($yesterdaysincome ? $yesterdaysincome->amount : 0); ?>/-</div>
                     </div>
                 </section>
                 <!--.widget-simple-sm-->
@@ -98,7 +96,7 @@
                 <section class="widget widget-simple-sm">
                     <div class="widget-simple-sm-statistic">
                         <div class="number pt-2 pb-2"> <span class="text-mm">This Week income (till date):</span>
-                            BDT{{$thisWeekIncome ? $thisWeekIncome->amount : 0}}/-</div>
+                            BDT<?php echo e($thisWeekIncome ? $thisWeekIncome->amount : 0); ?>/-</div>
                         <div class="number pt-2 pb-2"> <span class="text-mm">Last Week Income:</span>
                             BDT 0/-</div>
                     </div>
@@ -135,27 +133,28 @@
             </thead>
 
             <tbody>
-                @foreach ($statements as $statement)
+                <?php $__currentLoopData = $statements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $statement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
-                    <td>{{date("d-m-Y", strtotime($statement->created_at))}}</td>
-                    <td>{{$statement->details}}({{$statement->type}})</td>
-                    <td>{{$statement->trxno}}</td>
-                    <td class="text-center"> <span> @if ($statement->status == 'credit') <span
+                    <td><?php echo e(date("d-m-Y", strtotime($statement->created_at))); ?></td>
+                    <td><?php echo e($statement->details); ?>(<?php echo e($statement->type); ?>)</td>
+                    <td><?php echo e($statement->trxno); ?></td>
+                    <td class="text-center"> <span> <?php if($statement->status == 'credit'): ?> <span
                                 class="label rounded-circle label-success" data-toggle="tooltip" data-placement="top"
                                 title="Credited"><i class="fa fa-plus"></i></span>
-                            @elseif($statement->status == 'income') <span class="label rounded-circle label-warning"
-                                data-toggle="tooltip" data-placement="top" title="Earned">(e)</span> @else <span
+                            <?php elseif($statement->status == 'income'): ?> <span class="label rounded-circle label-warning"
+                                data-toggle="tooltip" data-placement="top" title="Earned">(e)</span> <?php else: ?> <span
                                 class="label rounded-circle label-danger" data-toggle="tooltip" data-placement="top"
-                                title="Debited"><i class="fa fa-minus"></i></span> @endif
+                                title="Debited"><i class="fa fa-minus"></i></span> <?php endif; ?>
                         </span> <span
-                            class="@if ($statement->status == 'credit') text-success  @elseif ($statement->status == 'income') text-warning @else text-danger @endif">{{$statement->amount}}/-</span>
+                            class="<?php if($statement->status == 'credit'): ?> text-success  <?php elseif($statement->status == 'income'): ?> text-warning <?php else: ?> text-danger <?php endif; ?>"><?php echo e($statement->amount); ?>/-</span>
                     </td>
                 </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
 
-        {{$statements->links()}}
+        <?php echo e($statements->links()); ?>
+
     </div>
 </div>
 
@@ -216,15 +215,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">কাস্টমারের বিবরণ :</h5>
-                        <h6 class="p-0 m-0 ">নাম : {{$lastServiceAmount->name}} </h5>
-                            <h6 class="p-0 m-0">ঠিকানা: {{$lastServiceAmount->address}} </h5>
+                        <h6 class="p-0 m-0 ">নাম : <?php echo e($lastServiceAmount->name); ?> </h5>
+                            <h6 class="p-0 m-0">ঠিকানা: <?php echo e($lastServiceAmount->address); ?> </h5>
                     </div>
                     <div class="col-md-6">
                         <h5 class="p-0 mt-2 m-0 border-bottom">সহকর্মীর বিবরণ :</h5>
                         <h6 class="p-0 m-0 ">নাম :
-                            {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''}} </h5>
+                            <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''); ?> </h5>
                             <h6 class="p-0 m-0">ঠিকানা :
-                                {{$lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''}} </h5>
+                                <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_phone_no : ''); ?> </h5>
                     </div>
                 </div>
 
@@ -245,20 +244,20 @@
                             </thead>
 
                             <tbody>
-                                @php
+                                <?php
                                 $i = 1;
-                                @endphp
-                                @foreach($lasServiceDetails as $lastService )
+                                ?>
+                                <?php $__currentLoopData = $lasServiceDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lastService): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td> {{$i}} </td>
-                                    <td> {{$lastService->service_name}} </td>
-                                    <td> {{$lastService->service_details_name}} </td>
-                                    <td> {{$lastService->quantity}} </td>
-                                    <td> {{$lastService->price}} </td>
-                                    <td> {{$lastService->aditional_price}} </td>
-                                    <td> {{$lastService->total_price}} </td>
+                                    <td> <?php echo e($i); ?> </td>
+                                    <td> <?php echo e($lastService->service_name); ?> </td>
+                                    <td> <?php echo e($lastService->service_details_name); ?> </td>
+                                    <td> <?php echo e($lastService->quantity); ?> </td>
+                                    <td> <?php echo e($lastService->price); ?> </td>
+                                    <td> <?php echo e($lastService->aditional_price); ?> </td>
+                                    <td> <?php echo e($lastService->total_price); ?> </td>
                                 </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
                         </table>
@@ -273,7 +272,7 @@
 </div>
 
 
-{{-- modal --}}
+
 <div class="modal fade" id="lastRechargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -300,31 +299,31 @@
                             </thead>
 
                             <tbody>
-                                @if($lastCashOut)
-                                @foreach($lastCashOut as $lastCash )
+                                <?php if($lastCashOut): ?>
+                                <?php $__currentLoopData = $lastCashOut; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lastCash): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{date("d-m-Y", strtotime($lastCash->created_at))}}</td>
-                                    <td>{{$lastCash->details}}({{$lastCash->type}})</td>
-                                    <td>{{$lastCash->trxno}}</td>
-                                    <td class="text-center"> <span> @if ($lastCash->status == 'credit') <span
+                                    <td><?php echo e(date("d-m-Y", strtotime($lastCash->created_at))); ?></td>
+                                    <td><?php echo e($lastCash->details); ?>(<?php echo e($lastCash->type); ?>)</td>
+                                    <td><?php echo e($lastCash->trxno); ?></td>
+                                    <td class="text-center"> <span> <?php if($lastCash->status == 'credit'): ?> <span
                                                 class="label rounded-circle label-success" data-toggle="tooltip"
                                                 data-placement="top" title="Credited"><i class="fa fa-plus"></i></span>
-                                            @elseif($lastCash->status == 'income') <span
+                                            <?php elseif($lastCash->status == 'income'): ?> <span
                                                 class="label rounded-circle label-warning" data-toggle="tooltip"
-                                                data-placement="top" title="Earned">(e)</span> @else <span
+                                                data-placement="top" title="Earned">(e)</span> <?php else: ?> <span
                                                 class="label rounded-circle label-danger" data-toggle="tooltip"
                                                 data-placement="top" title="Debited"><i class="fa fa-minus"></i></span>
-                                            @endif
+                                            <?php endif; ?>
                                         </span> <span
-                                            class="@if ($lastCash->status == 'credit') text-success  @elseif ($lastCash->status == 'income') text-warning @else text-danger @endif">{{$lastCash->amount}}/-</span>
+                                            class="<?php if($lastCash->status == 'credit'): ?> text-success  <?php elseif($lastCash->status == 'income'): ?> text-warning <?php else: ?> text-danger <?php endif; ?>"><?php echo e($lastCash->amount); ?>/-</span>
                                     </td>
                                 </tr>
-                                @endforeach
-                                @else
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
                                 <tr>
                                     <td colspan="4"> No data found</td>
                                 </tr>
-                                @endif
+                                <?php endif; ?>
 
                             </tbody>
                         </table>
@@ -337,12 +336,13 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

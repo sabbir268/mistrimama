@@ -1,21 +1,20 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
-@endsection
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('esp.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('esp.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-md-12">
     <section class="box-typical box-typical-dashboard panel panel-default scrollable">
         <header class="box-typical-header panel-heading">
@@ -66,28 +65,28 @@
 
                 </tr>
                 <?php $i = 1 ?>
-                @foreach ($orders as $order )
+                <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td>
-                        <div>{{$i}} </div>
+                        <div><?php echo e($i); ?> </div>
                     </td>
                     <td>
-                        <div>{{$order->orders_no}}</div>
+                        <div><?php echo e($order->orders_no); ?></div>
                     </td>
                     <td>
                         <div>
-                            <button data-toggle="modal" data-target="#orderDetailsModal{{$order->id}}"
+                            <button data-toggle="modal" data-target="#orderDetailsModal<?php echo e($order->id); ?>"
                                 class="btn btn-success btn-sm">বিবরণ </button>
                         </div>
                     </td>
                     <td>
-                        <div>{{$order->total_price}}</div>
+                        <div><?php echo e($order->total_price); ?></div>
                     </td>
                     <td>
-                        <div>{{$order->extra_charge}}</div>
+                        <div><?php echo e($order->extra_charge); ?></div>
                     </td>
                     <td>
-                        <div>{{$order->total_price + $order->extra_charge}}</div>
+                        <div><?php echo e($order->total_price + $order->extra_charge); ?></div>
                     </td>
                     
                         <?php 
@@ -98,42 +97,44 @@
                         
                     
                     <td>
-                        <div>{{$spam}}</div>
+                        <div><?php echo e($spam); ?></div>
                     </td>
                     
                     <td>
-                        <div>{{date('d-m-Y',strtotime($order->order_date))}}</div>
+                        <div><?php echo e(date('d-m-Y',strtotime($order->order_date))); ?></div>
                     </td>
                     <td>
-                        <div>{{$order->order_time}}</div>
+                        <div><?php echo e($order->order_time); ?></div>
                     </td>
                     <td>
                         <div>
-                            {{date('d-m-Y',strtotime(explode(' ',$order->orders_place_time)[0]))}}/{{explode(' ',$order->orders_place_time)[1]}}
+                            <?php echo e(date('d-m-Y',strtotime(explode(' ',$order->orders_place_time)[0]))); ?>/<?php echo e(explode(' ',$order->orders_place_time)[1]); ?>
+
                         </div>
                     </td>
                     <td>
-                        <div>{{$order->user->name}}</div>
+                        <div><?php echo e($order->user->name); ?></div>
                     </td>
             
                     <td>
-                        <div>{{$order->comrade ? $order->comrade->c_name : "self"}}</div>
+                        <div><?php echo e($order->comrade ? $order->comrade->c_name : "self"); ?></div>
                     </td>
                     <?php $i++ ?>
                 </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </table>
         </div>
-            {{ $orders->links() }}
+            <?php echo e($orders->links()); ?>
+
         </div>
         <!--.box-typical-body-->
     </section>
     <!--.box-typical-dashboard-->
 </div>
 
-@foreach ($orders as $order )
-<div class="modal fade" id="orderDetailsModal{{$order->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<div class="modal fade" id="orderDetailsModal<?php echo e($order->id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -154,14 +155,14 @@
                     </thead>
                     <tbody>
                         <?php $services = $order->bookings()->get() ?>
-                        @foreach($services as $service)
+                        <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>{{$service->service_name}} - {{$service->service_details_name}} </td>
-                            <td>{{$service->price}}</td>
-                            <td>{{$service->aditional_price}}</td>
-                            <td>{{$service->total_price}}</td>
+                            <td><?php echo e($service->service_name); ?> - <?php echo e($service->service_details_name); ?> </td>
+                            <td><?php echo e($service->price); ?></td>
+                            <td><?php echo e($service->aditional_price); ?></td>
+                            <td><?php echo e($service->total_price); ?></td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
@@ -171,14 +172,14 @@
         </div>
     </div>
 </div>
-@endforeach
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 
 <script>
@@ -194,4 +195,5 @@
             });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
