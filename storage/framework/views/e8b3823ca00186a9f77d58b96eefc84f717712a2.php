@@ -9,22 +9,34 @@
         </li>
         <!-- END SIDEBAR TOGGLER BUTTON -->
         <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-
-        <li class="nav-item start <?php echo e(menuActiveClass(['admin'],true)); ?>">
-            <a href="<?php echo e(route('admin')); ?>" class="nav-link nav-toggle">
+        
+        <li class="nav-item start  <?php echo e(menuActiveClass(['admin.dashboard'],false)); ?>">
+            <a href="<?php echo e(route('admin.dashboard')); ?>" class="nav-link nav-toggle">
                 <i class="fa fa-dashboard"></i>
                 <span class="title">Dashboard</span>
                 <span class="selected"></span>
 
             </a>
         </li>
-
-        <li class="nav-item ">
-            <a href="<?php echo e(route('admin.accounts')); ?>" class="nav-link">
+        <?php if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'accountant')): ?>
+        <li class="nav-item start <?php echo e(menuActiveClass(['accounts'],true)); ?> ">
+            <a href="#" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
-                <span class="title">Accounts</span>
+                <span class="title">Cash Book</span>
                 <span class="arrow "></span>
             </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="<?php echo e(route('admin.accounts')); ?>" class="nav-link ">
+                        <span class="title">New Entry</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo e(route('admin.accounts.headings')); ?>" class="nav-link ">
+                        <span class="title">New Headings</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="nav-item ">
@@ -38,11 +50,21 @@
         <li class="nav-item ">
             <a href="<?php echo e(route('admin.withdraw')); ?>" class="nav-link">
                 <i class="fa fa-gear"></i>
-                <span class="title">Withdraw Request</span>
+                <span class="title">Cashout Request</span>
                 <span class="arrow "></span>
             </a>
         </li>
 
+        <li class="nav-item ">
+                <a href="<?php echo e(route('admin.service_provider.accounts')); ?>" class="nav-link">
+                    <i class="fa fa-gear"></i>
+                    <span class="title">Service Providers Accouts</span>
+                    <span class="arrow "></span>
+                </a>
+            </li>
+        <?php endif; ?>
+
+        <?php if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') ): ?>
         <li class="nav-item  <?php echo e(menuActiveClass(['faq','role','email-template','general-setting'],true)); ?>">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
@@ -129,7 +151,7 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item <?php echo e(menuActiveClass(['service-provider'],true)); ?> ">
-                    <a href="<?php echo e(route('service-provider.index')); ?>" class="nav-link ">
+                    <a href="<?php echo e(asset('service-provider')); ?>" class="nav-link ">
                         <span class="title">Manage Service Provider</span>
                     </a>
                 </li>
@@ -215,6 +237,7 @@
             </a>
         </li>
 
+        <?php endif; ?>
 
 
     </ul>

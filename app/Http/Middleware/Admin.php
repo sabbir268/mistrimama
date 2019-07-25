@@ -15,9 +15,14 @@ class Admin {
      * @return mixed
      */
     public function handle($request, Closure $next) {
-         if(checkRole(auth()->user()->id, 'admin') ||  checkRole(auth()->user()->id, 'accountant')){
+        if(Auth::check()){
+            if(checkRole(auth()->user()->id, 'admin') ||  checkRole(auth()->user()->id, 'accountant')){
             return $next($request);
+        }else{
+            return redirect(route('adminLogin'));
+         }
         }
+         
         return redirect(route('adminLogin'));
     }
 

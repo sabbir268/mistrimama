@@ -1,7 +1,8 @@
 @extends('admin.cms.template')
 @section('body')
 
-<h1 class="page-title">Withdraw Request
+<h1 class="page-title">Cash Out
+ Request
     <small></small>
     <!--    <a href="{{ route('cms.create') }}" class="btn btn-primary float-right"> Create </a>-->
 </h1>
@@ -14,7 +15,7 @@
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i>Withdraw Request
+                    <i class="fa fa-cogs"></i>Cash Out Request
                 </div>
                 <a href="#" data-toggle="modal" data-target="#withdraw_import" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Mass Import</a>
                 <a href="{{route('admin.withdraw.export')}}" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Export CSV</a>

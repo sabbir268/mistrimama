@@ -24,6 +24,8 @@
                         <tr>
                             <th>Order No</th>
                             <th>Client</th>
+                            <th>Phone</th>
+                            <th>Address</th>
                             <th>Area</th>
                             <th>Category</th>
                             <th>Date</th>
@@ -39,6 +41,8 @@
                         <tr>
                             <td><?php echo e($order->order_no); ?></td>
                             <td><?php echo e($order->user ? $order->user->name : '-'); ?></td>
+                            <td><?php echo e($order->user ? $order->user->phone_no : '-'); ?></td>
+                            <td><?php echo e($order->user ? $order->user->address : '-'); ?></td>
                             <td><?php echo e($order->area); ?></td>
                             <td><?php echo e($order->category->name); ?></td>
                             <td><?php echo e($order->order_date); ?></td>
@@ -75,6 +79,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div class="portlet box green">
