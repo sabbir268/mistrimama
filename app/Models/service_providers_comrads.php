@@ -11,12 +11,12 @@ class service_providers_comrads extends Model
 
     public function applyService()
     {
-        return $this->morphOne('App\Model\category', 'category_id');
+        return $this->morphOne('App\Models\category', 'category_id');
     }
 
     public function serviceProvider()
     {
-        return $this->belongsTo('App\Model\service_providers', 's_id');
+        return $this->belongsTo('App\Models\service_providers', 's_id','id');
     }
 
     public function user()

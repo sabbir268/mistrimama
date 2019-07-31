@@ -7,6 +7,8 @@ use App\ServiceSystem;
 use App\User;
 use Auth;
 use App\Models\service_providers_comrads as Comrades;
+use App\Models\service_providers as SP;
+use App\Models\category as Catagory;
 use DB;
 use App\OrderDetails;
 
@@ -33,5 +35,18 @@ class comradeController extends Controller
         $comrades = User::find(Auth::user()->id)->comrades;
         $prevOrder = $comrades->first()->serviceSystem->where('status', '=',  '5');
         return view('comrade.job-history', compact('prevOrder'));
+    }
+
+    public function behalfOrder()
+    {
+        $comrades = User::find(Auth::user()->id)->comrades->first();
+        $providers = SP::find($comrades->s_id);
+        $services = $providers->category->pluck('cats')->toArray();
+        //return $services;
+        $services_category = Catagory::whereIn('id', $services)->get();
+
+        // return $services_category;
+        //  $services_category = DB::select("SELECT categories.id,categories.name FROM categories");
+        return view('comrade.order.area_cat', compact('services_category'));
     }
 }

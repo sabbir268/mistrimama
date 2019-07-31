@@ -272,7 +272,7 @@
                                 @if($order->status == '0')
                                 <button class="btn btn-sm btn-info" data-toggle="modal"
                                     data-target="#allocate-{{$order->id}}"
-                                    data-item="{{ $order->id }}">Allocate</button> @else
+                                    data-item="{{ $order->id }}">সহকারী</button> @else
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}" disabled>
                                     এলোকেটেড </button> @endif
@@ -453,7 +453,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-{{$order->id}}"
-                    data-item="{{ $order->id }}" class="btn btn-primary">এলোকেট</button>
+                    data-item="{{ $order->id }}" class="btn btn-primary">সহকারী</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
             </div>
         </div>
@@ -499,7 +499,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Allocate</button>
+                    <button type="submit" class="btn btn-primary">Ok</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -701,7 +701,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Allocate</button>
+                    <button type="submit" class="btn btn-primary">OK</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>

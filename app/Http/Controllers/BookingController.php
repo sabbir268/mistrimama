@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Admin\ServiceAllocatorController;
 
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class BookingController extends Controller
             if (Auth::check()) {
                 return redirect()->route('show.services');
             } else {
-                return redirect()->route('user.signup');
+                return redirect()->route('show.services');
             }
             // if ($request->page == 'index') {
             //     $order = Order::find($order->id);
@@ -88,11 +89,11 @@ class BookingController extends Controller
         $order->save();
         Session::put('order_id', $order->id);
 
-        if (Auth::check()) {
-            return redirect()->route('show.services');
-        } else {
-            return redirect()->route('user.signup');
-        }
+        // if (Auth::check()) {
+        //     return redirect()->route('show.services');
+        // } else {
+        return redirect()->route('show.services');
+        //  }
     }
 
 
@@ -116,12 +117,15 @@ class BookingController extends Controller
         // if ($request->page == 'index') {
         //     return redirect()->route('book.frot.second');                   
         // }
-        if( auth()->user()->roles->first()->role == 'esp' ){
-            return view('esp.order.service', compact('Sub_categories', 'ServiceName'));
-        }else {
+        if (Auth::check()) {
+            if (auth()->user()->roles->first()->role == 'esp') {
+                return view('esp.order.service', compact('Sub_categories', 'ServiceName'));
+            } else {
+                return view('user.booking.self.service', compact('Sub_categories', 'ServiceName'));
+            }
+        } else {
             return view('user.booking.self.service', compact('Sub_categories', 'ServiceName'));
         }
-        
     }
 
 
@@ -231,12 +235,17 @@ class BookingController extends Controller
     /** ******************Third step************************  */
     public function ShowDateTime()
     {
-        if( auth()->user()->roles->first()->role == 'esp' ){
-            return view('esp.order.time');
-        }else {
+        if (Auth::check()) {
+            if (auth()->user()->roles->first()->role == 'esp') {
+                return view('esp.order.time');
+            } elseif (auth()->user()->roles->first()->role == 'comrade') {
+                return view('comrade.order.time');
+            } else {
+                return view('user.booking.self.time');
+            }
+        } else {
             return view('user.booking.self.time');
         }
-        
     }
 
     public function AddDateTime(Request $request)
@@ -266,18 +275,18 @@ class BookingController extends Controller
 
             if (($num > 8.00 && $met == 'PM') || ($num < 8.00 && $met == 'AM')) {
                 $order->extra_charge = 500.00;
-                if($num == 12  && $met == 'PM'){
+                if ($num == 12  && $met == 'PM') {
                     $order->extra_charge = 0;
                 }
-            }else{
+            } else {
                 $order->extra_charge = 0;
-                if($num == 12  && $met == 'PM'){
-                     $order->extra_charge = 500.00;
-                } 
+                if ($num == 12  && $met == 'PM') {
+                    $order->extra_charge = 500.00;
+                }
             }
 
             $order->save();
-            
+
             return redirect()->route('order.confirm');
         }
     }
@@ -285,22 +294,34 @@ class BookingController extends Controller
 
     public function OrderConfirm()
     {
-        if( auth()->user()->roles->first()->role == 'esp' ){
-            $providers = User::find(Auth::user()->id)->serviceProvider->first();
-            $comrades = $providers->comrads->where('status', 1);
-            // return $comrades;
-            $order = Order::find(Session::get('order_id'));
-            $order_id = $order->id;
-            return view('esp.order.confirm',compact('comrades','providers','order_id'));
-        }else {
+        if (Auth::check()) {
+            if (auth()->user()->roles->first()->role == 'esp') {
+                $providers = User::find(Auth::user()->id)->serviceProvider->first();
+                $comrades = $providers->comrads->where('status', 1);
+                // return $comrades;
+                $order = Order::find(Session::get('order_id'));
+                $order_id = $order->id;
+                return view('esp.order.confirm', compact('comrades', 'providers', 'order_id'));
+            } elseif (auth()->user()->roles->first()->role == 'comrade') {
+                $comrades = User::find(Auth::user()->id)->comrades->first();
+                $providers = $comrades->serviceProvider;
+                //return $providers;
+                $order = Order::find(Session::get('order_id'));
+                $order_id = $order->id;
+                return view('comrade.order.confirm', compact('comrades', 'providers', 'order_id'));
+            } else {
+                return view('user.booking.confirm');
+            }
+        } else {
             return view('user.booking.confirm');
         }
-        
     }
 
-    public function OrderConfirmDone(Request $request, User $user)
+
+    public function OrderConfirmDone(Request $request)
     {
 
+        $user = new User();
         $order = Order::find(Session::get('order_id'));
 
         if ($request->has('ref_code') && $request->ref_code != '' || $request->ref_code != NULL) {
@@ -318,7 +339,7 @@ class BookingController extends Controller
             $order->ref_code = $request->ref_code;
             // $order->save();
         }
-        
+
         if ($request->has('type') && $request->type == 'others') {
             $order->area = $request->area;
             $order->others_name = $request->others_name;
@@ -327,12 +348,12 @@ class BookingController extends Controller
             $order->type = 'others';
 
             // $order->save();
-        }else{
+        } else {
             $order->area = auth()->user()->area;
             $order->type = 'self';
         }
-        
-        
+
+
 
         $order->status = '0';
         if (Auth::check()) {
@@ -343,13 +364,15 @@ class BookingController extends Controller
         Session::forget('order_id');
         // return $order->area;
         $ServiceAllowcate = new ServiceAllocatorController();
-        if( auth()->user()->roles->first()->role == 'esp' || auth()->user()->roles->first()->role == 'comrade' ){
-             $ServiceAllowcate->service_allocate($request);
-             return redirect('esp/jobs');
-        }else {
+        if (auth()->user()->roles->first()->role == 'esp') {
+            $ServiceAllowcate->service_allocate($request);
+            return redirect('esp/jobs');
+        }elseif( auth()->user()->roles->first()->role == 'comrade'){
+            $ServiceAllowcate->service_allocate($request);
+            return redirect('/comrade/dashboard');
+        } else {
             return redirect()->route('dashboard');
         }
-        
     }
 
 

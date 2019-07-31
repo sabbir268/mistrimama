@@ -16,11 +16,11 @@
 @endsection
 
 @section('topbar')
-@include('esp.topbar')
+@include('comrade.topbar')
 @endsection
 
 @section('sidebar')
-@include('esp.sidebar')
+@include('comrade.sidebar')
 @endsection
 
 @section('content')
@@ -119,10 +119,10 @@
                         <div class="col-xl-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">+88</span>
+                                    <span class="input-group-text" >+88</span>
                                 </div>
                                 <input type="text" name="others_phone" minlength="11" maxlength="11" id="others_phone" placeholder="Others Phone"
-                                    class="form-control m-0">
+                                    class="form-control m-0" style="width:50%">
                             </div>
                         </div>
                     </div>
@@ -188,12 +188,13 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                
+                {{-- <div class="form-group row">
                     <div class="col-xl-4 ">
                         <label class="form-label text-left">
                             &nbsp;<i class="font-icon font-icon-map"></i>
                             Comrades
-                            {{-- Area <span class="invisible">Others</span> --}}
+                           
                         </label>
                     </div>
                     <div class="col-xl-8">
@@ -207,7 +208,8 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                <input type="comrade_id" value="{{$comrades->id}}" hidden>
                 <input type="text" name="type" id="type-others" value="others" hidden />
                 <input type="text" name="service_provider_id" value="{{$providers->id}}" hidden>
                 <input type="text" name="order_id" value="{{$order_id}}" hidden>

@@ -12,6 +12,21 @@
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/bootstrap/bootstrap.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/main.css')); ?>">
+	<?php if(!Auth::check()): ?>
+	<style>
+		.with-side-menu .page-content {
+			padding-left: 23px;
+		}
+
+		.page-content {
+			padding-left: 0px;
+			padding: 60px 15px 10px;
+		}
+
+	</style>
+
+	<?php endif; ?>
+
 	<style>
 		#preloader {
 			position: fixed;
@@ -299,8 +314,8 @@
 	</script>
 
 
-<script>
-    (function (window, document) {
+	<script>
+		(function (window, document) {
         var loader = function () {
             var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
             script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
@@ -309,7 +324,7 @@
 
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
-</script>
+	</script>
 </body>
 
 

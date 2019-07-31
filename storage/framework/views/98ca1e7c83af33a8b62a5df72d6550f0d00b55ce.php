@@ -1,25 +1,20 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/flatpickr/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/clockpicker/bootstrap-clockpicker.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
-@endsection
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/flatpickr/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/clockpicker/bootstrap-clockpicker.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@if(Auth::check())
-@section('topbar')
-@include('user.topbar')
-@endsection
-@endif
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('comrade.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@if(Auth::check())
-@section('sidebar')
-@include('user.sidebar')
-@endsection
-@endif
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('comrade.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <section class="box-typical steps-icon-block">
     <div class="steps-icon-progress">
@@ -52,14 +47,12 @@
     </div>
 
     <header class="steps-numeric-title">Date & Time </header>
-    <form action="{{route('add.date-time')}}" method="post">
-        @csrf
+    <form action="<?php echo e(route('add.date-time')); ?>" method="post">
+        <?php echo csrf_field(); ?>
         <div class="col-xl-6 offset-md-3 ">
             <div class="row imergency" style="display:none">
                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade show" role="alert">
-                    {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button> --}}
+                    
                     <i class="font-icon font-icon-warning"></i>
                     <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be added.
                 </div>
@@ -120,19 +113,19 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white" href="{{route('show.services')}}">←
+        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white" href="<?php echo e(route('show.services')); ?>">←
                 Back</a></button>
         <button type="submit" class="btn btn-rounded float-right btn-mm">Next →</button>
     </form>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/moment/moment-with-locales.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/flatpickr/flatpickr.min.js')}}"></script>
-<script src="{{asset('dashboard/js/lib/daterangepicker/daterangepicker.js')}}"></script>
-<script src="{{asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker.min.js')}}"></script>
-<script src="{{asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker-init.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/moment/moment-with-locales.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/flatpickr/flatpickr.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/lib/daterangepicker/daterangepicker.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker-init.js')); ?>"></script>
 <script>
     var today = new Date(); 
     var dd = today.getDate(); 
@@ -179,4 +172,5 @@
     
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

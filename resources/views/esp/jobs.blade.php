@@ -193,13 +193,17 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-success" data-toggle="modal"
+                                        <!-- <button class="btn btn-sm btn-success" data-toggle="modal"
                                             data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}"><i
                                                 data-toggle="tooltip" data-placement="top" title="Accept & Allowcate"
-                                                class="fa fa-check"></i></button>
-                                        <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}"> <i
+                                                class="fa fa-check"></i></button> -->
+                                        <button class="btn btn-sm btn-success" data-toggle="modal"
+                                            data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}">গ্রহন ও বন্ঠন</button>
+                                        
+                                        <!-- <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}"> <i
                                                 data-toggle="tooltip" data-placement="top" title="Reject"
-                                                class="fa fa-times"></i> </button>
+                                                class="fa fa-times"></i> </button> -->
+                                        <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}">বাতিল</button>
                                     </div>
                                 </td>
                             </tr>
@@ -455,7 +459,7 @@
 
 @if ($newOrdersRequests)
 @foreach ($newOrdersRequests as $order)
-<div class="modal fade" id="view-{{$order->order->id}}" role="dialog">
+<div class="modal fade" id="view-{{$order->id}}" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -511,7 +515,7 @@
 {{-- <br> --}}
 
 <!-- View Details Modal end -->
-<div class="modal fade" id="allocate-{{$order->order->id}}" role="dialog">
+<div class="modal fade" id="allocate-{{$order->id}}" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

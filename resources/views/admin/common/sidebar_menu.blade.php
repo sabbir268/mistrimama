@@ -58,7 +58,7 @@
         <li class="nav-item ">
                 <a href="{{route('admin.service_provider.accounts')}}" class="nav-link">
                     <i class="fa fa-gear"></i>
-                    <span class="title">Service Providers Accouts</span>
+                    <span class="title">Service Providers Accounts</span>
                     <span class="arrow "></span>
                 </a>
             </li>
@@ -151,7 +151,7 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ menuActiveClass(['service-provider'],true) }} ">
-                    <a href="{{ asset('service-provider') }}" class="nav-link ">
+                    <a href="{{ asset('/admin/service-provider') }}" class="nav-link ">
                         <span class="title">Manage Service Provider</span>
                     </a>
                 </li>

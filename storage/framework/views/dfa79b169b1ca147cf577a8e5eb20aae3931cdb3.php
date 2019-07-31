@@ -1,19 +1,10 @@
-@extends('new_layout.template')
-@section('content')
-<link rel="icon" href="{{asset('/images/favicon.ico')}}" type="image/ico" sizes="16x16">
+<?php $__env->startSection('content'); ?>
+<link rel="icon" href="<?php echo e(asset('/images/favicon.ico')); ?>" type="image/ico" sizes="16x16">
 <div class="page-content">
     <!-- inner page banner END -->
     <!-- Breadcrumb  Templates Start -->
     <div style="height:50px;"></div>
-    {{-- <div class="breadcrumb-row">
-        <div class="container">
-            <ul class="list-inline">
-                <li><a href="#">Home</a></li>
-                <li>Services</li>
-                <li>{{ $model[0]->name }}</li>
-    </ul>
-</div>
-</div> --}}
+    
 <!-- Breadcrumb  Templates End -->
 <!-- contact area -->
 <div class="container">
@@ -56,7 +47,7 @@
                         <h5 class="text-center" style="margin-bottom: 50px;">Any One can Earn in Follow below steps:</h5>
                         <div class="col-md-3 col-sm-6 contact-info" style="padding: 0px;">
                             <div class="sf-element-bx">
-                                <img style="width: 100%" class="img-responsive" src="{{asset('/images/refer_img/01.jpg')}}">
+                                <img style="width: 100%" class="img-responsive" src="<?php echo e(asset('/images/refer_img/01.jpg')); ?>">
                                 <!-- <div class="icon-bx-md rounded-bx" style="color: #f3b400;">  <!-- <i class="fa fa-user-plus"></i> </div> -->
                                 <h6>Become a Referrer</h6>
                                 <p style="text-align: justify;padding: 0px 15px;">It's easy and free to join. Just register with your name, mobile number and valid Mobile banking number to get start from today. Mobile banking number is required for cash out process.
@@ -66,7 +57,7 @@
 
                         <div class="col-md-3 col-sm-6 contact-info" style="padding: 0px;">
                             <div class="sf-element-bx">
-                                <img style="width: 100%" class="img-responsive" src="{{asset('/images/refer_img/02.jpg')}}">
+                                <img style="width: 100%" class="img-responsive" src="<?php echo e(asset('/images/refer_img/02.jpg')); ?>">
                                 <!-- <div class="icon-bx-md rounded-bx" style="color: #f3b400;">  <!-- <i class="fa fa-user-plus"></i> </div> -->
                                 <h6>Refer Someone</h6>
                                 <p style="text-align: justify;padding: 0px 15px;">Start sharing referral code or the referral link to others, who is looking for a service. Referrer can share his/her refer code or the referral link to any User through social media or a simple SMS.  
@@ -76,7 +67,7 @@
 
                         <div class="col-md-3 col-sm-6 contact-info" style="padding: 0px;">
                             <div class="sf-element-bx">
-                                <img style="width: 100%" class="img-responsive" src="{{asset('/images/refer_img/03.jpg')}}">
+                                <img style="width: 100%" class="img-responsive" src="<?php echo e(asset('/images/refer_img/03.jpg')); ?>">
                                 <!-- <div class="icon-bx-md rounded-bx" style="color: #f3b400;">  <!-- <i class="fa fa-user-plus"></i> </div> -->
                                 <h6>Earn Reward Point</h6>
                                 <p style="text-align: justify;padding: 0px 15px;">User can avail any Mistri Mama service by using the referral code or the link. For every successful service completion, referrer will receive 20% reward points of the actual bill in his/her accounts.
@@ -86,7 +77,7 @@
 
                         <div class="col-md-3 col-sm-6 contact-info" style="padding: 0px;">
                             <div class="sf-element-bx">
-                                <img style="width: 100%" class="img-responsive" src="{{asset('/images/refer_img/04.jpg')}}">
+                                <img style="width: 100%" class="img-responsive" src="<?php echo e(asset('/images/refer_img/04.jpg')); ?>">
                                 <!-- <div class="icon-bx-md rounded-bx" style="color: #f3b400;">  <!-- <i class="fa fa-user-plus"></i> </div> -->
                                 <h6>Get Paid</h6>
                                 <p style="text-align: justify;padding: 0px 15px;">Referrer can convert his/her earned reward points into cash and easily cash out through his/her enlisted mobile banking number. To cash out referrer will require 4000 reward points.
@@ -126,7 +117,7 @@
                         <p>Referrer will get 20% of RP (reward point) of each successful referred service’s payable amount. (e.g.- Mr. X referred fan installation service, <strong> BDT 300</strong> to Mr. Y. After successful service, Mr. X will get 20% or 60 reward point). 20 reward points is equivalent to BDT 1. Referrer can withdraw his/her amount, if he/she has minimum 4000 reward points, which is equivalent to BDT 200. User or referrer can make service payment through reward point. Only half of total service amount can be adjusted through reward point.</p>
                  </p>
                  <div class="col-md-3">
-                    <a href="{{asset('/refer')}}" class="btn  btn-lg btn-mm"
+                    <a href="<?php echo e(asset('/refer')); ?>" class="btn  btn-lg btn-mm"
                         style="border-radius: 10px; margin-top:12%;text-transform: lowercase;">Click to know details</a>
                 </div>
                 </div>
@@ -139,4 +130,5 @@
 </div>
 <!-- contact area  END -->
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('new_layout.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

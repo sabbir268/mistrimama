@@ -210,7 +210,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource("cms", "Admin\CmsController");
 
         Route::resource("service-provider", "Admin\ServiceProviderController");
-        Route::get("service-provider", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
+        Route::get("service-provider/accounts", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
 
 
         Route::post("add-mmfirst-balance", "Admin\ServiceProviderController@addAmount")->name('add.mmfirstbalance');
@@ -323,6 +323,7 @@ Route::group(['prefix' => 'comrade', 'middleware' => ['auth']], function () {
     /** Comrade pages routes*/
     Route::get('/dashboard', 'comradeController@index')->name('comrade-dashboard'); // esp dahsboard
     Route::get('/job-history', 'comradeController@jobHistory')->name('comrade-history'); // esp job-history
+    Route::get('/order', 'comradeController@behalfOrder')->name('comrade.behalf.order');
 });
 
 /** New Available order  */
@@ -341,6 +342,7 @@ Route::group(['prefix' => 'withdraw', 'middleware' => ['auth']], function () {
     Route::post('/approve', 'WithdrawRequestController@withdrawApprove')->name('withdraw.approve'); // esp job-history
 });
 
+
 // SSLCOMMERZ Start
 Route::get('/example1', 'SslCommerzPaymentController@exampleEasyCheckout');
 Route::get('/example2', 'SslCommerzPaymentController@exampleHostedCheckout');
@@ -351,6 +353,5 @@ Route::post('/pay-via-ajax', 'SslCommerzPaymentController@payViaAjax');
 Route::post('/success', 'SslCommerzPaymentController@success');
 Route::post('/fail', 'SslCommerzPaymentController@fail');
 Route::post('/cancel', 'SslCommerzPaymentController@cancel');
-
 Route::post('/ipn', 'SslCommerzPaymentController@ipn');
-//SSLCOMMERZ END
+

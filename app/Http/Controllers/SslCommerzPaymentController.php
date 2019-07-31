@@ -39,7 +39,7 @@ class SslCommerzPaymentController extends Controller
         $post_data['cus_state'] = "";
         $post_data['cus_postcode'] = "";
         $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = '8801XXXXXXXXX';
+        $post_data['cus_phone'] = '01631776875';
         $post_data['cus_fax'] = "";
 
         # SHIPMENT INFORMATION
@@ -77,10 +77,13 @@ class SslCommerzPaymentController extends Controller
         //         'currency' => $post_data['currency']
         //     ]);
 
-        $sslc = new SslCommerzNotification();
+        
+
+       $sslc = new SslCommerzNotification();
+       //dd($sslc);
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
         $payment_options = $sslc->makePayment($post_data, 'hosted');
-
+           // return $payment_options;
         if (!is_array($payment_options)) {
             print_r($payment_options);
             $payment_options = array();
@@ -166,9 +169,10 @@ class SslCommerzPaymentController extends Controller
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
         $currency = $request->input('currency');
-
+        
         $sslc = new SslCommerzNotification();
-
+        $validation = $sslc->orderValidate($tran_id, $amount, $currency, $request->all());
+        dd($validation);
         #Check order status in order tabel against the transaction id or order id.
         $order_detials = DB::table('orders')
             ->where('transaction_id', $tran_id)

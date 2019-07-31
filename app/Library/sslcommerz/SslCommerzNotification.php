@@ -214,9 +214,9 @@ class SslCommerzNotification extends AbstractSslCommerz
 
         // Now, call the Gateway API
         $response = $this->callToApi($this->data, $header, $this->config['connect_from_localhost']);
-
+       // dd($response);
         $formattedResponse = $this->formatResponse($response, $type, $pattern); // Here we will define the response pattern
-
+        
         if ($type == 'hosted') {
             if (isset($formattedResponse['GatewayPageURL']) && $formattedResponse['GatewayPageURL'] != '') {
                 $this->redirect($formattedResponse['GatewayPageURL']);

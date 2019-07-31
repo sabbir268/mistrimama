@@ -7,17 +7,13 @@
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
 @endsection
 
-@if(Auth::check())
 @section('topbar')
-@include('user.topbar')
+@include('comrade.topbar')
 @endsection
-@endif
 
-@if(Auth::check())
 @section('sidebar')
-@include('user.sidebar')
+@include('comrade.sidebar')
 @endsection
-@endif
 
 
 @section('content')
@@ -52,7 +48,7 @@
         </ul>
     </div>
 
-    <header class="steps-numeric-title">Category</header>
+    <header class="steps-numeric-title">Area & Services</header>
     <form action="{{ route('create.order') }}" method="post">
         {{csrf_field()}}
         <input type="text" hidden name="page" value="dashboard">
@@ -104,13 +100,13 @@
                 <div class="col-xl-4">
                     <label class="form-label">
                         <i class="font-icon font-icon-case-2"></i>
-                        Select Category
+                        Select Service
                     </label>
                 </div>
                 <div class="col-xl-8">
                     <div class="input-group">
                         <select name="category" id="ss" class="form-control" style="text-transform:none;" required>
-                            <option selected="true" value="">Select</option>
+                            <option selected="true" value="">Select Service</option>
                             @foreach($services_category as $data)
                             <option value="{{$data->id}}">{{$data->name}}</option>
                             @endforeach

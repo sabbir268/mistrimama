@@ -178,7 +178,7 @@
                     <?php echo e(csrf_field()); ?>
 
                     <input type="text" hidden name="page" value="index">
-                    <!--<div class="form-group">
+                    <!--<div class="`-group">
                         <label for="sa" class="raw-order-label"> <strong> Select Area </strong></label>
                         <select name="area" id="sa" onchange="combomap(this.value)" style="text-transform:none;"
                             class="form-control" required>

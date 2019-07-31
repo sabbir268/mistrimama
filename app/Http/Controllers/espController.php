@@ -211,7 +211,6 @@ class espController extends Controller
 
         $rules = [
             'c_name' => 'string',
-            'email' => 'string|required|unique:users,email',
             'c_phone_no' => 'string|required|unique:users,phone_no',
             'password' => 'string|required',
         ];

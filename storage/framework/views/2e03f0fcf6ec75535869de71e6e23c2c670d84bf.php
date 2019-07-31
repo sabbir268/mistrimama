@@ -216,7 +216,7 @@
                                 <?php if($order->status == '0'): ?>
                                 <button class="btn btn-sm btn-info" data-toggle="modal"
                                     data-target="#allocate-<?php echo e($order->id); ?>"
-                                    data-item="<?php echo e($order->id); ?>">Allocate</button> <?php else: ?>
+                                    data-item="<?php echo e($order->id); ?>">সহকারী</button> <?php else: ?>
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>" disabled>
                                     এলোকেটেড </button> <?php endif; ?>
@@ -326,7 +326,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
-                    data-item="<?php echo e($order->id); ?>" class="btn btn-primary">এলোকেট</button>
+                    data-item="<?php echo e($order->id); ?>" class="btn btn-primary">সহকারী</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
             </div>
         </div>
@@ -373,7 +373,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Allocate</button>
+                    <button type="submit" class="btn btn-primary">Ok</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -576,7 +576,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Allocate</button>
+                    <button type="submit" class="btn btn-primary">OK</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>

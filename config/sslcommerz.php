@@ -3,13 +3,13 @@
 // SSLCommerz configuration
 
 return [
-    'projectPath' => env('PROJECT_PATH'),
+    'projectPath' => 'http://127.0.0.1:8000',
     // For Sandbox, use "https://sandbox.sslcommerz.com"
     // For Live, use "https://securepay.sslcommerz.com"
-    'apiDomain' => env("API_DOMAIN_URL"),
+    'apiDomain' => "https://sandbox.sslcommerz.com",
     'apiCredentials' => [
-        'store_id' => env("STORE_ID"),
-        'store_password' => env("STORE_PASSWORD"),
+        'store_id' => "mistr5d24311c9b87c",
+        'store_password' => "mistr5d24311c9b87c@ssl",
     ],
     'apiUrl' => [
         'make_payment' => "/gwprocess/v4/api.php",

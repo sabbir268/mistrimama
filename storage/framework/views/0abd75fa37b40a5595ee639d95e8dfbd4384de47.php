@@ -1,40 +1,26 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/flatpickr/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/flatpickr/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 
-{{-- @if($type == 'others')
-<style>
-    .steps-icon-progress li {
-        width: 20% !important;
-    }
-</style>
-@endif --}}
 
-@endsection
 
-@section('topbar')
-@include('esp.topbar')
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('sidebar')
-@include('esp.sidebar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('comrade.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('comrade.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <section class="box-typical steps-icon-block">
     <div class="steps-icon-progress">
         <ul style="margin-left: -11.7656px; margin-right: -11.7656px;">
-            {{-- @if($type == 'others')
-                <li class="active">
-                    <div class="icon">
-                        <i class="font-icon font-icon-user"></i>
-                    </div>
-                    <div class="caption">Name & Phone </div>
-                </li>
-                @endif --}}
+            
             <li class="active">
                 <div class="icon bg-mm">
                     <i class="font-icon font-icon-pin-2"></i>
@@ -64,35 +50,12 @@
 
     <header class="steps-numeric-title">Confrimation</header>
     <div class="col-xl-6 offset-md-3 ">
-        {{-- <p class="text-center">
-                <strong>Your order has been place successfully.</strong> Please wait a momment for confirmation. <br>
-                <a href="{{route('add.order-confirm')}}" class="btn btn-link">Confirm Order</a>
-        </p> --}}
-        <form action="{{route('add.order-confirm')}}" method="POST">
-            @csrf
+        
+        <form action="<?php echo e(route('add.order-confirm')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <div class="form-group">
-                {{-- <div class="checkbox-detailed text-left" id="self-checkbox">
-                    <input type="radio" name="type" id="type-self" value="self" checked />
-                    <label for="type-self">
-                        <span class="checkbox-detailed-tbl">
-                            <span class="checkbox-detailed-cell">
-                                <span class="checkbox-detailed-title">For Me</span>
-                                Order for Yourself.
-                            </span>
-                        </span>
-                    </label>
-                </div> --}}
-                {{-- <div class="checkbox-detailed text-left" id="others-checkbox">
-                    <input type="radio" name="type" id="type-others" value="others" />
-                    <label for="type-others">
-                        <span class="checkbox-detailed-tbl">
-                            <span class="checkbox-detailed-cell">
-                                <span class="checkbox-detailed-title">For Others</span>
-                                Order for Others.
-                            </span>
-                        </span>
-                    </label>
-                </div> --}}
+                
+                
 
                 <div class="others-area" style="display:block">
                     <div class="form-group row">
@@ -119,10 +82,10 @@
                         <div class="col-xl-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">+88</span>
+                                    <span class="input-group-text" >+88</span>
                                 </div>
                                 <input type="text" name="others_phone" minlength="11" maxlength="11" id="others_phone" placeholder="Others Phone"
-                                    class="form-control m-0">
+                                    class="form-control m-0" style="width:50%">
                             </div>
                         </div>
                     </div>
@@ -132,7 +95,7 @@
                             <label class="form-label text-left">
                                 &nbsp;<i class="font-icon font-icon-map"></i>
                                 Area
-                                {{-- Area <span class="invisible">Others</span> --}}
+                                
                             </label>
                         </div>
                         <div class="col-xl-8">
@@ -188,30 +151,13 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <div class="col-xl-4 ">
-                        <label class="form-label text-left">
-                            &nbsp;<i class="font-icon font-icon-map"></i>
-                            Comrades
-                            {{-- Area <span class="invisible">Others</span> --}}
-                        </label>
-                    </div>
-                    <div class="col-xl-8">
-                        <div class="input-group">
-                            <select name="comrade_id" id="comrade" onchange="combomap(this.value)"
-                                class="form-control form-control m-0">
-                                <option value="">Select Comrade</option>
-                                @foreach ($comrades as $comrade)
-                                <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                
+                
+                <input type="comrade_id" value="<?php echo e($comrades->id); ?>" hidden>
                 <input type="text" name="type" id="type-others" value="others" hidden />
-                <input type="text" name="service_provider_id" value="{{$providers->id}}" hidden>
-                <input type="text" name="order_id" value="{{$order_id}}" hidden>
-                <input type="text" name="user_id" value="{{auth()->user()->id}}" hidden>
+                <input type="text" name="service_provider_id" value="<?php echo e($providers->id); ?>" hidden>
+                <input type="text" name="order_id" value="<?php echo e($order_id); ?>" hidden>
+                <input type="text" name="user_id" value="<?php echo e(auth()->user()->id); ?>" hidden>
 
                 <div class="form-group row">
                     <div class="col-xl-4">
@@ -224,9 +170,9 @@
                         <div class="input-group date">
                             <input type="text" id="refrral" placeholder="34AVSD87" name="ref_code"
                                 class="form-control m-0">
-                            @if (Session::has('msg'))
-                            <span class="text-danger pl-2">{{Session::get('msg')}}</span>
-                            @endif
+                            <?php if(Session::has('msg')): ?>
+                            <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -238,33 +184,13 @@
     <button type="submit" class="btn btn-rounded float-right btn-mm">Finish <i class="fa fa-check"></i></button>
     </form>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/moment/moment-with-locales.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/flatpickr/flatpickr.min.js')}}"></script>
-<script src="{{asset('dashboard/js/lib/daterangepicker/daterangepicker.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/moment/moment-with-locales.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/flatpickr/flatpickr.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/lib/daterangepicker/daterangepicker.js')); ?>"></script>
 
-{{-- <script>
-    $(document).ready(function(){
-        $('.others-area').hide();
-        $('#others-checkbox').click(function() {
-            if($('#type-others').is(':checked')) { 
-                $('.others-area').show();
-                $('#others_name').attr('required','true');
-                $('#others_phone').attr('required','true');
-                $('#others_addr').attr('required','true');
-            }
-        });
 
-        $('#self-checkbox').click(function() {
-            if($('#type-self').is(':checked')) { 
-                $('.others-area').hide();
-                $('#others_name').removeAttr('required');
-                $('#others_phone').removeAttr('required');
-                $('#others_addr').removeAttr('required');
-            }
-        });
-    });
-</script> --}}
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

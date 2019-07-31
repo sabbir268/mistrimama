@@ -16,6 +16,7 @@ use App\Models\roles;
 use App\Models\user_roles;
 
 
+
 class AuthController extends Controller
 {
     public function doRegister(Request $request)
@@ -33,9 +34,10 @@ class AuthController extends Controller
             return redirect()->to('/register')->withErrors($validator->errors());
         } else {
             $userType = $request->user_type;
-            $user = new User($request->except(['reason']));
+            $user = new User($request->except(['reason','type','ref_code']));
             // return $user->phone_no = $phone = "+88".$request['phone_no'];
-            $user->ref_code =  explode(" ", $request->name)[0] . rand(0, 9) . generateRandomString(3);
+            $refcode = explode(" ", $request->name)[0] . rand(0, 9) . generateRandomString(3);
+            $user->ref_code =  $refcode;
             $user->password = Hash::make($request->input('password'));
             if ($user->save()) {
                 if ($request->has('reason')) {
@@ -44,10 +46,12 @@ class AuthController extends Controller
                     $roles->roles_id = 2;
                     $roles->save();
                 }
+                $msg = "Dear ".explode(" ", $request->name)[0]."! Thanks for registering in Mistri Mama. Use this referrer code “".$refcode."” to earn reward points. Call +8809610222111 for details.";
+                SMS::send($request->phone_no , $msg);
                 return $this->doLogin($request);
             } else {
                 $errors = new MessageBag(['errors' => ['Cannot create your account now. Please try later.']]);
-                return redirect()->to('/register')->withErrors($errors);
+                return redirect()->back()->withErrors($errors);
             }
         }
     }
@@ -70,12 +74,18 @@ class AuthController extends Controller
 
     public function doLogin(Request $request)
     {
+
+        //return $request;
         $phone = $request['phone_no'];
         $userType = $request->user_type;
         if ($attempt = Auth::attempt(['phone_no' => $phone, 'password' => $request['password']], $request->has('remember'))) {
             if ($request->reason == 'true') {
                 return redirect()->route('show.services');
             } else {
+                if($request->reason == 'ok'){
+                    $ord = new \App\Http\Controllers\BookingController();
+                 return  $ord->OrderConfirmDone($request);
+                }
                 switch ($userType) {
                     case "user":
                         if (checkRole(auth()->user()->id, 'user')) {

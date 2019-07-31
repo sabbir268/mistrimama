@@ -1,58 +1,58 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/profile.min.css')}}">
-@endsection
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/lobipanel/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/lobipanel.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/widgets.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/pages/profile.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('topbar')
-@include('comrade.topbar')
-@endsection
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('comrade.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('sidebar')
-@include('comrade.sidebar')
-@endsection
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('comrade.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
-@if($allowcatedOrders)
+<?php $__env->startSection('content'); ?>
+<?php if($allowcatedOrders): ?>
 <section class="box-typical box-typical-dashboard panel panel-default scrollable">
     <header class="box-typical-header panel-heading pt-2 pb-2 text-center">
         <h3 class="panel-header m-0">বন্টন কৃত সার্ভিস </h3>
     </header>
-    @foreach ($allowcatedOrders as $allord)
+    <?php $__currentLoopData = $allowcatedOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $allord): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="row">
         <div class="col-md-12">
-            {{-- @if($allowcatedOrders) --}}
-            {{-- <div class="row">
-            </div> --}}
+            
+            
             <div class="row">
                 <div class="col-lg-4 col-lg-pull-6 col-md-3 col-sm-6 pl-5 pt-3">
                     <section class="box-typical">
                         <div class="card-header text-center">
-                            অর্ডার #{{$allord->order->order_no}}
+                            অর্ডার #<?php echo e($allord->order->order_no); ?>
+
                         </div>
                         <div class="profile-card">
                             <div class="profile-card-photo">
                                 <img style="width: 100% !important;height: 100px;"
                                     src="
-                                    @if($allord->type == 'self')
-                                     {{$allord->user->photo != null ? $allord->user->photo : asset('/dashboard/img/avatar-1-256.png') }}
-                                     @else 
-                                     {{asset('/dashboard/img/avatar-1-256.png')}}
-                                     @endif
+                                    <?php if($allord->type == 'self'): ?>
+                                     <?php echo e($allord->user->photo != null ? $allord->user->photo : asset('/dashboard/img/avatar-1-256.png')); ?>
+
+                                     <?php else: ?> 
+                                     <?php echo e(asset('/dashboard/img/avatar-1-256.png')); ?>
+
+                                     <?php endif; ?>
                                      " alt="" />
                             </div>
                             <div class="profile-card-name"><strong><i class="fa fa-user text-secondary"></i></strong>
-                                {{$allord->order->name}}</div>
-                            {{-- <a href="tel:{{$allord->user->phone_no}}" class="text-secondary"><div class="profile-card-status"><strong><i class="fa fa-phone text-secondary"></i></strong>{{substr($allord->user->phone_no, 3)}}
-                                </div></a> --}}
+                                <?php echo e($allord->order->name); ?></div>
+                            
                             <div class="profile-card-status "><strong><i class="fa fa-map text-secondary"></i></strong>
-                                {{$allord->user->address}}</div>
+                                <?php echo e($allord->user->address); ?></div>
 
-                            {{-- <button type="button" class="btn btn-rounded"><i class="fa fa-phone"></i> Call</button> --}}
+                            
                         </div>
                         <!--.profile-card-->
 
@@ -80,9 +80,9 @@
                                     <button class="btn btn-mm btn-sm col-md-12 d-none">নতুন সার্ভিস যোগ করুন </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <form action="{{route('order.cancel')}}" method="POST" id="cancel_order">
-                                        @csrf
-                                        <input type="text" name="id" value="{{$allord->order->id}}" hidden>
+                                    <form action="<?php echo e(route('order.cancel')); ?>" method="POST" id="cancel_order">
+                                        <?php echo csrf_field(); ?>
+                                        <input type="text" name="id" value="<?php echo e($allord->order->id); ?>" hidden>
                                         <button class="btn btn-danger col-md-12">অর্ডার বাতিল করুন </button>
                                     </form>
                                 <!-- <button class="btn btn-danger btn-sm col-md-12 ">Cancel Order</button> -->
@@ -102,18 +102,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($allord->order->bookings as $booking)
+                                    <?php $__currentLoopData = $allord->order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td class="text-left">
-                                            {{$booking->service_name}}({{$booking->service_details_name}})</td>
-                                        <td>{{$booking->price}}</td>
-                                        <td>{{$booking->aditional_price}}</td>
-                                        <td>{{$booking->quantity}}</td>
-                                        <td>{{$booking->total_price}}</td>
+                                            <?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->aditional_price); ?></td>
+                                        <td><?php echo e($booking->quantity); ?></td>
+                                        <td><?php echo e($booking->total_price); ?></td>
                                         <td><button class="btn btn-rounded btn-sm btn-success-outline finsih_sub"><i
                                                     class="fa fa-thumbs-up"></i> শেষ </button></td>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
 
                                 <tfoot>
@@ -122,83 +122,84 @@
 
                         </div>
                         <div class="col-md-12 p-0 pb-2">
-                            @if ($allord)
-                            <form action="{{route('service-update-sts')}}" method="post">
-                                @csrf
+                            <?php if($allord): ?>
+                            <form action="<?php echo e(route('service-update-sts')); ?>" method="post">
+                                <?php echo csrf_field(); ?>
                                 <!-- -->
-                                <input type="text" value="{{$allord->order->id}}" name="order_id" hidden>
-                                <input type="text" value="{{$allord->id}}" name="s_sys_id" hidden>
-                                @switch($allord->order->status)
-                                @case(1)
+                                <input type="text" value="<?php echo e($allord->order->id); ?>" name="order_id" hidden>
+                                <input type="text" value="<?php echo e($allord->id); ?>" name="s_sys_id" hidden>
+                                <?php switch($allord->order->status):
+                                case (1): ?>
                                 <input type="text" value="2" name="status" hidden>
-                                <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু করুন </button> @break
-                                @case(2)
+                                <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু করুন </button> <?php break; ?>
+                                <?php case (2): ?>
                                 <input type="text" value="3" name="status" hidden>
                                 <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন </button>
-                                @break
-                                @case(3)
-                                @if($allord->type == 'self')
+                                <?php break; ?>
+                                <?php case (3): ?>
+                                <?php if($allord->type == 'self'): ?>
                                         <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য অপেক্ষা করুন </button>
 
-                                @else 
+                                <?php else: ?> 
                                         <input type="text" value="5" name="status" hidden>
-                                        <input type="text" value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
+                                        <input type="text" value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
                                             name="amount" hidden>
-                                        <input type="text" value="{{$allord->service_provider_id}}"
+                                        <input type="text" value="<?php echo e($allord->service_provider_id); ?>"
                                             name="service_provider_id" hidden>
-                                        <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
+                                        <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
-                                 @endif
-                                @break
-                                @case(4)
+                                 <?php endif; ?>
+                                <?php break; ?>
+                                <?php case (4): ?>
                                 <ul class="list-group mb-2">
                                     <li class="list-group-item p-0 m-0 border-0 ">কাস্টমার প্রদান করছেন : <span
                                             class="invisible">1232</span>
-                                        <strong>{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
+                                        <strong><?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>
+
                                             টাকা </strong></li>
                                     <li class="list-group-item p-0 m-0 border-0 "> কাস্টমারের ডিসকাউন্ট :
-                                        <strong>{{$sumOrder->disc  }} টাকা</strong></li>
+                                        <strong><?php echo e($sumOrder->disc); ?> টাকা</strong></li>
                                     <li class="list-group-item p-0 m-0"></li>
                                     <li class="list-group-item p-0 m-0 border-0 "> আপনার ইনকাম : <span
                                             class="invisible">123s2</span>
-                                        <strong>{{(($sumOrder->total_price + $sumOrder->extra_price) ) }} টাকা</strong>
+                                        <strong><?php echo e((($sumOrder->total_price + $sumOrder->extra_price) )); ?> টাকা</strong>
                                     </li>
                                 </ul>
                                 <input type="text" value="5" name="status" hidden>
                                 <input type="text"
-                                    value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
+                                    value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
                                     name="amount" hidden>
-                                <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
+                                <input type="text" value="<?php echo e($allord->service_provider_id); ?>" name="service_provider_id"
                                     hidden>
-                                <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
+                                <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
-                                @break
-                                @default
-                                <input type="text" value="" name="status" hidden> @endswitch
+                                <?php break; ?>
+                                <?php default: ?>
+                                <input type="text" value="" name="status" hidden> <?php endswitch; ?>
                             </form>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
     </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </section>
-@else
+<?php else: ?>
 <section>
     <header class="box-typical-header panel-heading pt-2 pb-2 text-center">
         <h3 class="panel-header m-0">এই মূহুর্তে কোনো সার্ভিস বরাদ্দ নেই।</h3>
     </header>
 </section>
-@endif
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/lobipanel/lobipanel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 
 
@@ -228,4 +229,5 @@
         
       });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

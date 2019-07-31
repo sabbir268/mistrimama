@@ -43,7 +43,7 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
      * @param bool $setLocalhost
      * @return bool|string
      */
-    public function callToApi($data, $header = [], $setLocalhost = false)
+    public function callToApi($data, $header = [], $setLocalhost = true)
     {
         $curl = curl_init();
 
@@ -60,16 +60,18 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-
+        // see the error
         $response = curl_exec($curl);
+        // echo  $this->getApiUrl();
+        // dd($data);
         $err = curl_error($curl);
+       // dd($err);
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $curlErrorNo = curl_errno($curl);
         curl_close($curl);
-
+        //dd($code);
         if ($code == 200 & !($curlErrorNo)) {
             return $response;
         } else {

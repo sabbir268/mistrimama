@@ -43,7 +43,7 @@ class AdminRechargeController extends Controller
 
             if($rr->save()){
                 $SpPhone = $rr->user->phone_no;
-                $msg = "Your account recharged with BDT ". round($rr->amount) ."/-. Your current online balance: BDT Total ". totalBalance($rr->user_id) ."/-.";
+                $msg = "Your account recharged with BDT ". round($rr->amount) ."/-. Your current online balance: BDT ". totalBalance($rr->user_id) ."/-.";
                 SMS::send($SpPhone,$msg);
             }
 

@@ -1,39 +1,31 @@
-@extends('layouts.main-dash')
-@section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/flatpickr/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/flatpickr.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/flatpickr/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/flatpickr.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@if(Auth::check())
-@section('topbar')
-@include('user.topbar')
-@endsection
-@endif
+<?php if(Auth::check()): ?>
+<?php $__env->startSection('topbar'); ?>
+<?php echo $__env->make('user.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php endif; ?>
 
-@if(Auth::check())
-@section('sidebar')
-@include('user.sidebar')
-@endsection
-@endif
+<?php if(Auth::check()): ?>
+<?php $__env->startSection('sidebar'); ?>
+<?php echo $__env->make('user.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php endif; ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <section class="box-typical steps-icon-block">
     <div class="steps-icon-progress">
         <ul style="margin-left: -11.7656px; margin-right: -11.7656px;">
-            {{-- @if($type == 'others')
-                <li class="active">
-                    <div class="icon">
-                        <i class="font-icon font-icon-user"></i>
-                    </div>
-                    <div class="caption">Name & Phone </div>
-                </li>
-                @endif --}}
+            
             <li class="active">
                 <div class="icon bg-mm">
                     <i class="font-icon font-icon-pin-2"></i>
@@ -63,13 +55,10 @@
 
     <header class="steps-numeric-title">Confrimation</header>
     <div class="col-xl-6 offset-md-3 ">
-        {{-- <p class="text-center">
-                <strong>Your order has been place successfully.</strong> Please wait a momment for confirmation. <br>
-                <a href="{{route('add.order-confirm')}}" class="btn btn-link">Confirm Order</a>
-        </p> --}}
-        @if(Auth::check())
-        <form action="{{route('add.order-confirm')}}" method="POST">
-            @csrf
+        
+        <?php if(Auth::check()): ?>
+        <form action="<?php echo e(route('add.order-confirm')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <div class="form-group">
                 <div class="checkbox-detailed text-left" id="self-checkbox">
                     <input type="radio" name="type" id="type-self" value="self" checked />
@@ -128,7 +117,7 @@
                             <label class="form-label text-left">
                                 &nbsp;<i class="font-icon font-icon-map"></i>
                                 Area
-                                {{-- Area <span class="invisible">Others</span> --}}
+                                
                             </label>
                         </div>
                         <div class="col-xl-8">
@@ -194,9 +183,9 @@
                         <div class="input-group date">
                             <input type="text" id="refrral" placeholder="34AVSD87" name="ref_code"
                                 class="form-control m-0">
-                            @if (Session::has('msg'))
-                            <span class="text-danger pl-2">{{Session::get('msg')}}</span>
-                            @endif
+                            <?php if(Session::has('msg')): ?>
+                            <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -204,13 +193,13 @@
 
     </div>
 
-    <button type="button" class="btn btn-rounded btn-mm float-left"><a href="{{route('date.time')}}" class="text-white">
+    <button type="button" class="btn btn-rounded btn-mm float-left"><a href="<?php echo e(route('date.time')); ?>" class="text-white">
             ← Back </a></button>
     <button type="submit" class="btn btn-rounded float-right btn-mm">Finish <i class="fa fa-check"></i></button>
     </form>
-    @else
-    <form action="{{route('user.do-register')}}" method="POST">
-        @csrf
+    <?php else: ?>
+    <form action="<?php echo e(route('user.do-register')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
         <div class="form-group">
 
             <div class="checkbox-detailed text-left" id="others-checkbox">
@@ -252,11 +241,11 @@
                         </div>
                     </div>
 
-                    @if ($errors->has('name'))
+                    <?php if($errors->has('name')): ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('name') }}</strong>
+                        <strong><?php echo e($errors->first('name')); ?></strong>
                     </span>
-                    @endif
+                    <?php endif; ?>
 
                 </div>
                 <div class="form-group row">
@@ -288,9 +277,9 @@
                         <div class="input-group date">
                             <input type="password" id="password"  name="password"
                                 class="form-control m-0">
-                            @if (Session::has('msg'))
-                            <span class="text-danger pl-2">{{Session::get('msg')}}</span>
-                            @endif
+                            <?php if(Session::has('msg')): ?>
+                            <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -299,7 +288,7 @@
                     <div class="col-xl-4 ">
                         <label class="form-label text-left">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="font-icon font-icon-map"></i>
-                            Area{{-- Area <span class="invisible">Others</span> --}}
+                            Area
                         </label>
                     </div>
                     <div class="col-xl-8">
@@ -367,9 +356,9 @@
                 <div class="col-xl-8">
                     <div class="input-group date">
                         <input type="text" id="refrral" placeholder="34AVSD87" name="ref_code" class="form-control m-0">
-                        @if (Session::has('msg'))
-                        <span class="text-danger pl-2">{{Session::get('msg')}}</span>
-                        @endif
+                        <?php if(Session::has('msg')): ?>
+                        <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -377,19 +366,19 @@
 
         </div>
 
-        <button type="button" class="btn btn-rounded btn-mm float-left"><a href="{{route('date.time')}}"
+        <button type="button" class="btn btn-rounded btn-mm float-left"><a href="<?php echo e(route('date.time')); ?>"
                 class="text-white">
                 ← Back </a></button>
         <button type="submit" class="btn btn-rounded float-right btn-mm">Finish <i class="fa fa-check"></i></button>
     </form>
-    @endif
+    <?php endif; ?>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/moment/moment-with-locales.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/flatpickr/flatpickr.min.js')}}"></script>
-<script src="{{asset('dashboard/js/lib/daterangepicker/daterangepicker.js')}}"></script>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/moment/moment-with-locales.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/flatpickr/flatpickr.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/lib/daterangepicker/daterangepicker.js')); ?>"></script>
 
 <script>
     $(document).ready(function(){
@@ -414,4 +403,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

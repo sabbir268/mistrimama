@@ -41,7 +41,7 @@
     <div class="container">
         <div class="logo-header mostion rawstyle" style="">
             <div class="logo-header-inr"><a href="{{asset('/')}}"> <img style="    max-width: 100%;height: 23%;"
-                        src='{{ getConfigValue("home_logo") }}' alt="MISTRI MAMA" title="MISTRI MAMA"> </a>
+                        src='{{ asset('/photos/1/a.png') }}' alt="MISTRI MAMA" title="MISTRI MAMA"> </a>
             </div>
         </div>
         <button data-target=".header-nav" data-toggle="collapse" type="button"
