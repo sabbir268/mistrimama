@@ -172,6 +172,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row ">
+                    <div class="col-xl-4">
+                        <label class="form-label ">
+                            <i class="font-icon font-icon-answer"></i>Comments
+                        </label>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="input-group date">
+                            <textarea name="comments" class="form-control" id="comments" cols="100" rows="4"></textarea>
+                            <?php if(Session::has('comments')): ?>
+                            <span class="text-danger pl-2"><?php echo e(Session::get('comments')); ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label ">
@@ -189,6 +204,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
     </div>
@@ -227,7 +243,7 @@
                 </label>
             </div>
 
-            <div class="others-area" style="display:block">
+            <div class="others-area" style="display:none">
                 <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label">
@@ -275,8 +291,7 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="input-group date">
-                            <input type="password" id="password"  name="password"
-                                class="form-control m-0">
+                            <input type="password" id="password" name="password" class="form-control m-0">
                             <?php if(Session::has('msg')): ?>
                             <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
                             <?php endif; ?>
@@ -346,6 +361,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="form-group row refer">
                 <div class="col-xl-4">
                     <label class="form-label ">
@@ -362,6 +378,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         </div>

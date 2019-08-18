@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <a href="{{route('esp.comrade')}}" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                 </div>
                 <div class="tbl-cell">
                     <div class="tbl tbl-item">
@@ -194,7 +194,7 @@
                     <thead>
                         <tr>
                             <th>তারিখ </th>
-                            <th>বিবরণ </th>
+                            <th>বিস্তারিত </th>
                             <th>TXN ID</th>
                             <th class="text-center">পরিমান </th>
                         </tr>
@@ -251,7 +251,7 @@
                                 <div>সময় </div>
                             </th>
                             <th>
-                                <div> বিবরণ </div>
+                                <div> বিস্তারিত </div>
                             </th>
                             <th>
                                 <div> একশন </div>
@@ -266,7 +266,7 @@
                             <td>{{$order->area}}</td>
                             <td>{{$order->order_date}}/{{$order->order_time}}</td>
                             <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত </button>
                             </td>
                             <td>
                                 @if($order->status == '0')
@@ -413,7 +413,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">

@@ -12,7 +12,7 @@ class RechargeRequestController extends Controller
 
         $validator = Validator::make($request->all(), [
             'mfs' => 'required',
-            'trxn' => 'required',
+           //'trxn' => 'required',
             'amount' => 'required'            
         ]);
 
@@ -21,7 +21,16 @@ class RechargeRequestController extends Controller
             }
 
             $RechargeRequest->mfs = $request->mfs;
-            $RechargeRequest->trxn = $request->trxn;
+           
+
+            if($request->has('deposit_date')){
+                if($request->has('mm_trx_no')){
+                    $RechargeRequest->trxn = $request->mm_trx_no."/".$request->agent_id;
+                }
+                $RechargeRequest->trxn = $request->brance_name."/".$request->deposit_date;
+            }else{
+                $RechargeRequest->trxn = $request->trxn;
+            }
             $RechargeRequest->amount = $request->amount;
             $RechargeRequest->status = 0;
             $RechargeRequest->user_id = auth()->user()->id;

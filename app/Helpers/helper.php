@@ -319,7 +319,8 @@ function getFaqType($type = false)
     $faqArray = [
         1 => "User FAQ's",
         2 => "ESP FAQ's",
-        3 => "Referral FAQ's"
+        3 => "Referral FAQ's",
+        4 => "Comrades FAQ's"
     ];
     if ($type) {
         return isset($faqArray[$type]) ? $faqArray[$type] : '-';

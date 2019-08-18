@@ -75,6 +75,8 @@ class UsersController extends Controller
         return back();
     }
 
+   
+
     public function EditInfo()
     {
         $users = User::find(Auth::user()->id);

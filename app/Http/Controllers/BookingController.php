@@ -11,6 +11,7 @@ use Auth;
 use DB;
 use Session;
 use App\Order;
+use App\OrderDetails;
 use App\User;
 use App\SMS;
 use Carbon\Carbon;
@@ -159,6 +160,7 @@ class BookingController extends Controller
             $booking->aditional_price = $subCatDetails->additional_price;
             // $booking->aditional_price = $subCat->additional_price;
             $booking->total_price = 0;
+            $booking->status = 0;
             /** this is only for inserting total_price , the price will be calculated in mutator  */
             if ($booking->save()) {
                 $data['unit_remarks'] = SubServiceDetails::find($request->id)->unit_remarks;
@@ -390,5 +392,17 @@ class BookingController extends Controller
         $order->status = 'cancel';
         $order->save();
         return redirect()->route('dashboard');
+    }
+
+    public function OrderBitFinish($booking_id){
+        $booking = Booking::find($booking_id);
+        $booking->status = 1;
+        if($booking->save()){
+            return 1;
+        }else{
+            return 0;
+        }
+
+       // return $booking;
     }
 }

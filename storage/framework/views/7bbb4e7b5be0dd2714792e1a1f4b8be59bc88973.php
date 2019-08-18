@@ -28,7 +28,7 @@
                                 aria-selected="true">
                                 <span class="nav-link-in">
                                     <i class="font-icon font-icon-wallet"></i>
-                                    এম.এফ.এস / ব্যাংক 
+                                    এম.এফ.এস / ব্যাংক
                                 </span>
                             </a>
                         </li>
@@ -45,31 +45,54 @@
                             <?php echo csrf_field(); ?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">মাধ্যম <span class="invisible">পরিমান</span></span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">মাধ্যম <span
+                                            class="invisible">পরিমান</span></span>
                                 </div>
                                 <!-- <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"> -->
                                 <select class="form-control" name="mfs" id="mfs">
                                     <option value="">নির্বাচন করুন </option>
-                                    <option value="bkash" style="background-image:url(<?php echo e(asset('images/bkash.png')); ?>);"><strong>বিকাশ</strong> </option>
-                                    <option value="rocket"> <strong>রকেট  </strong></option>
-                                    <option value="surecash"> <strong> শিওর ক্যাশ </strong></option>
-                                    <option value="bank"> <strong> ব্যাংক ডিপোজিট  </strong></option>
-                                    <option value="cash_agent"> <strong> মিস্ত্রিমামা এজেন্ট ডিপোজিট </strong></option>
+                                    <option value="bkash" style="background-image:url(<?php echo e(asset('images/bkash.png')); ?>);">
+                                        <strong>বিকাশ</strong> </option>
+                                    <option value="bank"> <strong> ব্যাংক ডিপোজিট </strong></option>
+                                    <option value="mm_agent"> <strong> মিস্ত্রিমামা এজেন্ট ডিপোজিট </strong></option>
                                 </select>
                             </div>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-3 trx_id">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">TXN ID <span class="invisible">পরিমান</span> </span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">ট্রানজেকশন নাম্বার
+                                    </span>
                                 </div>
-                                <input type="text" name="trxn" minlength="15" maxlength="15" class="form-control"
-                                    placeholder="xxxxxxxx" required>
+                                <input type="text" name="trxn" class="form-control" placeholder="xxxxxxxx">
+                            </div>
+
+                            <div class="input-group mb-3 bank_deposit" style="display:none">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">ব্রাঞ্চের নাম ও তারিখ
+                                    </span>
+                                </div>
+                                <input type="text" name="trxn" class="form-control bg-white input-group-text"
+                                    placeholder="ব্রাঞ্চের নাম ">
+                                <input type="date" name="deposit_date" class="form-control bg-white input-group-text"
+                                    placeholder="তারিখ ">
+                            </div>
+
+                            <div class="input-group mb-3 mm_money_recit" style="display:none">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">রশিদ নং ও এজেন্ট আই
+                                        ডি</span>
+                                </div>
+                                <input type="text" name="trxn" class="form-control bg-white input-group-text"
+                                    placeholder="রশিদ নং ">
+                                <input type="text" name="agent_id" class="form-control bg-white input-group-text"
+                                    placeholder="এজেন্ট আই ডি ">
                             </div>
                             
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">টাকার পরিমান  </span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">টাকার পরিমান </span>
                                 </div>
-                                <input type="number" name="amount"   max="99999" minlength="2" maxlength="5" class="form-control">
+                                <input type="number" name="amount" max="99999" minlength="2" maxlength="5"
+                                    class="form-control">
                             </div>
 
 
@@ -124,19 +147,43 @@
             <hr>
             <div class="col-md-12">
                 <div class="mfs-content">
-                    <p class="bkash d-none">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                    </p>
+                    <div class="bkash ">
+                        <h3>
+                            বিকাশ এর মাধ্যমে মিস্ত্রি মামা একাউন্ট-এ রিচার্জ করার জন্য নীচের ধাপগুলো অনুসরণ করুন -
+                        </h3>
 
-                    <p class="surecash d-none">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo
-                    </p>
+                        <p>
+                            ধাপ-১: আপনার পার্সোনাল বিকাশ নাম্বার থেকে মিস্ত্রি মামা মার্চেন্ট নাম্বার ০১৭২৭০৬৩৫৯৩ এ
+                            প্রয়োজন অনুযায়ী টাকা সেন্ড করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-২: টাকা রিচার্জ করার পর আপনার মোবাইল নাম্বার-এ বিকাশ থেকে একটি কনফার্মেশন এসএমএস আসবে তা
+                            সংরক্ষন করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৩: যেকোন স্মার্ট ডিভাইস থেকে আপনার আইডি এবং পাসওয়ার্ড দিয়ে মিস্ত্রি মামা একাউন্ট-এ লগইন
+                            করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৪: আপনার ড্যাশবোর্ড-এর বাম পাশের মেনু অপশন থেকে "রিচার্জ করুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৫: এরপর স্ক্রিন-এ একটি বক্স দেখা যাবে যেখানে মাধ্যম (বিকাশ), ট্রানজেক্শন আইডি (সংরক্ষিত
+                            বিকাশ-এর এসএমএস থেকে পাওয়া যাবে) এবং টাকার পরিমান (বিকাশ এর দ্বারা সেন্ডকৃত টাকার পরিমান)
+                            পূরণ
+                            করে "নিশ্চিতকরুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+                        ধাপ-৬: প্রদানকৃত তথ্যগুলো সঠিক হলে আপনার স্ক্রিন-এ একটি নোটিফিকেশন চলে আসবে এবং মিস্ত্রি মামা
+                        আপনার রিচার্জ রিকোয়েস্ট-টি একসেপ্ট করলে ৩৬ ঘন্টার মধ্যে আপনার মোবাইল নাম্বার-এ একটি এসএমএস চলে
+                        আসবে যা আপনি মিস্ত্রি মামা অনলাইন ব্যালান্স চেক করেও দেখতে পারবেন।
+                        <p>
+
+
+                    </div>
 
                     <p class="rocket d-none">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -145,26 +192,78 @@
                         voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                     </p>
 
-                    <p class="bank d-none">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut eni
-                    </p>
+                    <div class="bank">
+                        <h3>
+                            ব্যাংক ডিপোজিট-এর মাধ্যমে মিস্ত্রি মামা একাউন্ট-এ রিচার্জ করার জন্য নীচের ধাপগুলো অনুসরণ
+                            করুন -
+                        </h3>
 
-                    <p class="all "> 
-                        
-                            Mistri Mama allows you to recharge online balance from your bKash / Rocket / Sure Cash and direct Mistri Mama bank account. You can recharge from your own mobile phone or someone else's mobile phone.
-                            Follow the steps below –
-                            <ol class="pl-5">
-                                <li>Go to your Mistri Mama account from website</li>
-                                <li>Select “Recharge”</li>
-                                <li>Choose your payment mode</li>
-                                <li>Insert your transaction ID</li>
-                                <li>Enter the amount you want to recharge</li>
-                                <li>Press confirm</li>
-                            </ol>
-                            Done! You will receive a confirmation message from Mistri Mama and the recharge amount will be added on your Mistri Mama online balance.
-                        
-                    </p>
+                        <p>
+
+                            ধাপ-১: ব্র্যাক ব্যাংক এর যেকোন ব্রাঞ্চ থেকে মিস্ত্রি মামা ব্যাংক আকাউন্ট ১৫৩২২০৪২৩৮৫৪৯০০১ এ
+                            প্রয়োজন অনুযায়ী টাকা জমা দিন।
+                        </p>
+
+                        <p>
+                            ধাপ-২: টাকা জমা দেবার পর জমা স্লিপ-টি সংরক্ষন করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৩: যেকোন স্মার্ট ডিভাইস থেকে আপনার আইডি এবং পাসওয়ার্ড দিয়ে মিস্ত্রি মামা একাউন্ট-এ লগইন
+                            করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৪: আপনার ড্যাশবোর্ড-এর বাম পাশের মেনু অপশন থেকে "রিচার্জ করুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৫: এরপর স্ক্রিন-এ একটি বক্স দেখা যাবে যেখানে মাধ্যম (ব্যাংক ডিপোজিট), ব্রাঞ্চের নাম ও
+                            তারিখ (সংরক্ষিত ডিপোজিট স্লিপ থেকে পাওয়া যাবে) এবং টাকার পরিমান (জমা টাকার পরিমান) পূরণ করে
+                            "নিশ্চিতকরুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+                        ধাপ-৬: প্রদানকৃত তথ্যগুলো সঠিক হলে আপনার স্ক্রিন-এ একটি নোটিফিকেশন চলে আসবে এবং মিস্ত্রি মামা
+                        আপনার রিচার্জ রিকোয়েস্ট-টি একসেপ্ট করলে ৩৬ ঘন্টার মধ্যে আপনার মোবাইল নাম্বার-এ একটি এসএমএস চলে
+                        আসবে যা আপনি মিস্ত্রি মামা অনলাইন ব্যালান্স চেক করেও দেখতে পারবেন।
+                        <p>
+                    </div>
+
+                    <div class="mm_agent">
+                        <h3>
+                            মিস্ত্রি মামা এজেন্ট ডিপোজিট-এর মাধ্যমে মিস্ত্রি মামা একাউন্ট-এ রিচার্জ করার জন্য নীচের
+                            ধাপগুলো অনুসরণ করুন -
+                        </h3>
+
+                        <p>
+
+                            ধাপ-১: কোনো প্রকার ঝামেলা ছাড়া মিস্ত্রি মামা এজেন্ট-এর নিকট প্রয়োজন অনুযায়ী টাকা জমা দিন।
+                        </p>
+
+                        <p>
+                            ধাপ-২: টাকা জমা দেবার পর জমা রশিদ গ্রহণ করুন এবং তা সংরক্ষন করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৩: যেকোন স্মার্ট ডিভাইস থেকে আপনার আইডি এবং পাসওয়ার্ড দিয়ে মিস্ত্রি মামা একাউন্ট-এ লগইন
+                            করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৪: আপনার ড্যাশবোর্ড-এর বাম পাশের মেনু অপশন থেকে "রিচার্জ করুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+
+                        <p>
+                            ধাপ-৫: এরপর স্ক্রিন-এ একটি বক্স দেখা যাবে যেখানে মাধ্যম (মিস্ত্রি মামা এজেন্ট), রশিদ নং ও
+                            এজেন্ট আইডি (সংরক্ষিত রশিদ থেকে পাওয়া যাবে) এবং টাকার পরিমান (জমা টাকার পরিমান) পূরণ করে
+                            "নিশ্চিতকরুন" বাটন-টি সিলেক্ট করুন।
+                        </p>
+                        ধাপ-৬: প্রদানকৃত তথ্যগুলো সঠিক হলে আপনার স্ক্রিন-এ একটি নোটিফিকেশন চলে আসবে এবং মিস্ত্রি মামা
+                        আপনার রিচার্জ রিকোয়েস্ট-টি একসেপ্ট করলে ৩৬ ঘন্টার মধ্যে আপনার মোবাইল নাম্বার-এ একটি এসএমএস চলে
+                        আসবে যা আপনি মিস্ত্রি মামা অনলাইন ব্যালান্স চেক করেও দেখতে পারবেন।
+                        <p>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -182,8 +281,7 @@
 <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 
 
-<script>    
-
+<script>
     $bkash = <?php echo e(MfsCharge('bkash')); ?>;
     $rocket = <?php echo e(MfsCharge('rocket')); ?>;
     $surecash = <?php echo e(MfsCharge('surecash')); ?>;
@@ -229,25 +327,47 @@
             $('.surecash').hide();
             $('.rocket').hide();
             $('.bank').hide();
+            $('.mm_agent').hide();
+            $('.bank_deposit').hide();
+            $('.trx_id').show();
+            $('.mm_money_recit').hide();
         }else if($mfs == 'surecash'){
             $('.bkash').hide();
             $('.surecash').show();
             $('.rocket').hide();
             $('.bank').hide();
+            $('.mm_agent').hide();
         }else if($mfs == 'rocket'){
             $('.bkash').hide();
             $('.surecash').hide();
             $('.rocket').show();
             $('.bank').hide();
+            $('.mm_agent').hide();
         }else if($mfs == 'bank'){
             $('.bkash').hide();
             $('.surecash').hide();
             $('.rocket').hide();
             $('.bank').show();
-        }else{
+            $('.mm_agent').show();
+            $('.bank_deposit').show();
+            $('.trx_id').hide();
+            $('.mm_money_recit').hide();
+        }else if($mfs == 'mm_agent'){
             $('.bkash').hide();
             $('.surecash').hide();
             $('.rocket').hide();
+            $('.bank').hide();
+            $('.mm_agent').show();
+            $('.bank_deposit').hide();
+            $('.trx_id').hide();
+            $('.mm_money_recit').show();
+
+        }
+        else{
+            $('.bkash').hide();
+            $('.surecash').hide();
+            $('.rocket').hide();
+            $('.bank').hide();
         }   
 
 

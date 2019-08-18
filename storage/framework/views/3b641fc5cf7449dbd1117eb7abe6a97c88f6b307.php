@@ -58,13 +58,13 @@
                             সকল কাজ
                         </a>
                         <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.comrade' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.comrade')); ?>">
-                            সহকর্মী
+                            সহকারী
                         </a>
                         <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.services' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.services')); ?>">
                             সেবা সমূহ
                         </a>
                         <a class="btn btn-nav <?php echo e(Request::route()->getName() == 'esp.incomestmnt' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline '); ?> btn-rounded" href="<?php echo e(route('esp.incomestmnt')); ?>">
-                            আয়ের বিবরণী
+                            আয়ের বিবরনী
                         </a>
                     
                     

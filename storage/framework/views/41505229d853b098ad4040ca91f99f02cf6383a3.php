@@ -20,7 +20,7 @@
 
         <ol class="breadcrumb bg-white mb-1">
             <li><a href="<?php echo e(route('esp-dashboard')); ?>">ড্যাশবোর্ড </a></li>
-            <li><a href="#">কমরেড </a></li>
+            <li><a href="#">সহকারী</a></li>
         </ol>
 
         <section class="box-typical box-typical-dashboard panel panel-default " >
@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-6 float">
                         <button type="button" class="btn btn-sm btn-mm btn-inline " data-toggle="modal"
-                            data-target="#addComradeMdl">নতুন যোগ করুন </button>
+                            data-target="#addComradeMdl">নতুন সহকারী যোগ করুন </button>
                     </div>
                     <div class="col-md-6">
                         <form class="site-header-search sr-only">
@@ -77,11 +77,14 @@
                             <td>
                                 <div class="btn-gorup">
                                     <button class="btn btn-sm btn-success sr-only"><i class="fa fa-eye"></i></button>
-                                    <a href="/esp/comrade/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
+                                    <a href="/esp/comrade/<?php echo e($comrade->id); ?>" data-toggle="tooltip"
+                                        data-placement="top" title="Edit" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
                                     <?php if($comrade->status == 1): ?>
-                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
+                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" data-toggle="tooltip"
+                                        data-placement="top" title="De-active" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
                                     <?php else: ?> 
-                                        <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-info "><i class="fa fa-check-square"></i></a>
+                                        <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" data-toggle="tooltip"
+                                            data-placement="top" title="Active"  class="btn btn-sm btn-success "><i class="fa fa-check-square"></i></a>
                                     <?php endif; ?>
                                     
                                     <button class="btn btn-sm btn-danger sr-only"><i class="fa fa-times"></i></button>
@@ -187,10 +190,12 @@
 
 
                         </div>
+                        <span>Max Upload Image is 4MB. </span>
+                        <span><a href="https://resizeimage.net/" target="_blank">Click Here</a> To resize your image in online</span>
                     </div>
+                    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">বাতিল </button>
                 <button type="submit" class="btn btn-mm">যোগ করুন </button>
             </div>
             </form>

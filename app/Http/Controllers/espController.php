@@ -29,7 +29,8 @@ use Image;
 class espController extends Controller
 {
 
-    public function login(){
+    public function login()
+    {
         return view('esp.login');
     }
 
@@ -38,7 +39,7 @@ class espController extends Controller
 
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services = $providers->first()->category->pluck('cats')->toArray();
-        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(20000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
+        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(2000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
         $activeOrders = $providers->first()->orderDetails->where('status', '!=',  5)->where('status', '!=',  'cancel');
 
         $totalcomrades = $providers->first()->comrads; //total
@@ -46,11 +47,56 @@ class espController extends Controller
         $rp =  auth()->user()->rp->where('status', 'add')->sum('rp') - auth()->user()->rp->where('status', 'remove')->sum('rp');
         $balance = Account::where('user_id', Auth::user()->id)->where('status', 'credit')->sum('amount') - Account::where('user_id', Auth::user()->id)->where('status', 'debit')->sum('amount');
         $ratings = $providers->first()->serviceSystem->where('status', '=', 5)->sum('sp_rating') / ($providers->first()->serviceSystem->where('status', '=', 5)->count() == 0 ? 1 : $providers->first()->serviceSystem->where('status', '=', 5)->count());
-        $miniStatements = auth()->user()->account()->where('status','!=','income')->orderBy('id','DESC',5)->get();
+        $miniStatements = auth()->user()->account()->where('status', '!=', 'income')->orderBy('id', 'DESC', 5)->get();
 
-       //return $miniStatements;
+        //return $miniStatements;
         return view('esp.index', compact('newOrders', 'comrades', 'providers', 'activeOrders', 'balance', 'totalcomrades', 'rp', 'ratings', 'miniStatements', 'services'));
     }
+
+    public function manualService()
+    {
+        return view('esp.manual.service-book');
+    }
+
+    public function manualPhoneDist()
+    {
+        return view('esp.manual.phone-dist');
+    }
+
+    public function manualComradeAddDel()
+    {
+        return view('esp.manual.comrade-add-del');
+    }
+
+    public function manualComradeLogin()
+    {
+        return view('esp.manual.comred-login');
+    }
+    public function manualComradeWork()
+    {
+        return view('esp.manual.comred-login');
+    }
+
+    public function manualRecharge()
+    {
+        return view('esp.manual.recharge');
+    }
+
+    public function manualCashout()
+    {
+        return view('esp.manual.cashout');
+    }
+
+    public function manualSelfOrder()
+    {
+        return view('esp.manual.self-order');
+    }
+
+    public function manualSPLogin()
+    {
+        return view('esp.manual.sp-login');
+    }
+
 
     public function NewAvailAbleOrder()
     {
@@ -92,10 +138,8 @@ class espController extends Controller
         $comrades = $providers->first()->comrads->where('status', 1); // active
 
         $balance = Account::where('user_id', Auth::user()->id)->where('status', 'credit')->sum('amount') - Account::where('user_id', Auth::user()->id)->where('status', 'debit')->sum('amount');
-
         // return $ongonigOrder;
-        return view('esp.jobs', compact('newOrders', 'comrades', 'providers', 'activeOrders', 'ongonigOrder', 'newOrdersRequests','balance'));
-
+        return view('esp.jobs', compact('newOrders', 'comrades', 'providers', 'activeOrders', 'ongonigOrder', 'newOrdersRequests', 'balance'));
         // return $shcedeuledOrders;
     }
 
@@ -135,7 +179,7 @@ class espController extends Controller
             $referHistory = null;
         }
 
-       // return $topRefCode;
+        // return $topRefCode;
 
         // $topReferars = Referral::groupBy('user_id')->where('status','>', '0')->get();
         return view('esp.refer', compact('totalcomrades', 'comrades', 'rp', 'balance', 'ratings', 'refcode', 'topRferer', 'referHistory'));
@@ -159,9 +203,8 @@ class espController extends Controller
     public function comrade()
     {
         $providers = User::find(Auth::user()->id)->serviceProvider;
-        $comrades = Comrades::where('s_id',$providers[0]->id)->paginate(10);
+        $comrades = Comrades::where('s_id', $providers[0]->id)->paginate(10);
         return view('esp.comrade.index', compact('comrades'));
-        
     }
 
     public function ComradeEdit($id)
@@ -176,9 +219,9 @@ class espController extends Controller
     {
         // $comrades = new Comrades();
         $comrades = Comrades::find($id);
-        if($comrades->status == 1){
+        if ($comrades->status == 1) {
             $comrades->status = 0;
-        }else{
+        } else {
             $comrades->status = 1;
         }
 
@@ -216,7 +259,7 @@ class espController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return redirect()->back()->with('error','Something went wrong!');
+            return redirect()->back()->with('error', 'Something went wrong!');
         } else {
             $user->name = $request->c_name;
             $user->email = $request->email;
@@ -244,7 +287,7 @@ class espController extends Controller
                 // $comrade->c_pic = $request->c_pic;
                 // $comrade->c_nic_back = $request->c_nic_back;
                 // $comrade->c_nic_back = $request->c_nic_back;
-                
+
                 $destinationPath = public_path('/uploads/SP/');
 
                 // $image = $request->file('image');
@@ -255,73 +298,69 @@ class espController extends Controller
                 // })->save($destinationPath.'/'.$input['imagename']);
 
                 // $image->move($destinationPath, $input['imagename']);
-    
+
                 if ($request->hasFile('c_pic')) {
                     $image = $request->file('c_pic');
-                    $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
                     $img = Image::make($image->getRealPath());
 
-                    $image->move($destinationPath, $input['imagename']);
+                    //  $image->move($destinationPath, $input['imagename']);
 
                     $img->resize(250, 250, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($destinationPath.'/'.$input['imagename']);
+                    })->save($destinationPath . '/' . $input['imagename']);
 
-                    $comrade->c_pic = asset('/uploads/SP/')."/".$input['imagename'];
-
+                    $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
                 }
 
                 if ($request->hasFile('c_nic_back')) {
                     $image = $request->file('c_nic_back');
-                    $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
                     $img = Image::make($image->getRealPath());
-                    $image->move($destinationPath, $input['imagename']);
+                    //  $image->move($destinationPath, $input['imagename']);
                     $img->resize(250, 250, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($destinationPath.'/'.$input['imagename']);
-
-                    
-
-                    $comrade->c_nic_back = asset('/uploads/SP/')."/".$input['imagename'];
+                    })->save($destinationPath . '/' . $input['imagename']);
 
 
+
+                    $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
                 }
 
 
                 if ($request->hasFile('c_nic_front')) {
                     $image = $request->file('c_nic_front');
-                    $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
                     $img = Image::make($image->getRealPath());
-                    $image->move($destinationPath, $input['imagename']);
+                    //  $image->move($destinationPath, $input['imagename']);
                     $img->resize(250, 250, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($destinationPath.'/'.$input['imagename']);
+                    })->save($destinationPath . '/' . $input['imagename']);
 
-                    
 
-                    $comrade->c_nic_front = asset('/uploads/SP/')."/".$input['imagename'];
 
+                    $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
                 }
-    
-    
+
+
                 // if ($request->hasFile('c_nic_front')) {
                 //     $pic1 = $request->file('c_nic_front');
                 //     $pic1->move('uploads/SP', $pic1->getClientOriginalName());
                 //     $comrade->c_nic_front = $pic1->getClientOriginalName();
                 // }
-    
+
                 // if ($request->hasFile('c_nic_back')) {
                 //     $pic2 = $request->file('c_nic_back');
                 //     $pic2->move('uploads/SP', $pic2->getClientOriginalName());
                 //     $comrade->c_nic_back = $pic2->getClientOriginalName();
                 // }
 
-                
+
 
                 // if ($comrade->save()) {
                 //     $msgText = "Welcome to Mistri Mama Comrade. Login To your account. \n Phone No: " . $request->c_phone_no . "\n Password: " . $pass;
                 //     SMS::send($request->c_phone_no, $msgText);
-    
+
                 //     $request->session()->flash('success', 'New Comrade Added !');
                 //     return back();
                 // } else {
@@ -329,15 +368,13 @@ class espController extends Controller
                 //     return back();
                 // }
 
-                if($comrade->save()){
+                if ($comrade->save()) {
                     $request->session()->flash('success', 'Comrade added successfully');
                     return back();
-                }else{
+                } else {
                     $request->session()->flash('error', 'Something went worng. Try Again!..');
                     return back();
                 }
-
-                
             } else {
                 $request->session()->flash('error', 'Something went worng.');
                 return back();
@@ -382,14 +419,14 @@ class espController extends Controller
 
         $thisWeekIncome =  Account::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', 'credit')->first();
 
-        
 
-         $statements = auth()->user()->account()->where('status','!=','income')->orderBy('id','DESC')->paginate(20);
 
-         
-         //return $lastServiceAmount;
+        $statements = auth()->user()->account()->where('status', '!=', 'income')->orderBy('id', 'DESC')->paginate(20);
 
-        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome','statements','lasServiceDetails'));
+
+        //return $lastServiceAmount;
+
+        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome', 'statements', 'lasServiceDetails'));
     }
 
     // public function cashout()
@@ -433,6 +470,21 @@ class espController extends Controller
     {
         $users = User::find(Auth::user()->id);
         return view('esp.edit_info', compact('users'));
+    }
+
+    public function cancelOrder($id)
+    {
+        $ss = ServiceSystem::find($id);
+        //return $order ;
+        $order = Order::find($ss->order_id);
+        $order->status = '0';
+        if ($order->save()) {
+            if ($ss->delete()) {
+                return back()->with('success', 'অর্ডার বাতিল করা হয়েছে');
+            } else {
+                return back()->with('danger', 'Something went wrong');
+            }
+        }
     }
 
     // public function updateProfile(ProfileEdit $request)

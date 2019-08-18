@@ -12,6 +12,7 @@ use App\Models\category as Catagory;
 use DB;
 use App\OrderDetails;
 
+
 class comradeController extends Controller
 {
     public function index()
@@ -19,15 +20,15 @@ class comradeController extends Controller
         $comrades = User::find(Auth::user()->id)->comrades;
         $allowcatedOrders = $comrades->first()->serviceSystem->where('status', '!=',  '5');
         $activeOrders = $comrades->first()->serviceSystem->where('status', '!=',  '5')->first();
-        if($activeOrders){
+        if ($activeOrders) {
             //$sumOrder = DB::table('bookings')->select(DB::raw("SUM(quantity) as total_quantity, SUM(total_price) as total_price"))->where('order_id', $activeOrders->order_id)->get();
             $sumOrder = OrderDetails::find($activeOrders->order_id);
-        }else{
+        } else {
             $sumOrder = '';
             $allord = '';
-            return view('comrade.index', compact('allowcatedOrders','sumOrder','allord'));
+            return view('comrade.index', compact('allowcatedOrders', 'sumOrder', 'allord'));
         }
-         return view('comrade.index', compact('allowcatedOrders','sumOrder'));
+        return view('comrade.index', compact('allowcatedOrders', 'sumOrder'));
     }
 
     public function jobHistory()
@@ -48,5 +49,28 @@ class comradeController extends Controller
         // return $services_category;
         //  $services_category = DB::select("SELECT categories.id,categories.name FROM categories");
         return view('comrade.order.area_cat', compact('services_category'));
+    }
+
+    public function faq()
+    {
+        $faqs = DB::SELECT("SELECT * FROM faqs WHERE type = 4");
+        return view('comrade.faq', compact('faqs'));
+    }
+
+    public function cancelOrder($id)
+    {
+        $order = ServiceSystem::where('order_id', $id)->first();
+        // $order->delete();
+        if ($order->delete()) {
+            return back()->with('success', 'অর্ডার বাতিল করা হয়েছে');
+        } else {
+            return back()->with('danger', 'Something went wrong');
+        }
+        // $order->service_provider_comrad_id = null;
+        // if($order->save()){
+        //     return back()->with('success','অর্ডার বাতিল করা হয়েছে');
+        // }else{
+        //     return back()->with('danger','Something went wrong');
+        // }
     }
 }

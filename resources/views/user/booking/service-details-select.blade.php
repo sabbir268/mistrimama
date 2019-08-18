@@ -9,8 +9,8 @@
                 id="check-bird-{{$SubType->sub_cat_details_id}}"> --}}
                 <label for="">{{$SubType->service_details_name}}</label>
             </div>
-            <div id="qtyCont" class="col-md-5" style="display:block">
-                <div class="input-group input-group-sm">
+            <div id="qtyCont" class="col-md-5" style="display:block;padding-left:57px">
+                <div class="input-group input-group-sm pl-5 ml-5">
                     <span style="cursor :pointer"
                         class="input-group-text pl-3 pr-3 pt-1 pb-0 btn-mm rounded-0 mr-0 decrease"
                         data-id="{{$SubType->sub_cat_details_id}}" data-service="{{$service_id}}">
@@ -47,7 +47,8 @@
             $('#qtyCont-' + $id).show();
             addSubServices($service_id, $id, $qty);
         } else {
-            $('#qtyCont-' + $id).hide();
+            $('#qty'+$id).val(1);
+            $('#qtyCont-'+$id).hide();
             delSubServices($service_id, $id, $qty);
         }
     });

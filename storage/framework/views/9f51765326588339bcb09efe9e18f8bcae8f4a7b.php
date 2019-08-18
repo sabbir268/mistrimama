@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
-                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                     </div>
                     <div class="tbl-cell">
                         <div class="tbl tbl-item">

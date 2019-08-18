@@ -172,7 +172,7 @@
                                     <div>সময় </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>একশন </div>
@@ -189,7 +189,7 @@
                                 <td>{{date('d-m-Y',strtotime($order->order->order_date))}}/{{$order->order->order_time}}
                                 </td>
                                 <td> <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত </button>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -230,7 +230,7 @@
                                     <div>সহকারী </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>অবস্থা </div>
@@ -252,7 +252,7 @@
                                 <td>{{$actord->comrade ? $actord->comrade->c_name : 'No Comrade assign yet.'}}</td>
                                 <td> <button class="btn btn-sm btn-success" data-toggle="modal"
                                         data-target="#view-act-{{$actord->id}}"
-                                        data-item="{{ $actord->id }}">বিবরণ </button>
+                                        data-item="{{ $actord->id }}">বিস্তারিত </button>
                                 </td>
                                 <td>
                                     @if($actord->comrade)
@@ -355,7 +355,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -459,7 +459,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডার এর বিবরণ</h4>
+                <h4 class="modal-title">অর্ডার এর বিস্তারিত</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -563,7 +563,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ</h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -571,7 +571,7 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="card-header col-md-6">
-                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিবরণ </span></strong></u><br>
+                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিস্তারিত </span></strong></u><br>
                                     নাম :<strong>{{$actOrder->name}}</strong><br> ফোন:
                                     <strong>{{$actOrder->phone}}</strong><br>
                                     এলাকা : <strong>{{$actOrder->area}}</strong><br>

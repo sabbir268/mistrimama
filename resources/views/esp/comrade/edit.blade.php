@@ -21,8 +21,8 @@
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb bg-white mb-1">
-            <li><a href="{{route('esp-dashboard')}}">Dashboard</a></li>
-            <li><a href="#">Comrade</a></li>
+            <li><a href="{{route('esp-dashboard')}}">ড্যাশবোর্ড </a></li>
+            <li><a href="#">সহকারী</a></li>
         </ol>
     </div>
 </div>
@@ -158,8 +158,8 @@
 
             <div class="form-group row">
                 <div class="col-xl-12">
-                    <button type="submit" style="color:#fff !important" class="form-control btn-mm">
-                        Update Info
+                    <button type="submit"  class="form-control btn-mm">
+                        তথ্য আপডেট 
                     </button>
                 </div>
             </div>

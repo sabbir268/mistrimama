@@ -1,12 +1,12 @@
 div.order-form {
-    max-width: 600px;
-    position: absolute;
-    top: 36%;
-    right: 10%;
-    background: #ffffffdb;
-    padding: 50px;
-    width: 100%;
-    border-radius: 10px;
+  max-width: 600px;
+  position: absolute;
+  top: 36%;
+  right: 8%;
+  background: #ffffffdb;
+  padding: 50px;
+  width: 100%;
+  border-radius: 10px;
 }
 
 div#show_subCategories {
@@ -39,14 +39,36 @@ div#order-form-mobile{
   display: none;
   padding: 10px 20px;
 }
+.call-for-order{
+  max-width: 547px;
+  position: absolute;
+  top: 36%;
+  left: 2%;
+  background: transparent;
+  padding: 50px;
+  width: 100%;
+  border-radius: 10px;
+}
 
+div.call-for-order-mobile{
+  display: none;
+  text-align: center;
+}
 
 
 @media only screen and (max-width: 600px) {
     div.order-form {
       display: none;
+      text-align: center;
   }
 
+  div.call-for-order{
+    display: none;
+  }
+  div.call-for-order-mobile{
+    display: block;
+    text-align: center;
+  }
   div#order-form-mobile{
     display: block;
     padding: 10px 20px;
@@ -64,3 +86,4 @@ div#order-form-mobile{
   }
 
 } */
+

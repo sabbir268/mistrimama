@@ -116,9 +116,9 @@
                     <h2>Referrer Point Policy</h2>
                         <p>Referrer will get 20% of RP (reward point) of each successful referred service’s payable amount. (e.g.- Mr. X referred fan installation service, <strong> BDT 300</strong> to Mr. Y. After successful service, Mr. X will get 20% or 60 reward point). 20 reward points is equivalent to BDT 1. Referrer can withdraw his/her amount, if he/she has minimum 4000 reward points, which is equivalent to BDT 200. User or referrer can make service payment through reward point. Only half of total service amount can be adjusted through reward point.</p>
                  </p>
-                 <div class="col-md-3">
-                    <a href="<?php echo e(asset('/refer')); ?>" class="btn  btn-lg btn-mm"
-                        style="border-radius: 10px; margin-top:12%;text-transform: lowercase;">Click to know details</a>
+                 <div class="col-md-12 text-center">
+                    <a href="<?php echo e(asset('/register')); ?>" class="btn  btn-lg btn-mm"
+                        style="border-radius: 10px; margin-top:12%;">Register Now</a>
                 </div>
                 </div>
 

@@ -8,11 +8,11 @@
 @endsection
 
 @section('topbar')
-@include('user.topbar')
+@include('comrade.topbar')
 @endsection
 
 @section('sidebar')
-@include('user.sidebar')
+@include('comrade.sidebar')
 @endsection
 
 @section('content')

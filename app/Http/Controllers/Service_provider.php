@@ -44,7 +44,7 @@ class Service_provider extends Controller
         $nf = explode(" ", $serviceProvider->name)[0];
         $pass = mt_rand(1000, 9999);
         $user->password = Hash::make($pass);
-        $user->ref_code =  explode(" ",$serviceProvider->name)[0].rand(0,9).generateRandomString(3);
+        $user->ref_code =  explode(" ", $serviceProvider->name)[0] . rand(0, 9) . generateRandomString(3);
         $user->status = '2';
         $user->address = $serviceProvider->mailing_add;
         $user->photo = $serviceProvider->passport;
@@ -56,7 +56,7 @@ class Service_provider extends Controller
         $ur->save();
 
 
-        $msgText = "Your Service Provider request has been approved, Login to your account. \n Email: " . $serviceProvider->email . "\n Password: " . $pass;
+        $msgText = "Your Service Provider request has been approved, Login to your account. \n Phone: " . $serviceProvider->phone_no . "\n Password: " . $pass;
 
         if ($success) {
             $serviceProvider->u_id = $user->id;
@@ -283,10 +283,11 @@ class Service_provider extends Controller
 
     public function add_esp(Request $r)
     {
+
         $validatedData = $r->validate([
             // 'phone_no' => 'required|unique:users,phone_no'
         ]);
-        
+
         try {
             // $username = $r->input('login_email');
             // $password = $r->input('login_password');
@@ -346,10 +347,10 @@ class Service_provider extends Controller
             $sp->mailing_add = $mailing_add;
             $sp->smart_card = $smart_card;
             $sp->service_category = $service_category;
-            $sp->nic_front = url('/')."/uploads/SP/".$nic_front->getClientOriginalName();
-            $sp->nic_back = url('/')."/uploads/SP/".$nic_back->getClientOriginalName();
-            $sp->passport = url('/')."/uploads/SP/".$passport->getClientOriginalName();
-            $sp->tin_cer = url('/')."/uploads/SP/".$tin_cer->getClientOriginalName();
+            $sp->nic_front = url('/') . "/uploads/SP/" . $nic_front->getClientOriginalName();
+            $sp->nic_back = url('/') . "/uploads/SP/" . $nic_back->getClientOriginalName();
+            $sp->passport = url('/') . "/uploads/SP/" . $passport->getClientOriginalName();
+            $sp->tin_cer = url('/') . "/uploads/SP/" . $tin_cer->getClientOriginalName();
             // $sp->mobile_banking = $mobile_banking;
             $sp->mfs_account = $mfs_account;
             // $sp->u_id = $user->id;
@@ -358,11 +359,17 @@ class Service_provider extends Controller
             // $commision = $r->commision;
             $service_type = $r->service_type;
 
+
+
             if (!empty($service_type)) {
-                $spsc = new SPSC();
-                $spsc->cats =  $service_type;
-                $spsc->s_id = $sp->id;
-                $spsc->save();
+                $i = 0;
+                while ($i < count($service_type)) {
+                    $spsc = new SPSC();
+                    $spsc->cats =  $service_type[$i];
+                    $spsc->s_id = $sp->id;
+                    $spsc->save();
+                    $i++;
+                }
             }
 
 

@@ -57,7 +57,7 @@ class OrderDetails extends Model
 
     public function getTotalPriceAttribute()
     {
-            return $this->bookings->sum('total_price');
+            return $this->bookings->where('status',1)->sum('total_price');
     }
 
 

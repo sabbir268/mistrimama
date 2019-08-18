@@ -47,32 +47,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="<?php if($balance > 499): ?> #amount_withdraw <?php else: ?> # <?php endif; ?>"
+                    <a href="#" data-toggle="modal" data-target="<?php if($balance > 599): ?> #amount_withdraw <?php else: ?> # <?php endif; ?>"
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 499): ?> disabled <?php endif; ?> ">ক্যাশ
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 599): ?> disabled <?php endif; ?> ">ক্যাশ
                         আউট করুন </a>
                 </div>
-                <div class="tbl-cell pb-0">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="">
-                                    <div class="title">রিওয়ার্ড পয়েন্ট</div>
-                                    <div class="amount-sm">টাকা ৳<?php echo e($rp/20); ?>/-</div>
-                                </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong><?php echo e($rp); ?></strong> </header>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target=" <?php if($rp < 4000): ?> #rp_withdraw <?php endif; ?> "
-                        style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($rp < 3999 ): ?> disabled <?php endif; ?> ">ক্যাশে
-                        পরিবর্তন করুন </a>
-                </div>
+                
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
                         <div class="tbl-row">
@@ -91,7 +71,7 @@
                         </div>
                     </div>
                     <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                 </div>
                 <div class="tbl-cell">
                     <div class="tbl tbl-item">
@@ -138,7 +118,7 @@
                     <thead>
                         <tr>
                             <th>তারিখ </th>
-                            <th>বিবরণ </th>
+                            <th>বিস্তারিত </th>
                             <th>TXN ID</th>
                             <th class="text-center">পরিমান </th>
                         </tr>
@@ -195,7 +175,7 @@
                                 <div>সময় </div>
                             </th>
                             <th>
-                                <div> বিবরণ </div>
+                                <div> বিস্তারিত </div>
                             </th>
                             <th>
                                 <div> একশন </div>
@@ -210,11 +190,11 @@
                             <td><?php echo e($order->area); ?></td>
                             <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
                             <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
+                                    data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিস্তারিত </button>
                             </td>
                             <td>
                                 <?php if($order->status == '0'): ?>
-                                <button class="btn btn-sm btn-info" data-toggle="modal"
+                                <button class="btn btn-sm btn-mm" data-toggle="modal"
                                     data-target="#allocate-<?php echo e($order->id); ?>"
                                     data-item="<?php echo e($order->id); ?>">সহকারী</button> <?php else: ?>
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
@@ -290,7 +270,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -465,14 +445,14 @@
                     <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
-                        <div class="col-sm-10">
-                            <input type="number" min="500" max="<?php echo e($balance > 500 ? $balance - 500 : 0); ?>" name="amount"
+                        <div class="col-sm-12">
+                            <input type="number" min="100" max="<?php echo e($balance > 500 ? $balance - 500 : 0); ?>" name="amount"
                                 class="form-control" placeholder="500" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <select name="type" id="type" class="form-control">
                                 <option value="bkash">Bkash</option>
                                 <option value="surecash">SureCash</option>
@@ -481,17 +461,24 @@
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label for="mfs_number" class="col-sm-4 col-form-label">MFS
+                        <label for="mfs_number" class="col-sm-12 col-form-label">MFS
                             Number(Bkash,Rocket,SureCash)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <input type="text" class="form-control" id="mfs_number" name="mfs_number"
                                 placeholder="017XXXXXXXX" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="mfs_number" class="col-sm-12 col-form-label">To Conferm Enter your password</label>
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="mfs_number" name="mfs_number"
+                                 required>
                         </div>
                     </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             </form>

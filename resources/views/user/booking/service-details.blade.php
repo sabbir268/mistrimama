@@ -4,6 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Service Option</h5>
+                <button type="button" class="close nextOpt" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
@@ -19,7 +22,7 @@
                                             id="check-bird-{{$SubType->id}}">
                                         <label for="check-bird-{{$SubType->id}}">{{$SubType->name}}</label>
                                     </div>
-                                    <div id="qtyCont-{{$SubType->id}}" class="col-md-4" style="display:none">
+                                    <div id="qtyCont-{{$SubType->id}}" class="col-md-4" style="display:none;">
                                         <div class="input-group input-group-sm">
                                             <div class="input-group-prepend ">
                                                 <span class="input-group-text btn-mm decrease" style="cursor :pointer"
@@ -30,9 +33,9 @@
                                                 aria-describedby="inputGroup-sizing-sm" placeholder="Qty"
                                                 id="qty{{$SubType->id}}" value="1">
                                             <div class="input-group-append ">
-                                                <span class="input-group-text btn-mm text increase" style="cursor :pointer"
-                                                    data-id="{{$SubType->id}}" id="inputGroup-sizing-sm"><i
-                                                        class="fa fa-plus"></i></span>
+                                                <span class="input-group-text btn-mm text increase"
+                                                    style="cursor :pointer" data-id="{{$SubType->id}}"
+                                                    id="inputGroup-sizing-sm"><i class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -48,19 +51,19 @@
             <div class="modal-footer row p-0 m-0">
                 {{-- <div class="row"> --}}
 
-                    <div class="col-md-4 text-left p-0 m-0 pt-2 pl-2">
-                        <ul class="remarks">
-                        </ul>
-                    </div>
-                    <div class="col-md-8 text-right p-0 m-0 pt-3 pr-2">
-                        <button class="btn btn-secondary ">Approx. Price:<span class="sub_total">0</span></button>
-                        <button type="button" class="btn btn-mm" id="nextOpt" data-dismiss="modal">Next
-                            →</button>
-                    </div>
-                    
-                    <div class="col-md-12 offset-md-1 pull-left m-1 brief ">
-                        
-                    </div>
+                <div class="col-md-4 text-left p-0 m-0 pt-2 pl-2">
+                    <ul class="remarks">
+                    </ul>
+                </div>
+                <div class="col-md-8 text-right p-0 m-0 pt-3 pr-2">
+                    <button class="btn btn-secondary ">Approx. Price:<span class="sub_total">0</span></button>
+                    <button type="button" class="btn btn-mm nextOpt" id="nextOpt" data-dismiss="modal">Next
+                        →</button>
+                </div>
+
+                <div class="col-md-12 offset-md-1 pull-left m-1 brief ">
+
+                </div>
                 {{-- </div> --}}
 
             </div>
@@ -77,6 +80,7 @@
             jQuery('#qtyCont-' + $id).show();
             addSubServices($service_id, $id, $qty);
         } else {
+            jQuery('#qty'+$id).val(1);
             jQuery('#qtyCont-' + $id).hide();
             delSubServices($service_id, $id, $qty);
         }
@@ -184,7 +188,7 @@
         qtyUpdate($id, $qty);
     });
 
-    jQuery('#nextOpt').click(function() {
+    jQuery('.nextOpt').click(function() {
         $service_id = jQuery('#pservice_id').val();
         jQuery.ajax({
             url: "{{route('selected.sub-service')}}",

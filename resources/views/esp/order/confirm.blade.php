@@ -105,7 +105,7 @@
                         <div class="col-xl-8">
                             <div class="input-group">
                                 <input type="text" name="others_name" id="others_name" placeholder="Others Name"
-                                    class="form-control m-0">
+                                    class="form-control m-0" required>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                         <div class="col-xl-8">
                             <div class="input-group">
                                 <input type="text" name="others_phone" id="others_phone" placeholder="Others Phone"
-                                    class="form-control m-0">
+                                    class="form-control m-0" required>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <div class="col-xl-8">
                             <div class="input-group">
                                 <select name="area" id="sa" onchange="combomap(this.value)" 
-                                    class="form-control form-control m-0" >
+                                    class="form-control form-control m-0" required>
                                     <option value="" selected="false" class="locationDropdown">Select Area</option>
                                     <option value="Adabor"> Adabor</option>
                                     <option value="Azampur"> Azampur</option>
@@ -196,7 +196,7 @@
                     <div class="col-xl-8">
                         <div class="input-group">
                             <select name="comrade_id" id="comrade" onchange="combomap(this.value)" 
-                                class="form-control form-control m-0" >
+                                class="form-control form-control m-0" required>
                                 <option value="">Select Comrade</option>
                                 @foreach ($comrades as $comrade)
                                     <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
@@ -205,12 +205,12 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" name="type" id="type-others" value="others" hidden  />
+                <input type="text" name="type" id="others" value="others" hidden  />
                 <input type="text" name="service_provider_id" value="{{$providers->id}}" hidden>
                 <input type="text" name="order_id" value="{{$order_id}}" hidden>
                 <input type="text" name="user_id" value="{{auth()->user()->id}}" hidden>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label ">
                             <i class="font-icon font-icon-answer"></i>
@@ -226,7 +226,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
     </div>

@@ -48,12 +48,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="@if($balance > 499) #amount_withdraw @else # @endif"
+                    <a href="#" data-toggle="modal" data-target="@if($balance > 599) #amount_withdraw @else # @endif"
                         style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 499) disabled @endif ">ক্যাশ
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 599) disabled @endif ">ক্যাশ
                         আউট করুন </a>
                 </div>
-                <div class="tbl-cell pb-0">
+                {{-- <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
                         <div class="tbl-row">
                             <div class="tbl-cell">
@@ -73,7 +73,7 @@
                         style="width:100%"
                         class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে
                         পরিবর্তন করুন </a>
-                </div>
+                </div> --}}
                 <div class="tbl-cell pb-0">
                     <div class="tbl tbl-item">
                         <div class="tbl-row">
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <a href="{{route('esp.comrade')}}" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                 </div>
                 <div class="tbl-cell">
                     <div class="tbl tbl-item">
@@ -194,7 +194,7 @@
                     <thead>
                         <tr>
                             <th>তারিখ </th>
-                            <th>বিবরণ </th>
+                            <th>বিস্তারিত </th>
                             <th>TXN ID</th>
                             <th class="text-center">পরিমান </th>
                         </tr>
@@ -251,7 +251,7 @@
                                 <div>সময় </div>
                             </th>
                             <th>
-                                <div> বিবরণ </div>
+                                <div> বিস্তারিত </div>
                             </th>
                             <th>
                                 <div> একশন </div>
@@ -266,11 +266,11 @@
                             <td>{{$order->area}}</td>
                             <td>{{$order->order_date}}/{{$order->order_time}}</td>
                             <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত </button>
                             </td>
                             <td>
                                 @if($order->status == '0')
-                                <button class="btn btn-sm btn-info" data-toggle="modal"
+                                <button class="btn btn-sm btn-mm" data-toggle="modal"
                                     data-target="#allocate-{{$order->id}}"
                                     data-item="{{ $order->id }}">সহকারী</button> @else
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
@@ -356,7 +356,7 @@
         @endif
     </td>
     <td>
-        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#allocate-{{$actord->id}}"
+        <button class="btn btn-sm btn-mm" data-toggle="modal" data-target="#allocate-{{$actord->id}}"
             data-item="{{ $actord->id }}">Chnage
             Comrade</button>
     </td>
@@ -413,7 +413,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -591,14 +591,14 @@
                     @csrf
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
-                        <div class="col-sm-10">
-                            <input type="number" min="500" max="{{$balance > 500 ? $balance - 500 : 0}}" name="amount"
+                        <div class="col-sm-12">
+                            <input type="number" min="100" max="{{$balance > 500 ? $balance - 500 : 0}}" name="amount"
                                 class="form-control" placeholder="500" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="amount" class="col-sm-4 col-form-label">Enter Amount</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <select name="type" id="type" class="form-control">
                                 <option value="bkash">Bkash</option>
                                 <option value="surecash">SureCash</option>
@@ -607,17 +607,24 @@
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label for="mfs_number" class="col-sm-4 col-form-label">MFS
+                        <label for="mfs_number" class="col-sm-12 col-form-label">MFS
                             Number(Bkash,Rocket,SureCash)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <input type="text" class="form-control" id="mfs_number" name="mfs_number"
                                 placeholder="017XXXXXXXX" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="mfs_number" class="col-sm-12 col-form-label">To Conferm Enter your password</label>
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="mfs_number" name="mfs_number"
+                                 required>
                         </div>
                     </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             </form>

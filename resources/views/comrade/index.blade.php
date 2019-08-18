@@ -36,8 +36,7 @@
                         </div>
                         <div class="profile-card">
                             <div class="profile-card-photo">
-                                <img style="width: 100% !important;height: 100px;"
-                                    src="
+                                <img style="width: 100% !important;height: 100px;" src="
                                     @if($allord->type == 'self')
                                      {{$allord->user->photo != null ? $allord->user->photo : asset('/dashboard/img/avatar-1-256.png') }}
                                      @else 
@@ -47,8 +46,10 @@
                             </div>
                             <div class="profile-card-name"><strong><i class="fa fa-user text-secondary"></i></strong>
                                 {{$allord->order->name}}</div>
-                            {{-- <a href="tel:{{$allord->user->phone_no}}" class="text-secondary"><div class="profile-card-status"><strong><i class="fa fa-phone text-secondary"></i></strong>{{substr($allord->user->phone_no, 3)}}
-                                </div></a> --}}
+                            {{-- <a href="tel:{{$allord->user->phone_no}}" class="text-secondary"><div
+                                class="profile-card-status"><strong><i
+                                        class="fa fa-phone text-secondary"></i></strong>{{substr($allord->user->phone_no, 3)}}
+                            </div></a> --}}
                             <div class="profile-card-status "><strong><i class="fa fa-map text-secondary"></i></strong>
                                 {{$allord->user->address}}</div>
 
@@ -64,7 +65,7 @@
                                 </div>
                                 <div class="tbl-cell">
                                     <b>5 <i class="font-icon font-icon-star text-secondary"></i> </b>
-                                    গড় রেটিং 
+                                    গড় রেটিং
                                 </div>
                             </div>
                         </div>
@@ -79,14 +80,10 @@
                                 <div class="col-md-6">
                                     <button class="btn btn-mm btn-sm col-md-12 d-none">নতুন সার্ভিস যোগ করুন </button>
                                 </div>
-                                <div class="col-md-6">
-                                    <form action="{{route('order.cancel')}}" method="POST" id="cancel_order">
-                                        @csrf
-                                        <input type="text" name="id" value="{{$allord->order->id}}" hidden>
-                                        <button class="btn btn-danger col-md-12">অর্ডার বাতিল করুন </button>
-                                    </form>
-                                <!-- <button class="btn btn-danger btn-sm col-md-12 ">Cancel Order</button> -->
+                                <div class="col-md-6">                        
+                                        <a href="{{route('comrade.cancel-order',$allord->order->id)}}" class="btn btn-danger col-md-12">অর্ডার বাতিল করুন</a>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card mb-3" style="height: 250px;overflow: auto;">
@@ -97,7 +94,7 @@
                                         <th>মূল্য</th>
                                         <th>অতিরিক্ত </th>
                                         <th>পরিমান </th>
-                                        <th>মোট  </th>
+                                        <th>মোট </th>
                                         <th class="text-center">একশন </th>
                                     </tr>
                                 </thead>
@@ -110,8 +107,27 @@
                                         <td>{{$booking->aditional_price}}</td>
                                         <td>{{$booking->quantity}}</td>
                                         <td>{{$booking->total_price}}</td>
-                                        <td><button class="btn btn-rounded btn-sm btn-success-outline finsih_sub"><i
-                                                    class="fa fa-thumbs-up"></i> শেষ </button></td>
+                                        <td>
+                                            @if($allord->order->status > 2)
+                                            <button class="btn btn-rounded btn-sm
+                                            @if($booking->status == 0)
+                                                 btn-success-outline
+                                            @endif
+                                               finsih_sub" data-id="{{$booking->id}}"
+                                                id="finsih_sub{{$booking->id}}"><i class="fa fa-thumbs-up"></i>
+                                                @if($booking->status == 0)
+                                                শেষ
+                                                @else
+                                                কাজ শেষ
+                                                @endif
+
+                                            </button>
+                                            @else 
+                                            -
+                                            @endif
+                                        </td>
+                                       
+
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -131,24 +147,29 @@
                                 @switch($allord->order->status)
                                 @case(1)
                                 <input type="text" value="2" name="status" hidden>
-                                <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু করুন </button> @break
+                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ শুরু করুন
+                                </button> @break
                                 @case(2)
                                 <input type="text" value="3" name="status" hidden>
-                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন </button>
+                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন
+                                </button>
                                 @break
                                 @case(3)
                                 @if($allord->type == 'self')
-                                        <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য অপেক্ষা করুন </button>
+                                <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য
+                                    অপেক্ষা করুন </button>
 
-                                @else 
-                                        <input type="text" value="5" name="status" hidden>
-                                        <input type="text" value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
-                                            name="amount" hidden>
-                                        <input type="text" value="{{$allord->service_provider_id}}"
-                                            name="service_provider_id" hidden>
-                                        <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
-                                        <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
-                                 @endif
+                                @else
+                                <input type="text" value="5" name="status" hidden>
+                                <input type="text"
+                                    value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
+                                    name="amount" hidden>
+                                <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
+                                    hidden>
+                                <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
+                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
+                                </button>
+                                @endif
                                 @break
                                 @case(4)
                                 <ul class="list-group mb-2">
@@ -171,7 +192,8 @@
                                 <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
-                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
+                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
+                                </button>
                                 @break
                                 @default
                                 <input type="text" value="" name="status" hidden> @endswitch
@@ -206,11 +228,23 @@
     $(document).ready(function() {
 
         $('.finsih_sub').click(function(){
-            $(this).removeClass('btn-primary-outline');
-            $(this).addClass('btn-success-outline');
-            $(this).find('i.fa').toggleClass('fa-user fa-thumbs-up');
-            // $(this).find('i').addClass('');
-            $(this).text('Finished');
+            $id = $(this).data('id');
+            // console.log($id);
+            // console.log("{{asset('/order-bit-done/')}}/"+$id);
+            $.ajax({
+                    type: "get",
+                    url: "{{asset('/order-bit-done/')}}/"+$id,
+                    dataType: "html",
+                    success: function (response) {
+                        if(response == 1){
+                            $("#finsih_sub"+$id).removeClass('btn-primary-outline');
+                            $("#finsih_sub"+$id).addClass('btn-success-outline');
+                            $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
+                            $("#finsih_sub"+$id).text('কাজ শেষ');
+                        }
+                    }
+                });
+            
         });
 
         // $('#cancel_order').submit(function(e){

@@ -40,26 +40,7 @@
                             style="width:100%"
                             class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($balance < 999): ?> disabled <?php endif; ?> ">ক্যাশ আউট করুন </a>
                     </div>
-                    <div class="tbl-cell pb-0">
-                        <div class="tbl tbl-item">
-                            <div class="tbl-row">
-                                <div class="tbl-cell">
-                                    <div class="">
-                                        <div class="title">রিওয়ার্ড পয়েন্ট</div>
-                                        <div class="amount-sm">টাকা ৳<?php echo e($rp/20); ?>/-</div>
-                                    </div>
-                                </div>
-                                <div class="tbl-cell">
-                                    <div class="col-md-4">
-                                        <header> <strong><?php echo e($rp); ?></strong> </header>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" data-toggle="modal" data-target=" <?php if($rp < 4000): ?> #rp_withdraw <?php endif; ?> "
-                            style="width:100%"
-                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 <?php if($rp < 3999 ): ?> disabled <?php endif; ?> ">ক্যাশে পরিবর্তন করুন </a>
-                    </div>
+                    
                     <div class="tbl-cell pb-0">
                         <div class="tbl tbl-item">
                             <div class="tbl-row">
@@ -78,7 +59,7 @@
                             </div>
                         </div>
                         <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
-                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                     </div>
                     <div class="tbl-cell">
                         <div class="tbl tbl-item">

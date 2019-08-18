@@ -76,7 +76,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
     Route::post("/user-profile-update", 'UsersController@updateProfile')->name('user-profile-update');
     Route::post("/user-photo-update", 'UsersController@updateProfilePicture')->name('user-photo-update');
     // Route::post("/changepassword", 'UsersController@postC)->namehangePassword')->name('changePasswordPost');
-    
 
     /** ------------ sabbir works here ------------------- */
     Route::get('/', 'UsersController@profile')->name('dashboard'); //dashboard
@@ -99,6 +98,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
     Route::get('/order-details-view', 'UsersController@viewOrder')->name('order-details'); // booking for others
 
     Route::get('/remove-sub/{booking_id}', 'UsersController@removeItem');
+   
 });
 
 Route::post('/service_provider_allocate', 'Admin\ServiceAllocatorController@service_allocate')->name('service_provider_allocate');
@@ -276,7 +276,8 @@ Route::get('/confirm', 'BookingController@OrderConfirm')->name('order.confirm');
 Route::post('/confirm', 'BookingController@OrderConfirmDone')->name('add.order-confirm'); // store date and time
 
 Route::post('/cancel', 'BookingController@CancelOrder')->name('cancel.order'); // booking cancel
-Route::post('order-cancel', 'BookingController@CancelOrder')->name('order.cancel'); // booking cancel
+Route::post('/order-cancel', 'BookingController@CancelOrder')->name('order.cancel'); // booking cancel
+Route::get('/order-bit-done/{id}', 'BookingController@OrderBitFinish')->name('order.finish'); // booking cancel
 
 /** Bookings route in BookingController end*/
 
@@ -311,6 +312,20 @@ Route::group(['prefix' => 'esp', 'middleware' => ['esp']], function () {
 
     Route::post('/recharge', 'RechargeRequestController@request')->name('esp.recharge.request');
 
+
+    Route::get('/cancel-order/{id}', 'espController@cancelOrder')->name('esp.cancel-request');
+
+    Route::get('/manual-1', 'espController@manualService')->name('esp.manual-service-allocate');
+    Route::get('/manual-2', 'espController@manualPhoneDist')->name('esp.manual-phone-dist');
+    Route::get('/manual-3', 'espController@manualComradeAddDel')->name('esp.manual-comrade-add-del');
+    Route::get('/manual-4', 'espController@manualComradeLogin')->name('esp.manual-comrade-login');
+    Route::get('/manual-5', 'espController@manualComradeWork')->name('esp.manual-comrade-work');
+    Route::get('/manual-6', 'espController@manualRecharge')->name('esp.manual-recharge');
+    Route::get('/manual-7', 'espController@manualCashout')->name('esp.manual-cashout');
+    Route::get('/manual-8', 'espController@manualSelfOrder')->name('esp.manual-self-order');
+    Route::get('/manual-9', 'espController@manualSPLogin')->name('esp.manual-sp-login');
+    // Route::get('/manual-1', 'espController@manualService')->name('esp.manual-service');
+
 });
 
 Route::group(['prefix' => 'fsp', 'middleware' => ['auth']], function () {
@@ -324,6 +339,8 @@ Route::group(['prefix' => 'comrade', 'middleware' => ['auth']], function () {
     Route::get('/dashboard', 'comradeController@index')->name('comrade-dashboard'); // esp dahsboard
     Route::get('/job-history', 'comradeController@jobHistory')->name('comrade-history'); // esp job-history
     Route::get('/order', 'comradeController@behalfOrder')->name('comrade.behalf.order');
+    Route::get('/faq', 'comradeController@faq')->name('comrade.faq');
+    Route::get('/order-cancel/{id}', 'comradeController@cancelOrder')->name('comrade.cancel-order');
 });
 
 /** New Available order  */

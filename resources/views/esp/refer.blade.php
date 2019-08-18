@@ -41,7 +41,7 @@
                             style="width:100%"
                             class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($balance < 999) disabled @endif ">ক্যাশ আউট করুন </a>
                     </div>
-                    <div class="tbl-cell pb-0">
+                    {{-- <div class="tbl-cell pb-0">
                         <div class="tbl tbl-item">
                             <div class="tbl-row">
                                 <div class="tbl-cell">
@@ -60,7 +60,7 @@
                         <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
                             style="width:100%"
                             class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে পরিবর্তন করুন </a>
-                    </div>
+                    </div> --}}
                     <div class="tbl-cell pb-0">
                         <div class="tbl tbl-item">
                             <div class="tbl-row">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <a href="{{route('esp.comrade')}}" style="width:100%"
-                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিবরণ </a>
+                            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                     </div>
                     <div class="tbl-cell">
                         <div class="tbl tbl-item">

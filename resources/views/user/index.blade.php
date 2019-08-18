@@ -70,7 +70,7 @@
                                     confirmation.</b></p>
                             <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
                             @endif
-                            @else 
+                            @else
                             <p>Order has been accepted , a comrade will allocated soon!</p>
                             @endif
                             @endif
@@ -88,14 +88,14 @@
                     </div>
                 </div>
             </div>
-            <div class="widget-simple-sm-bottom p-0">
+            {{-- <div class="widget-simple-sm-bottom p-0">
                 <div class="row">
                     <div style="@if ($activeOrders) cursor: pointer @else cursor: not-allowed @endif"
                         class="col-6 border-right p-3">Add New Service</div>
                     <div style="@if ($activeOrders) @if ($activeOrders->status == 4) cursor: pointer @else cursor: not-allowed @endif @endif"
                         class="col-6 border-left p-3">Make Payment</div>
                 </div>
-            </div>
+            </div> --}}
         </section>
         <!--.widget-simple-sm-->
     </div>
@@ -104,15 +104,26 @@
             <div class="widget-simple-sm-icon  p-3">
                 {{-- <i class="font-icon font-icon-cloud-download color-green"></i> --}}
                 <h4 class="p-0 m-0 font-weight-bold">Reward Point</h4>
-                <h3 class="text-uppercase text-center font-weight-bold text-mm p-0 m-0">{{$rp}}</h3>
+                <h3 class="text-uppercase text-center font-weight-bold text-mm p-0 m-0" data-toggle="tooltip"
+                    data-placement="bottom" title="Equivalent Amount: BDT {{$rp/20}}/-">{{$rp}}</h3>
             </div>
             <div class="widget-simple-sm-bottom p-0">
                 <div class="row">
                     <div style="@if ($rp >= 4000) cursor: pointer @else cursor: not-allowed @endif"
-                        class="col-6 border-right p-3"> Adjust payment with RP</div>
-                    <div data-toggle="modal" data-target="@if ($rp >= 4000) #rp_withdraw @else # @endif"
+                        class="col-6 border-right p-3" data-toggle="tooltip" data-placement="bottom"
+                        title="You can pay 50% of your total bill with Reward Point">Adjust Bill</div>
+                    <div @if($rp>= 4000)
+                        data-toggle="modal"
+                        data-target="#rp_withdraw"
+                        @else
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="You need minimum 4000 Reward Point to withdrawal"
+                        @endif
                         style="@if ($rp >= 4000) cursor: pointer @else cursor: not-allowed @endif"
-                        class="col-6 border-left p-3">Ask for Cash out
+
+
+                        class="col-6 border-left p-3">Cash Out
                     </div>
                 </div>
             </div>
@@ -272,20 +283,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-            <header class="box-typical-header panel-heading text-center">
-                <h6 class="text-center m-0 p-0">
-                    <strong>
-                        Promotional Content
-                    </strong>
-                </h6>
-            </header>
-            <div class="box-typical-body panel-body ">
-                <img style="width:100%" class="img-responsive" src="{{asset('uploads/promoimage/advartizement.png')}}" alt="">
-            </div>
-            <!--.box-typical-body-->
-        </section>
-        <!--.box-typical-dashboard-->
+        <div class="box-typical-body panel-body ">
+            <img style="width:100%" class="img-responsive" src="{{asset('/images/Product-Promo-Banner.png')}}" alt="">
+        </div>
     </div>
 
 </div>
@@ -293,7 +293,7 @@
 @if($activeOrders->status != 0) {{-- <button data-target="#payModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
     Launch demo modal
  </button> --}}
- @if($activeOrders->serviceSystem->first()->comrade)
+@if($activeOrders->serviceSystem->first()->comrade)
 <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -310,7 +310,9 @@
                                 <strong>{{$activeOrders->serviceSystem->first()->comrade->c_name}}</strong> Mama ,<br />
                                 Just finish your work. And Waiting for your payment.</p>
                             <br>
-                            <p>Total Charge: <strong>{{($sumOrder->total_price + $sumOrder->extra_charge) - promocheck($sumOrder->user_id, $sumOrder->total_price) }}BDT</strong> </p>
+                            <p>Total Charge:
+                                <strong>{{($sumOrder->total_price + $sumOrder->extra_charge) - promocheck($sumOrder->user_id, $sumOrder->total_price) }}BDT</strong>
+                            </p>
                             <form action="{{route('service-update-sts')}}" method="post">
                                 @csrf
                                 <input type="text" name="status" value="4" hidden>
@@ -323,7 +325,7 @@
                                             <label class="input-group-text border-mm" for="inputGroupSelect01">Payment
                                                 Option</label>
                                         </div>
-                                        <select class="custom-select border-mm" id="inputGroupSelect01">
+                                        <select name="pay_type" class="custom-select border-mm" id="inputGroupSelect01">
                                             <option selected>Choose...</option>
                                             <option value="1">Cash</option>
                                             <option value="2">Sure Cash</option>
@@ -412,4 +414,5 @@
      });
 
 </script>
+
 @endsection

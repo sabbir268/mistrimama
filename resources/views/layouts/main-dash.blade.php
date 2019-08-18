@@ -313,7 +313,7 @@
 	</script>
 
 
-	<script>
+	{{-- <script>
 		(function (window, document) {
         var loader = function () {
             var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
@@ -323,7 +323,7 @@
 
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
-	</script>
+	</script> --}}
 </body>
 
 

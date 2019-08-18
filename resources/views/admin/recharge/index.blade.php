@@ -32,9 +32,11 @@
                             <th>SL</th>
                             <th>SP Name</th>
                             <th>SP Category</th>
-                            <th>MFS</th>
-                            <th>Trx. NO</th>
-                            <th>Amount</th>
+                            <th>Media</th>
+                            <th>Actual Amount</th>
+                            <th>Media Charge</th>
+                            <th>ESP Amount</th>
+                            <th>TXN. NO</th>
                             <th class="align-center">Action</th>
                         </tr>
                     </thead>
@@ -53,8 +55,10 @@
                                 @endif
                             </td>
                             <td>{{$request->mfs}}</td>
-                            <td>{{$request->trxn }}</td>
+                            <td>{{$request->amount - ($request->amount * MfsCharge($request->mfs)/100) }}</td>
+                            <td>{{MfsCharge($request->mfs)}}</td>
                             <td>{{$request->amount}}</td>
+                            <td>{{$request->trxn }}</td>
                             <td class="align-center">
                                 <div class="btn-group">
                                     @if($request->status == 0)

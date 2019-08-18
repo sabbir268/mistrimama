@@ -172,7 +172,7 @@
                                     <div>সময় </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>একশন </div>
@@ -190,7 +190,7 @@
 
                                 </td>
                                 <td> <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিবরণ </button>
+                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিস্তারিত </button>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -231,7 +231,7 @@
                                     <div>সহকারী </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>অবস্থা </div>
@@ -253,7 +253,7 @@
                                 <td><?php echo e($actord->comrade ? $actord->comrade->c_name : 'No Comrade assign yet.'); ?></td>
                                 <td> <button class="btn btn-sm btn-success" data-toggle="modal"
                                         data-target="#view-act-<?php echo e($actord->id); ?>"
-                                        data-item="<?php echo e($actord->id); ?>">বিবরণ </button>
+                                        data-item="<?php echo e($actord->id); ?>">বিস্তারিত </button>
                                 </td>
                                 <td>
                                     <?php if($actord->comrade): ?>
@@ -341,7 +341,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -442,7 +442,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডার এর বিবরণ</h4>
+                <h4 class="modal-title">অর্ডার এর বিস্তারিত</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -543,7 +543,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ</h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -551,7 +551,7 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="card-header col-md-6">
-                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিবরণ </span></strong></u><br>
+                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিস্তারিত </span></strong></u><br>
                                     নাম :<strong><?php echo e($actOrder->name); ?></strong><br> ফোন:
                                     <strong><?php echo e($actOrder->phone); ?></strong><br>
                                     এলাকা : <strong><?php echo e($actOrder->area); ?></strong><br>

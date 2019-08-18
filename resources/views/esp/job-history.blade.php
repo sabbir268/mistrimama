@@ -77,7 +77,7 @@
                     <td>
                         <div>
                             <button data-toggle="modal" data-target="#orderDetailsModal{{$order->id}}"
-                                class="btn btn-success btn-sm">বিবরণ </button>
+                                class="btn btn-success btn-sm">বিস্তারিত </button>
                         </div>
                     </td>
                     <td>
@@ -137,7 +137,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">সার্ভিসের বিবরণ </h5>
+                <h5 class="modal-title" id="exampleModalLabel">সার্ভিসের বিস্তারিত </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -165,9 +165,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">বাতিল </button>
-            </div>
+            
         </div>
     </div>
 </div>

@@ -68,11 +68,14 @@
 
             </section>
             <!--.box-typical-->
-            <form action="{{route('cancel.order')}}" method="POST">
+
+            @if ($activeOrders->status == '0' || $activeOrders->status == '1')
+            <form action="{{route('order.cancel')}}" method="POST">
                 @csrf
                 <input type="text" name="id" value="{{$activeOrders->id}}" hidden>
                 <button class="btn btn-danger col-md-12">Cancel Order</button>
             </form>
+            @endif
         </div>
         <!--.col- -->
         <div class="col-md-8">

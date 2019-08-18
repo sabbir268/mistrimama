@@ -126,7 +126,7 @@
             <thead>
                 <tr>
                     <th>তারিখ </th>
-                    <th>বিবরণ </th>
+                    <th>বিস্তারিত </th>
                     <th>TXN ID</th>
                     <th class="text-center">পরিমান </th>
                 </tr>
@@ -165,7 +165,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">সর্বশেষ উত্তোলনের বিবরণ </h5>
+                <h5 class="modal-title" id="exampleModalLabel">সর্বশেষ উত্তোলনের বিস্তারিত </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -178,7 +178,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>তারিখ</th>
-                                    <th>বিবরণ</th>
+                                    <th>বিস্তারিত</th>
                                     <th>TXNID </th>
                                     <th>মূল্য</th>
                                     <th>পরিমাণ</th>
@@ -214,12 +214,12 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h5 class="p-0 mt-2 m-0 border-bottom">কাস্টমারের বিবরণ :</h5>
+                        <h5 class="p-0 mt-2 m-0 border-bottom">কাস্টমারের বিস্তারিত :</h5>
                         <h6 class="p-0 m-0 ">নাম : <?php echo e($lastServiceAmount ? $lastServiceAmount->name : 0); ?> </h5>
                             <h6 class="p-0 m-0">ঠিকানা: <?php echo e($lastServiceAmount ?  $lastServiceAmount->address : 0); ?> </h5>
                     </div>
                     <div class="col-md-6">
-                        <h5 class="p-0 mt-2 m-0 border-bottom">সহকর্মীর বিবরণ :</h5>
+                        <h5 class="p-0 mt-2 m-0 border-bottom">সহকারীর বিস্তারিত :</h5>
                         <h6 class="p-0 m-0 ">নাম :
                             <?php if($lastServiceAmount): ?> <?php echo e($lastServiceAmount->comrade ? $lastServiceAmount->comrade->c_name : ''); ?> <?php endif; ?> </h5>
                             <h6 class="p-0 m-0">ঠিকানা :
@@ -292,7 +292,7 @@
                             <thead>
                                 <tr>
                                     <th>তারিখ</th>
-                                    <th>বিবরণ</th>
+                                    <th>বিস্তারিত</th>
                                     <th>TXN ID</th>
                                     <th class="text-center">পরিমান </th>
                                 </tr>

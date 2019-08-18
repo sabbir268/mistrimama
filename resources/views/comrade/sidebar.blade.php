@@ -8,6 +8,10 @@
             <a href="{{route('comrade.behalf.order')}}"><span><i class="font-icon font-icon-dashboard"></i><span
                         class="lbl">অর্ডার করুন</span></span></a>
         </li>
+        <li>
+            <a href="{{route('comrade.faq')}}"><span><i class="font-icon font-icon-dashboard"></i><span
+                        class="lbl">জিজ্ঞাসা </span></span></a>
+        </li>
         <li class="sr-only"><a href="{{route('comrade-history')}}"><span
                     class="font-icon glyphicon glyphicon-tasks"></span><span class="lbl">Job History</span></a></li>
 

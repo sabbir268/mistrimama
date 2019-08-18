@@ -119,10 +119,11 @@
 }
 @endif
 
-</style>
+</style> 
 
 
-<div class="col-md-12 alert alert-danger" id="get_order_alert" >দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন। </div>
+<div class="col-md-12 alert alert-danger" id="get_order_alert">দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন।
+</div>
 
 <section class="tabs-section" id="jobs_get">
     <div class="tabs-section-nav tabs-section-nav-icons">
@@ -132,7 +133,7 @@
                     <a class="nav-link text-mm" href="#tabs-1-tab-1" role="tab" data-toggle="tab" aria-selected="true">
                         <span class="nav-link-in text-mm">
                             <i class="font-icon font-icon-wallet text-mm"></i>
-                            <span class="invisible">আস্শদাস</span>  ফোন অর্ডার <span class="invisible">আস্কজদাস</span> 
+                            <span class="invisible">আস্শদাস</span> ফোন অর্ডার <span class="invisible">আস্কজদাস</span>
                         </span>
                     </a>
                 </li>
@@ -141,8 +142,7 @@
                         aria-selected="false">
                         <span class="nav-link-in text-mm">
                             <span class="font-icon font-icon-player-subtitres text-mm"></span>
-                            <span class="invisible">Request fr</span>চলতি কাজ <span
-                                class="invisible">Request fr</span>
+                            <span class="invisible">Request fr</span>চলতি কাজ <span class="invisible">Request fr</span>
                         </span>
                     </a>
                 </li>
@@ -172,7 +172,7 @@
                                     <div>সময় </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>একশন </div>
@@ -189,7 +189,8 @@
                                 <td>{{date('d-m-Y',strtotime($order->order->order_date))}}/{{$order->order->order_time}}
                                 </td>
                                 <td> <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিবরণ </button>
+                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত
+                                    </button>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -198,12 +199,13 @@
                                                 data-toggle="tooltip" data-placement="top" title="Accept & Allowcate"
                                                 class="fa fa-check"></i></button> -->
                                         <button class="btn btn-sm btn-success" data-toggle="modal"
-                                            data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}">গ্রহন ও বন্ঠন</button>
-                                        
+                                            data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}">গ্রহন ও
+                                            বন্ঠন</button>
+
                                         <!-- <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}"> <i
                                                 data-toggle="tooltip" data-placement="top" title="Reject"
                                                 class="fa fa-times"></i> </button> -->
-                                        <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}">বাতিল</button>
+                                        <a href="{{route('esp.cancel-request',$order->id)}}" class="btn btn-sm btn-danger">বাতিল</a>
                                     </div>
                                 </td>
                             </tr>
@@ -228,13 +230,13 @@
                                     <div>সার্ভিস </div>
                                 </th>
                                 <th>
-                                    <div> অর্ডারকারী  </div>
+                                    <div> অর্ডারকারী </div>
                                 </th>
                                 <th>
                                     <div>সহকারী </div>
                                 </th>
                                 <th>
-                                    <div>বিবরণ </div>
+                                    <div>বিস্তারিত </div>
                                 </th>
                                 <th>
                                     <div>অবস্থা </div>
@@ -254,28 +256,29 @@
                                 <td>{{$actord->category->name}}</td>
                                 <td>{{$actord->name}}</td>
                                 <td>{{$actord->comrade ? $actord->comrade->c_name : 'No Comrade assign yet.'}}</td>
-                                <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-act-{{$actord->id}}"
-                                        data-item="{{ $actord->id }}">বিবরণ </button>
+                                <td> <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#view-act-{{$actord->id}}" data-item="{{ $actord->id }}">বিস্তারিত
+                                    </button>
                                 </td>
                                 <td>
                                     @if($actord->comrade)
                                     @if($actord->status == 1)
-                                    <span class="text-warning">সহকারী যাচ্ছে </span>
+                                    <span class="text-dark">সহকারী যাচ্ছে </span>
                                     @endif
                                     @if($actord->status == 2)
                                     <span class="text-danger">সহকারী কাজ করছে</span>
                                     @endif
                                     @if($actord->status == 3)
-                                    <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য অপেক্ষামান</span>
+                                    <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য
+                                        অপেক্ষামান</span>
                                     @endif
                                     @if($actord->status == 4)
                                     <span class="text-success"> সহকারী পেমেন্ট গ্রহন করেছে </span>
                                     @endif
                                     @else
-                                    <button class="btn btn-sm btn-info" data-toggle="modal"
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-{{$actord->id}}"
-                                        data-item="{{ $actord->id }}">Allocate</button>
+                                        data-item="{{ $actord->id }}">বন্টন</button>
                                     @endif
                                 </td>
 
@@ -284,51 +287,51 @@
                                         @csrf
                                         <!-- -->
                                         <input type="text" value="{{$actord->id}}" name="order_id" hidden>
-                                        <input type="text" value="{{$actord->serviceSystem->id}}" name="s_sys_id" hidden>
+                                        <input type="text" value="{{$actord->serviceSystem->id}}" name="s_sys_id"
+                                            hidden>
                                         @switch($actord->status)
                                         @case(1)
                                         <input type="text" value="2" name="status" hidden>
-                                        <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু  </button> @break
+                                        <button type="submit" class="btn  btn-success" style="width:100%">কাজ শুরু
+                                        </button> @break
                                         @case(2)
                                         <input type="text" value="3" name="status" hidden>
-                                        <button type="submit" class="btn  btn-success" style="width:100%"> কাজ শেষ </button>
+                                        <button type="submit" class="btn  btn-success" style="width:100%"> কাজ শেষ
+                                        </button>
                                         @break
                                         @case(3)
-                                        @if($actord->type == 'self')
-                                            <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য অপেক্ষামান </button>
-
-                                        @else 
-                                            <input type="text" value="5" name="status" hidden>
-                                            <input type="text" value="{{ (($actord->total_price + $actord->extra_price) - $actord->disc)  }}" name="amount" hidden>
-                                            <input type="text" value="{{$actord->sp_id}}"  name="service_provider_id" hidden>
-                                            <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
-                                            <button type="submit" class="btn  btn-success" style="width:100%"> পেমেন্ট সংগ্রহ  </button>
-                                        @endif
-
+                                        <input type="text" value="5" name="status" hidden>
+                                        <input type="text"
+                                            value="{{ (($actord->total_price + $actord->extra_price) - $actord->disc)  }}"
+                                            name="amount" hidden>
+                                        <input type="text" value="{{$actord->sp_id}}" name="service_provider_id" hidden>
+                                        <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
+                                        <button type="submit" class="btn  btn-success" style="width:100%"> পেমেন্ট
+                                            সংগ্রহ </button>
                                         @break
                                         @case(4)
                                         {{-- <ul class="list-group mb-2">
                                             <li class="list-group-item p-0 m-0 border-0 ">User Paid: <span
                                                     class="invisible">1232</span>
                                                 <strong>{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
-                                                    টাকা</strong></li>
-                                            <li class="list-group-item p-0 m-0 border-0 "> ডিসকাউন্ট :
-                                                <strong>{{$sumOrder->disc  }} টাকা</strong></li>
-                                            <li class="list-group-item p-0 m-0"></li>
-                                            <li class="list-group-item p-0 m-0 border-0 "> ইনকাম : <span
-                                                    class="invisible">123s2</span>
-                                                <strong>{{(($sumOrder->total_price + $sumOrder->extra_price) ) }}
-                                                    টাকা</strong>
-                                            </li>
+                                        টাকা</strong></li>
+                                        <li class="list-group-item p-0 m-0 border-0 "> ডিসকাউন্ট :
+                                            <strong>{{$sumOrder->disc  }} টাকা</strong></li>
+                                        <li class="list-group-item p-0 m-0"></li>
+                                        <li class="list-group-item p-0 m-0 border-0 "> ইনকাম : <span
+                                                class="invisible">123s2</span>
+                                            <strong>{{(($sumOrder->total_price + $sumOrder->extra_price) ) }}
+                                                টাকা</strong>
+                                        </li>
                                         </ul> --}}
                                         <input type="text" value="5" name="status" hidden>
                                         {{-- <input type="text"
                                             value="{{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}"
-                                            name="amount" hidden> --}}
-                                        <input type="text" value="{{$actord->sp_id}}"
-                                            name="service_provider_id" hidden>
+                                        name="amount" hidden> --}}
+                                        <input type="text" value="{{$actord->sp_id}}" name="service_provider_id" hidden>
                                         <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
-                                        <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন</button>
+                                        <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন
+                                            করুন</button>
                                         @break
                                         @default
                                         <input type="text" value="" name="status" hidden> @endswitch
@@ -336,8 +339,9 @@
                                 </td>
 
                                 <td>
-                                    <button class="btn btn-sm btn-info" data-toggle="modal"
-                                        data-target="#allocate-{{$actord->id}}" data-item="{{ $actord->id }}">সহকারী পরিবর্তন</button>
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-{{$actord->id}}" data-item="{{ $actord->id }}">সহকারী
+                                        পরিবর্তন</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -359,7 +363,10 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ </h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -399,7 +406,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-{{$order->id}}"
-                    data-item="{{ $order->id }}" class="btn btn-primary">Allocate</button>
+                    data-item="{{ $order->id }}" class="btn btn-primary">বন্টন</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -417,6 +424,9 @@
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
             </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <form method="post" action="{{ route('service_provider_allocate') }}">
                 {{csrf_field()}}
                 <input type="hidden" name="order_id" value="{{$order->id}}" />
@@ -445,8 +455,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">এলোকেট </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
+                    <button type="submit" class="btn btn-primary">বন্টন </button>
+
                 </div>
             </form>
         </div>
@@ -463,7 +473,10 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডার এর বিবরণ</h4>
+                <h4 class="modal-title">অর্ডার এর বিস্তারিত</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -503,8 +516,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-{{$order->order->id}}"
-                    data-item="{{ $order->order->id }}" class="btn btn-primary">এলোকেট </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
+                    data-item="{{ $order->order->id }}" class="btn btn-primary">বন্টন</button>
             </div>
         </div>
 
@@ -520,6 +532,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('service_provider_allocate') }}">
                 {{csrf_field()}}
@@ -550,7 +565,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">এলোকেট</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল </button>
+
                 </div>
             </form>
         </div>
@@ -567,7 +582,10 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিবরণ</h4>
+                <h4 class="modal-title">অর্ডারের বিস্তারিত</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -575,7 +593,8 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="card-header col-md-6">
-                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিবরণ </span></strong></u><br>
+                                    <u><strong><span class="m-0 typical-header">কাস্টমার এর বিস্তারিত
+                                            </span></strong></u><br>
                                     নাম :<strong>{{$actOrder->name}}</strong><br> ফোন:
                                     <strong>{{$actOrder->phone}}</strong><br>
                                     এলাকা : <strong>{{$actOrder->area}}</strong><br>
@@ -583,7 +602,8 @@
                                 </div>
                                 <div class="card-header col-md-6">
                                     <u><strong><span class="m-0 typical-header">সহকারী </span></strong></u><br>
-                                    নাম :<strong>{{$actOrder->comrade ? $actOrder->comrade->c_name : 'No comrade allowcated'}}</strong><br>
+                                    নাম
+                                    :<strong>{{$actOrder->comrade ? $actOrder->comrade->c_name : 'No comrade allowcated'}}</strong><br>
                                     ফোন :
                                     <strong>{{$actOrder->comrade ? $actOrder->comrade->c_phone_no : '-'}}</strong>
                                 </div>
@@ -595,6 +615,7 @@
                                         <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
                                         <th>মোট মূল্য </th>
+                                        <th>একশন  </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -605,6 +626,25 @@
                                         <td>{{$booking->quantity}}</td>
                                         <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
                                                 - 1)) }} @endif</td>
+                                        <td>
+                                            @if($actOrder->status > 1)
+                                            <button class="btn btn-rounded btn-success-outline btn-sm
+                                                @if($booking->status == 0)
+                                                     btn-success-outline
+                                                @endif
+                                                   finsih_sub" data-id="{{$booking->id}}"
+                                                id="finsih_sub{{$booking->id}}"><i class="fa fa-thumbs-up"></i>
+                                                @if($booking->status == 0)
+                                                 শেষ
+                                                @else
+                                                কাজ শেষ
+                                                @endif
+
+                                            </button>
+                                            @else
+                                            -
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -613,20 +653,23 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল </button>
-            </div>
+            </div> --}}
         </div>
 
     </div>
 </div>
 
 
-<div class="modal fade" id="allocate-{{$actord->id}}" role="dialog">
+<div class="modal fade" id="allocate-{{$actOrder->id}}" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">সহকারী নির্বাচন করুন </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('service_provider_allocate') }}">
                 {{csrf_field()}}
@@ -657,8 +700,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">এলোকেট </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল </button>
+                    <button type="submit" class="btn btn-primary">বন্টন </button>
                 </div>
             </form>
         </div>
@@ -676,9 +718,24 @@
 <script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
 
 <script>
-    $(document).ready(function() {
-           
-    });
-
+   $('.finsih_sub').click(function(){
+            $id = $(this).data('id');
+            // console.log($id);
+            // console.log("{{asset('/order-bit-done/')}}/"+$id);
+            $.ajax({
+                    type: "get",
+                    url: "{{asset('/order-bit-done/')}}/"+$id,
+                    dataType: "html",
+                    success: function (response) {
+                        if(response == 1){
+                            $("#finsih_sub"+$id).removeClass('btn-primary-outline');
+                            $("#finsih_sub"+$id).addClass('btn-success-outline');
+                            $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
+                            $("#finsih_sub"+$id).text('কাজ শেষ');
+                        }
+                    }
+                });
+            
+        });
 </script>
 @endsection
