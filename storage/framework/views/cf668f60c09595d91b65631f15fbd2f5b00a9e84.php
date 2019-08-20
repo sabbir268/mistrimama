@@ -106,7 +106,7 @@
                                         <td><?php echo e($booking->quantity); ?></td>
                                         <td><?php echo e($booking->total_price); ?></td>
                                         <td>
-                                            <?php if($allord->order->status > 2): ?>
+                                            <?php if($allord->order->status > 1): ?>
                                             <button class="btn btn-rounded btn-sm
                                             <?php if($booking->status == 0): ?>
                                                  btn-success-outline

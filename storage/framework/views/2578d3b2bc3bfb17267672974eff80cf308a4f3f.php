@@ -313,7 +313,9 @@
                                         <?php case (4): ?>
                                         
                                         <input type="text" value="5" name="status" hidden>
-                                        
+                                        <input type="text"
+                                            value="<?php echo e((($actord->total_price + $actord->extra_price) - $actord->disc)); ?>"
+                                        name="amount" hidden> 
                                         <input type="text" value="<?php echo e($actord->sp_id); ?>" name="service_provider_id" hidden>
                                         <input type="text" value="<?php echo e($actord->user_id); ?>" name="client_id" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন

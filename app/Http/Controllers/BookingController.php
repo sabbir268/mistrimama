@@ -342,7 +342,7 @@ class BookingController extends Controller
             // $order->save();
         }
 
-        if ($request->has('type') && $request->type == 'others') {
+        if ($request->type == 'others') {
             $order->area = $request->area;
             $order->others_name = $request->others_name;
             $order->others_phone = $request->others_phone;
@@ -350,7 +350,7 @@ class BookingController extends Controller
             $order->type = 'others';
 
             // $order->save();
-        } else {
+        } else{
             $order->area = auth()->user()->area;
             $order->type = 'self';
         }

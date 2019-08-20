@@ -48,7 +48,7 @@ class AuthController extends Controller
                 }
 
                 $msg = "Dear ".explode(" ", $request->name)[0]."! Thanks for registering in Mistri Mama. Use this referrer code “".$refcode."” to earn reward points. Call +8809610222111 for details.";
-                SMS::send("+88".$request->phone_no , $msg);
+                SMS::send($request->phone_no , $msg);
 
                 return $this->doLogin($request);
             } else {

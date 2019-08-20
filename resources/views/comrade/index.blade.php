@@ -108,7 +108,7 @@
                                         <td>{{$booking->quantity}}</td>
                                         <td>{{$booking->total_price}}</td>
                                         <td>
-                                            @if($allord->order->status > 2)
+                                            @if($allord->order->status > 1)
                                             <button class="btn btn-rounded btn-sm
                                             @if($booking->status == 0)
                                                  btn-success-outline

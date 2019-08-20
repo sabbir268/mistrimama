@@ -20,7 +20,7 @@ class ServiceSystemController extends Controller
         $sts = $request->status;
         $ordId = $request->order_id;
         $sSysId = $request->s_sys_id;
-
+       // return $request->amount;
         if($request->has('order_id')) {
             $order = Order::find($ordId);
             $order->status = $sts;
@@ -34,10 +34,9 @@ class ServiceSystemController extends Controller
                 $serviceSys->status = $sts;
                 $serviceSys->save();
             }
-
+            
             if($request->has('pay_type')){
                 $order->pay_type = $request->pay_type;
-
                 if($request->pay_type == 3){
                     $data['total_amount'] = ($orderDetails->total_price + $orderDetails->extra_charge) - promocheck($orderDetails->user_id, $orderDetails->total_price); 
                     $data['cus_name'] = $order->user->name; 
@@ -48,6 +47,7 @@ class ServiceSystemController extends Controller
                     $data['order_no'] = $order->order_no;
                     $data['order_cat'] = $order->category->name;
                    // return SslCommerzPaymentController::index();
+                   $order->save();
                   return SslCommerzPaymentController::payment($data);
                 }
             }
@@ -60,7 +60,7 @@ class ServiceSystemController extends Controller
 
 
         if ($request->status == 5) {
-
+            //return $request->amount;
             /** Misatrimama commission deduct */
             $account = new Account();
             $sp = ServiceProvider::find($request->service_provider_id);
