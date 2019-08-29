@@ -69,40 +69,10 @@
                             </div>
                         </div>
                         <div class="col-md-4 text-center pt-2">
-                            {{--
-                                <div class="input-group ">
-                                <div class="input-group-prepend">
-                                    </div>
-                                    <span style="cursor :pointer"
-                                        class="bg-danger pl-3 pr-3 pt-1 pb-0 text-white rounded-left mr-0 decrease"
-                                        data-id="{{$data->id}}">
-                            <i class="fa fa-minus"></i></span>
-
-                            <span class="mr-0 ">
-                                <input type="text" value="1" style="width:35px" class="pb-1 text-center" name="qty" placeholder="Qty" id="qty{{$data->id}}">
-                            </span>
-
-                            <span style="cursor :pointer" class="bg-mm pl-3 pr-3 pt-1 pb-0 text-white mr-0 rounded-right increase" data-id="{{$data->id}}"><i class="fa fa-plus"></i>
-                            </span>
-                            --}}
                             <span style="cursor :pointer" class="bg-mm pl-3 pr-3 pt-1 pb-1 text-white ml-3 rounded addRemove" data-id="{{$data->id}}" id="addRemove{{$data->id}}">ADD</span>
                         </div>
                     </div>
-
                     <div class="row collapse mb-0 text-left" id="collapsePanel{{$data->id}}">
-                        {{-- <p class="m-0"> --}}
-                        {{-- <span>Price: ৳
-                            <span>{{$data->price}}</span>
-                        </span>|
-                        <span>Additional Price: ৳
-                            <span>{{$data->additional_price}}</span>
-                        </span>|
-                        <span>Unit Remark:
-                            <span>{{$data->unit_remark}}</span>
-                        </span> --}}
-                        {{-- {{$data->description}} --}}
-                        {{-- </p> --}}
-                        {{-- something --}}
                     </div>
                 </div>
             </div>

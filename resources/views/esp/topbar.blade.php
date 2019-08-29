@@ -218,9 +218,11 @@
                         <a class="btn btn-nav {{Request::route()->getName() == 'esp-jobs' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline ' }}  btn-rounded" href="{{route('esp-jobs')}}">
                             সকল কাজ
                         </a>
+                        @if(auth()->user()->serviceProvider->first()->type == 0)
                         <a class="btn btn-nav {{Request::route()->getName() == 'esp.comrade' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline ' }} btn-rounded" href="{{route('esp.comrade')}}">
                             সহকারী
                         </a>
+                        @endif
                         <a class="btn btn-nav {{Request::route()->getName() == 'esp.services' ? 'btn-mm-outline text-white bg-mm' : 'text-mm  btn-mm-outline ' }} btn-rounded" href="{{route('esp.services')}}">
                             সেবা সমূহ
                         </a>

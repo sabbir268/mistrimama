@@ -100,24 +100,24 @@
 
 
 <style>
-@if($balance >= 500)
-#jobs_get{
-    display: block;
-}
-
-#get_order_alert{
-    display: none;
-}
-
-@else 
-#jobs_get{
-    display: none;
-}
-
-#get_order_alert{
-    display: block;
-}
-@endif
+    @if($balance >= 500)
+    #jobs_get{
+        display: block;
+    }
+    
+    #get_order_alert{
+        display: none;
+    }
+    
+    @else 
+    #jobs_get{
+        display: none;
+    }
+    
+    #get_order_alert{
+        display: block;
+    }
+    @endif
 
 </style> 
 
@@ -205,7 +205,8 @@
                                         <!-- <button class="btn btn-sm btn-danger" data-item="{{ $order->id }}"> <i
                                                 data-toggle="tooltip" data-placement="top" title="Reject"
                                                 class="fa fa-times"></i> </button> -->
-                                        <a href="{{route('esp.cancel-request',$order->id)}}" class="btn btn-sm btn-danger">বাতিল</a>
+                                        <a href="{{route('esp.cancel-request',$order->id)}}"
+                                            class="btn btn-sm btn-danger">বাতিল</a>
                                     </div>
                                 </td>
                             </tr>
@@ -246,6 +247,9 @@
                                 </th>
                                 <th>
                                     <div>সহকারী পরিবর্তন </div>
+                                </th>
+                                <th>
+                                    <div>নতুন সার্ভিস যোগ </div>
                                 </th>
                             </tr>
                         </thead>
@@ -327,7 +331,7 @@
                                         <input type="text" value="5" name="status" hidden>
                                         <input type="text"
                                             value="{{ (($actord->total_price + $actord->extra_price) - $actord->disc)  }}"
-                                        name="amount" hidden> 
+                                            name="amount" hidden>
                                         <input type="text" value="{{$actord->sp_id}}" name="service_provider_id" hidden>
                                         <input type="text" value="{{$actord->user_id}}" name="client_id" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন
@@ -342,6 +346,11 @@
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-{{$actord->id}}" data-item="{{ $actord->id }}">সহকারী
                                         পরিবর্তন</button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-mm" id="new_service" data-order_id="{{$actord->id}}"
+                                        data-category_id="{{$actord->category_id}}"> <i class="fa fa-plus"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -391,7 +400,7 @@
                                 <tbody>
                                     @foreach ($order->bookings as $booking)
                                     <tr>
-                                        <td>{{$booking->service_name}}</td>
+                                        <td>{{$booking->service_name}}({{$booking->service_details_name}})</td>
                                         <td>{{$booking->price}}</td>
                                         <td>{{$booking->quantity}}</td>
                                         <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
@@ -615,13 +624,13 @@
                                         <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
                                         <th>মোট মূল্য </th>
-                                        <th>একশন  </th>
+                                        <th>একশন </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($actOrder->bookings as $booking)
                                     <tr>
-                                        <td>{{$booking->service_name}}</td>
+                                        <td>{{$booking->service_name}}({{$booking->service_details_name}})</td>
                                         <td>{{$booking->price}}</td>
                                         <td>{{$booking->quantity}}</td>
                                         <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
@@ -635,7 +644,7 @@
                                                    finsih_sub" data-id="{{$booking->id}}"
                                                 id="finsih_sub{{$booking->id}}"><i class="fa fa-thumbs-up"></i>
                                                 @if($booking->status == 0)
-                                                 শেষ
+                                                শেষ
                                                 @else
                                                 কাজ শেষ
                                                 @endif
@@ -710,6 +719,9 @@
 @endforeach
 @endif
 
+<div id="showModal"></div>
+<div id="showModal2"></div>
+
 @endsection
 
 @section('scripts')
@@ -718,7 +730,7 @@
 <script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
 
 <script>
-   $('.finsih_sub').click(function(){
+    $('.finsih_sub').click(function(){
             $id = $(this).data('id');
             // console.log($id);
             // console.log("{{asset('/order-bit-done/')}}/"+$id);
@@ -737,5 +749,27 @@
                 });
             
         });
+
+
+        $('#new_service').click(function(){
+            $category_id = $(this).data('category_id');
+            $order_id = $(this).data('order_id');
+            $.ajax({
+                    type: "get",
+                    url: "{{asset('/new_service/')}}/"+$category_id+"/"+$order_id,
+                    dataType: "html",
+                    success: function (response) {
+                        $('#showModal').html(response);
+                        $('#all_services').modal({
+                            show: true,
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+        })
+
+
+        
 </script>
 @endsection

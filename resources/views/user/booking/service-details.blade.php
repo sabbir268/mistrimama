@@ -94,7 +94,8 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id": service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": {{$order_id}}
             },
             dataType: 'html',
             success: function(response) {
@@ -124,7 +125,7 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id": service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
             },
             dataType: 'html',
             success: function(response) {
@@ -195,7 +196,8 @@
             type: 'post',
             data: {
                 "_token": "{{ csrf_token() }}",
-                "service_id": $service_id
+                "service_id": $service_id,
+                "order_id": {{$order_id}}
             },
             dataType: 'html',
             success: function(response) {

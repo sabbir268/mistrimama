@@ -61,7 +61,8 @@
                         <span aria-hidden="true">×</span>
                     </button> --}}
                     <i class="font-icon font-icon-warning"></i>
-                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be added.
+                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be
+                    added.
                 </div>
             </div>
 
@@ -89,7 +90,7 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="input-group">
-                        <select name="order_time" id="order_time" class="form-control" required>
+                        {{-- <select name="order_time" id="order_time" class="form-control" required>
                             <option value="">Chose Time</option>
                             <option value="12:00 AM">12:00 AM </option>
                             <option value="1:00 AM">01:00 AM </option>
@@ -115,12 +116,25 @@
                             <option value="9:00 PM">09:00 PM </option>
                             <option value="10:00 PM">10:00 PM </option>
                             <option value="11:00 PM">11:00 PM</option>
-                        </select>
+                        </select> --}}
+
+                        <input type="text" class="from-control" name="order_time" id="order_time" style="    display: block;
+                        width: 94%;
+                        padding: .375rem .75rem;
+                        font-size: 1rem;
+                        line-height: 1.5;
+                        color: #495057;
+                        background-color: #fff;
+                        background-clip: padding-box;
+                        border: 1px solid #f3b400;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
                     </div>
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white" href="{{route('show.services')}}">←
+        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white"
+                href="{{route('show.services')}}">←
                 Back</a></button>
         <button type="submit" class="btn btn-rounded float-right btn-mm">Next →</button>
     </form>
@@ -155,28 +169,62 @@
         }
 	});
 
-    $('#order_time').change(function(){
-            $time = $('#order_time').val();
-            $time = $time.split(" ");
-            $num = parseInt($time[0]);
-            $met = $time[1];
-            console.log($num);
-            console.log($met);
+    // $('#order_time').change(function(){
+        
             
-            if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
-                //alert("In this case we'll charge 500 tk extra for emergency ");
-                $('.imergency').show();
-                if($num == 12  && $met == 'PM'){
-                    $('.imergency').hide();
+            
+
+    //     })
+
+        // function for time picker help
+        function getCurrentTime(date) {
+                var hours = date.getHours()+1,
+                minutes = date.getMinutes(),
+                ampm = hours >= 12 ? 'pm' : 'am';
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+
+                return hours + ':' + '00' + ' ' + ampm;
+        }
+
+    console.log(getCurrentTime(new Date()));
+
+// only time picker
+        $('#order_time').timepicker({
+
+            change: function(time) {
+                $time = $(this).val();
+                $time = $time.split(" ");
+                $num = parseInt($time[0]);
+                $met = $time[1];
+                console.log($num);
+                console.log($met);
+                
+                if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
+                    //alert("In this case we'll charge 500 tk extra for emergency ");
+                    $('.imergency').show();
+                    if($num == 12  && $met == 'PM'){
+                        $('.imergency').hide();
+                    }
+                }else{
+                    $('.imergency').hide();   
                 }
-            }else{
-                $('.imergency').hide();   
-            }
 
-            
+            },
 
-        })
-    
 
+            timeFormat: 'h:mm p',
+            interval: 60,
+            minTime: getCurrentTime(new Date()),
+            // minTime: '08:00am',
+            // maxTime: '12:00pm',
+             defaultTime: getCurrentTime(new Date()),
+            // startTime: '12:00pm',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
 </script>
 @endsection

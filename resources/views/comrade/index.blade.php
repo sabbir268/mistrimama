@@ -78,10 +78,14 @@
                         <div class="col-md-12 p-0 pb-2">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-mm btn-sm col-md-12 d-none">নতুন সার্ভিস যোগ করুন </button>
+                                    <button class="btn btn-mm btn-sm col-md-12" id="new_service"
+                                        data-order_id="{{$allord->order->id}}"
+                                        data-category_id="{{$allord->order->category_id}}">নতুন সার্ভিস যোগ করুন
+                                    </button>
                                 </div>
-                                <div class="col-md-6">                        
-                                        <a href="{{route('comrade.cancel-order',$allord->order->id)}}" class="btn btn-danger col-md-12">অর্ডার বাতিল করুন</a>
+                                <div class="col-md-6">
+                                    <a href="{{route('comrade.cancel-order',$allord->order->id)}}"
+                                        class="btn btn-danger btn-sm col-md-12">অর্ডার বাতিল করুন</a>
                                 </div>
 
                             </div>
@@ -91,9 +95,9 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস</th>
-                                        <th>মূল্য</th>
-                                        <th>অতিরিক্ত </th>
-                                        <th>পরিমান </th>
+                                        <th class="text-center">প্রথম<span class="invisible">s</span>ইউনিট-এর মূল্য</th>
+                                        <th>অতিরিক্ত<span class="invisible">s</span>ইউনিট-এর মূল্য</th>
+                                        <th>পরিমান</th>
                                         <th>মোট </th>
                                         <th class="text-center">একশন </th>
                                     </tr>
@@ -122,11 +126,11 @@
                                                 @endif
 
                                             </button>
-                                            @else 
+                                            @else
                                             -
                                             @endif
                                         </td>
-                                       
+
 
                                     </tr>
                                     @endforeach
@@ -151,8 +155,10 @@
                                 </button> @break
                                 @case(2)
                                 <input type="text" value="3" name="status" hidden>
+                                @if(in_array("1",$allord->order->bookings->pluck('status')->toArray()))
                                 <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন
                                 </button>
+                                @endif
                                 @break
                                 @case(3)
                                 @if($allord->type == 'self')
@@ -215,6 +221,9 @@
 </section>
 @endif
 
+<div id="showModal"></div>
+<div id="showModal2"></div>
+
 @endsection
 
 @section('scripts')
@@ -241,6 +250,8 @@
                             $("#finsih_sub"+$id).addClass('btn-success-outline');
                             $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
                             $("#finsih_sub"+$id).text('কাজ শেষ');
+
+                            location.reload();
                         }
                     }
                 });
@@ -259,6 +270,25 @@
 
         // });
 
+
+
+        $('#new_service').click(function(){
+            $category_id = $(this).data('category_id');
+            $order_id = $(this).data('order_id');
+            $.ajax({
+                    type: "get",
+                    url: "{{asset('/new_service/')}}/"+$category_id+"/"+$order_id,
+                    dataType: "html",
+                    success: function (response) {
+                        $('#showModal').html(response);
+                        $('#all_services').modal({
+                            show: true,
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+        })
         
       });
 </script>

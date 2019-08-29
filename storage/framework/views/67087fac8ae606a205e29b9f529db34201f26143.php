@@ -67,17 +67,10 @@
                             </div>
                         </div>
                         <div class="col-md-4 text-center pt-2">
-                            
                             <span style="cursor :pointer" class="bg-mm pl-3 pr-3 pt-1 pb-1 text-white ml-3 rounded addRemove" data-id="<?php echo e($data->id); ?>" id="addRemove<?php echo e($data->id); ?>">ADD</span>
                         </div>
                     </div>
-
                     <div class="row collapse mb-0 text-left" id="collapsePanel<?php echo e($data->id); ?>">
-                        
-                        
-                        
-                        
-                        
                     </div>
                 </div>
             </div>

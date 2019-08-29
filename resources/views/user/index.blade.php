@@ -44,7 +44,6 @@
                             <p>Your order has been accepted. <br> <strong
                                     class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
                                     <span class="text-warning">Mama</span> </strong> is on your way.</p>
-                            <br>
                             <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}}
                             </p>
                             @endif

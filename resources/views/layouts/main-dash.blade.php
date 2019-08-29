@@ -12,6 +12,9 @@
 	<link rel="stylesheet" href="{{asset('dashboard/css/lib/bootstrap/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
 	<link rel="stylesheet" href="{{asset('dashboard/css/main.css')}}">
+
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
 	@if(!Auth::check())
 	<style>
 		.with-side-menu .page-content {
@@ -228,7 +231,10 @@
 	<script src="{{asset('dashboard/js/lib/tether/tether.min.js')}}"></script>
 	<script src="{{asset('dashboard/js/lib/bootstrap/bootstrap.min.js')}}"></script>
 	<script src="{{asset('dashboard/js/lib/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-	{{-- <script src="{{asset('dashboard/js/lib/bootstrap-notify/bootstrap-notify-init.js')}}"></script> --}}
+	{{-- <script src="{{asset('dashboard/js/lib/bootstrap-notify/bootstrap-notify-init.js')}}"></script> 
+	--}}
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script src="{{asset('dashboard/js/plugins.js')}}"></script>
 
 	@yield('scripts')

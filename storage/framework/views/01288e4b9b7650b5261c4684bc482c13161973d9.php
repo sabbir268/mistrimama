@@ -45,7 +45,6 @@
                                     class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
 
                                     <span class="text-warning">Mama</span> </strong> is on your way.</p>
-                            <br>
                             <p>Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?>
 
                             </p>

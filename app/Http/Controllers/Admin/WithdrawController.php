@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\WithdrawRequest;
 use App\Account;
+use App\SMS;
 
 class WithdrawController extends Controller
 {
@@ -21,49 +22,49 @@ class WithdrawController extends Controller
     {
         $wr = WithdrawRequest::find($request->id);
         $wr->status = 1;
-
-        $acc = Account::where('ref', $wr->id)->where('reason', 'pending_cashout')->first();
-        $account = Account::find($acc->id);
-        $account->trxno = generateRandomString(10);
-        $account->type = $wr->type;
-        $account->details = 'Cashout';
-        $account->ref = auth()->user()->name;
-        $account->reason = 'cashout';
-        $account->status = 'debit';
-
-
-        if ($account->save()) {
-            if ($wr->save()) {
-                return redirect()->back()->with('success', 'Cash Our request approve!');
+        if ($wr->mfs_number == $request->number) {
+            $acc = Account::where('ref', $wr->id)->where('reason', 'pending_cashout')->first();
+            $account = Account::find($acc->id);
+            $account->trxno = $request->trxno;
+            $account->type = $wr->type;
+            $account->details = 'Cashout';
+            $account->ref = auth()->user()->name;
+            $account->reason = 'cashout';
+            $account->status = 'debit';
+            if ($account->save()) {
+                if ($wr->save()) {
+                    return redirect()->back()->with('success', 'Cash Out request approve!');
+                } else {
+                    return redirect()->back()->with('error', 'Something is wrong!');
+                }
             } else {
                 return redirect()->back()->with('error', 'Something is wrong!');
             }
-        } else {
-            return redirect()->back()->with('error', 'Something is wrong!');
+        }else{
+            return redirect()->back()->with('error', 'Phone number dose not match!');
         }
     }
-
 
 
     public function withdrawRequestExport()
     {
         $headers = array(
             "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=file.csv",
+            "Content-Disposition" => "attachment; filename=cashout_file.csv",
             "Pragma" => "no-cache",
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"
         );
 
-        $data = WithdrawRequest::select('id', 'user_id', 'mfs_number', 'type')->where('status', '=', 0)->get();
-        $columns = array('id', 'user_id', 'mfs_number', 'type');
+        $data = WithdrawRequest::select('id', 'user_id', 'mfs_number','amount', 'type')->where('status', '=', 0)->get();
+        $columns = array('Withdrawl_ID', 'User_ID','Name', 'Mfs_Number','Amount', 'Type','TransactionID','Validation_Result');
 
         $callback = function () use ($data, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
 
             foreach ($data as $item) {
-                fputcsv($file, array($item->id, $item->user_id, $item->mfs_number, $item->type));
+                fputcsv($file, array($item->id, $item->user_id, $item->user->name, $item->mfs_number,$item->amount, $item->type,'-','Pending'));
             }
             fclose($file);
         };
@@ -80,12 +81,12 @@ class WithdrawController extends Controller
         $customerArr = csvToArray($file);
         //dd($customerArr);
         for ($i = 0; $i < count($customerArr); $i++) {
-            if ($customerArr[$i]['status'] == 1) {
-                $wr = WithdrawRequest::find($customerArr[$i]['id']);
+            if ($customerArr[$i]['Validation_Result'] == 'Success') {
+                $wr = WithdrawRequest::find($customerArr[$i]['Withdrawl_ID']);
                 $wr->status = 1;
                 $acc = Account::where('ref', $wr->id)->where('reason', 'pending_cashout')->first();
                 $account = Account::find($acc->id);
-                $account->trxno = $customerArr[$i]['trxnid'];
+                $account->trxno = $customerArr[$i]['TransactionID'];
                 $account->type = $wr->type;
                 $account->details = 'Cashout';
                 $account->ref = auth()->user()->name;
@@ -93,13 +94,13 @@ class WithdrawController extends Controller
                 $account->status = 'debit';
 
                 if ($account->save()) {
-                    $wr->save();
-                    // if ($wr->save()) {
-                    //     // $SpPhone = $wr->user->phone_no;
-                    //     // $msg = "Your account recharged with BDT " . round($wr->amount) . "/-. Your current online balance: BDT Total " . totalBalance($wr->user_id) . "/-.";
-                    //     // SMS::send($SpPhone, $msg);
+                   // $wr->save();
+                    if ($wr->save()) {
+                        $SpPhone = $wr->user->phone_no;
+                        $msg = "Your account recharged with BDT " . round($wr->amount) . "/-. Your current online balance: BDT Total " . totalBalance($wr->user_id) . "/-.";
+                        SMS::send($SpPhone, $msg);
 
-                    // }
+                    }
                 }
             }
         }

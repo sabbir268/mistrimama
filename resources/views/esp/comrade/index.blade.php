@@ -24,7 +24,7 @@
             <li><a href="#">সহকারী</a></li>
         </ol>
 
-        <section class="box-typical box-typical-dashboard panel panel-default " >
+        <section class="box-typical box-typical-dashboard panel panel-default ">
             <header class="box-typical-header panel-heading">
                 <div class="row">
                     <div class="col-md-6 float">
@@ -69,8 +69,8 @@
                     <tbody>
                         @foreach ($comrades as $comrade)
                         <tr>
-                            <td><img style="height:50px;width:50px" src="{{$comrade->c_pic}}"
-                                    class="rounded-circle" alt="some"></td>
+                            <td><img style="height:50px;width:50px" src="{{$comrade->c_pic}}" class="rounded-circle"
+                                    alt="some"></td>
                             <td>{{$comrade->c_name}}</td>
                             <td>{{$comrade->c_phone_no}}</td>
                             <td>{{$comrade->email}}</td>
@@ -78,16 +78,18 @@
                             <td>
                                 <div class="btn-gorup">
                                     <button class="btn btn-sm btn-success sr-only"><i class="fa fa-eye"></i></button>
-                                    <a href="/esp/comrade/{{$comrade->id}}" data-toggle="tooltip"
-                                        data-placement="top" title="Edit" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
+                                    <a href="/esp/comrade/{{$comrade->id}}" data-toggle="tooltip" data-placement="top"
+                                        title="Edit" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
                                     @if($comrade->status == 1)
                                     <a href="/esp/comrade/ban/{{$comrade->id}}" data-toggle="tooltip"
-                                        data-placement="top" title="De-active" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
-                                    @else 
-                                        <a href="/esp/comrade/ban/{{$comrade->id}}" data-toggle="tooltip"
-                                            data-placement="top" title="Active"  class="btn btn-sm btn-success "><i class="fa fa-check-square"></i></a>
+                                        data-placement="top" title="De-active" class="btn btn-sm btn-danger "><i
+                                            class="fa fa-ban"></i></a>
+                                    @else
+                                    <a href="/esp/comrade/ban/{{$comrade->id}}" data-toggle="tooltip"
+                                        data-placement="top" title="Active" class="btn btn-sm btn-success "><i
+                                            class="fa fa-check-square"></i></a>
                                     @endif
-                                    
+
                                     <button class="btn btn-sm btn-danger sr-only"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
@@ -148,7 +150,7 @@
                                 <label class="control-label" for="email">ইমেইল :</label>
                                 <div class="">
                                     <input type="email" name="email" class="form-control"
-                                        placeholder="Ex: amaila@gmail.com" >
+                                        placeholder="Ex: amaila@gmail.com">
                                 </div>
                             </div>
 
@@ -156,6 +158,18 @@
                                 <label class="control-label" for="password">পাসওয়ার্ড :</label>
                                 <div class="">
                                     <input type="password" name="password" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-1">
+                                <label class="control-label" for="category">ক্যাটেগরি:</label>
+                                <div class="">
+                                    <select name="category" id="" class="form-control">
+                                        <option selected="true" value="">ক্যাটেগরি নির্বাচন করুন</option>
+                                        @foreach($services_category as $data)
+                                        <option value="{{$data->id}}">{{$data->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -172,35 +186,36 @@
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_pic">ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_pic" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_pic" class="form-control" id="inputGroupFile02" required
+                                        placeholder="Chose file">
                                 </div>
                             </div>
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_front">NID সামনের ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
+                                        required placeholder="Chose file">
                                 </div>
                             </div>
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_back">NID পিছনের ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
+                                        required placeholder="Chose file">
                                 </div>
-                                
+
                             </div>
 
 
                         </div>
                         <span>Max Upload Image is 4MB. </span>
-                        <span><a href="https://resizeimage.net/" target="_blank">Click Here</a> To resize your image in online</span>
+                        <span><a href="https://resizeimage.net/" target="_blank">Click Here</a> To resize your image in
+                            online</span>
                     </div>
-                    
+
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-mm">যোগ করুন </button>

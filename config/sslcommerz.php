@@ -8,8 +8,8 @@ return [
     // For Live, use "https://securepay.sslcommerz.com"
     'apiDomain' => env("API_DOMAIN_URL"),
     'apiCredentials' => [
-        'store_id' => "mistr5d24311c9b87c",
-        'store_password' => "mistr5d24311c9b87c@ssl",
+        'store_id' => "mistrimamalive",
+        'store_password' => "5D639A63C24EC49244",
     ],
     'apiUrl' => [
         'make_payment' => "/gwprocess/v4/api.php",

@@ -133,14 +133,29 @@ class BookingController extends Controller
     public function AddSubServiceDetails(Request $request, SubServiceDetails $subServiceDetails)
     {
         // $bookCheck = $booking->where('sub_categories_id', $request->id)->where('order_id', Session::get('order_id'))->count('id');
+        if ($request->has('order_id')) {
+             $order_id = $request->order_id;
+        } else {
+             $order_id = Session::get('order_id');
+        }
         $SubServicesType = $subServiceDetails->where('sub_categories_id', $request->id)->get();
         $service_id = $request->id;
-        return view('user.booking.service-details', compact('SubServicesType', 'service_id'));
+        return view('user.booking.service-details', compact('SubServicesType', 'service_id','order_id'));
     }
 
     public function AddSubService(Request $request, Booking $booking)
     {
-        $bookCheck = $booking->where('sub_cat_details_id', $request->id)->where('sub_categories_id', $request->service_id)->where('order_id', Session::get('order_id'))->count('id');
+        // return $request;
+
+        if ($request->has('order_id')) {
+             $order_id = $request->order_id;
+        } else {
+             $order_id = Session::get('order_id');
+        }
+
+       // return $order_id;
+
+        $bookCheck = $booking->where('sub_cat_details_id', $request->id)->where('sub_categories_id', $request->service_id)->where('order_id',$order_id)->count('id');
 
         if ($bookCheck == true && $bookCheck > 0) {
             // $bookCheck = $booking->where('sub_cat_details_id', $request->id)->where('sub_categories_id', $request->service_id)->where('order_id', Session::get('order_id'));
@@ -150,7 +165,7 @@ class BookingController extends Controller
             $subCat = SubCategory::find($request->service_id);
             $subCatDetails = SubServiceDetails::find($request->id);
 
-            $booking->order_id = Session::get('order_id');
+            $booking->order_id = $order_id ;
             $booking->sub_categories_id = $request->service_id;
             $booking->sub_cat_details_id = $request->id;
             $booking->quantity = $request->qty;
@@ -166,11 +181,12 @@ class BookingController extends Controller
                 $data['unit_remarks'] = SubServiceDetails::find($request->id)->unit_remarks;
                 $data['unit_type'] = SubServiceDetails::find($request->id)->unit_type;
                 $data['brief'] = SubServiceDetails::find($request->id)->brief;
-                $data['total_price'] = Booking::where('order_id', Session::get('order_id'))->where('sub_categories_id', $request->service_id)->where('sub_cat_details_id', $request->id)->sum('total_price');
+                $data['total_price'] = Booking::where('order_id', $order_id)->where('sub_categories_id', $request->service_id)->where('sub_cat_details_id', $request->id)->sum('total_price');
                 return $data;
             }
         }
     }
+
 
     public function deleteSubService(Booking $booking, Request $request)
     {
@@ -208,7 +224,14 @@ class BookingController extends Controller
 
     public function SelectedSubService(Request $request, Booking $booking)
     {
-        $SubServicesSelected = $booking->where('sub_categories_id', $request->service_id)->where('order_id', Session::get('order_id'))->get();
+
+        if ($request->has('order_id')) {
+            $order_id = $request->order_id;
+       } else {
+            $order_id = Session::get('order_id');
+       }
+
+        $SubServicesSelected = $booking->where('sub_categories_id', $request->service_id)->where('order_id', $order_id)->get();
         $service_id = $request->service_id;
         if (count($SubServicesSelected) > 0) {
             return view('user.booking.service-details-select', compact('SubServicesSelected', 'service_id'));
@@ -252,6 +275,8 @@ class BookingController extends Controller
 
     public function AddDateTime(Request $request)
     {
+
+        //return  $request;
         $order = Order::find(Session::get('order_id'));
 
         // validate
@@ -350,7 +375,7 @@ class BookingController extends Controller
             $order->type = 'others';
 
             // $order->save();
-        } else{
+        } else {
             $order->area = auth()->user()->area;
             $order->type = 'self';
         }
@@ -369,7 +394,7 @@ class BookingController extends Controller
         if (auth()->user()->roles->first()->role == 'esp') {
             $ServiceAllowcate->service_allocate($request);
             return redirect('esp/jobs');
-        }elseif( auth()->user()->roles->first()->role == 'comrade'){
+        } elseif (auth()->user()->roles->first()->role == 'comrade') {
             $ServiceAllowcate->service_allocate($request);
             return redirect('/comrade/dashboard');
         } else {
@@ -394,15 +419,16 @@ class BookingController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function OrderBitFinish($booking_id){
+    public function OrderBitFinish($booking_id)
+    {
         $booking = Booking::find($booking_id);
         $booking->status = 1;
-        if($booking->save()){
+        if ($booking->save()) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
 
-       // return $booking;
+        // return $booking;
     }
 }

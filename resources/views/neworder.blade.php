@@ -1,24 +1,24 @@
 @if(count($newOrders) != 0)
-<table class="table table-bordered" >
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>
-                <div>Order No #</div>
+                <div>অর্ডার নং #</div>
             </th>
             <th>
-                <div>Service</div>
+                <div> সার্ভিস </div>
             </th>
             <th>
-                <div>Area</div>
+                <div>এলাকা </div>
             </th>
             <th>
-                <div>Time</div>
+                <div>সময় </div>
             </th>
             <th>
-                <div>Details</div>
+                <div> বিস্তারিত </div>
             </th>
             <th>
-                <div>Action</div>
+                <div> একশন </div>
             </th>
         </tr>
     </thead>
@@ -29,18 +29,20 @@
             <td>{{$order->category->name}}</td>
             <td>{{$order->area}}</td>
             <td>{{$order->order_date}}/{{$order->order_time}}</td>
-            <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">Details</button>
+            <td> <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#view-{{$order->id}}"
+                    data-item="{{ $order->id }}">বিস্তারিত</button>
             </td>
             <td>
-                @if($order->status == '0')
-                <button class="btn btn-sm btn-info" data-toggle="modal"
-                    data-target="#allocate-{{$order->id}}"
-                    data-item="{{ $order->id }}">Allocate</button> @else
-                <button class="btn btn-sm btn-primary" data-toggle="modal"
-                    data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}"
-                    disabled>Allocated</button> @endif
-
+                @if(auth()->user()->serviceProvider->first()->type == 0)
+                    @if($order->status == '0')
+                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#allocate-{{$order->id}}"
+                            data-item="{{ $order->id }}">সহকারী</button> @else
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#allocate-{{$order->id}}"
+                            data-item="{{ $order->id }}" disabled>এলোকেটেড</button> 
+                    @endif
+                @else 
+                        {{-- sabbir --}}
+                @endif
             </td>
         </tr>
         @endforeach
@@ -98,7 +100,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-{{$order->id}}"
-                    data-item="{{ $order->id }}" class="btn btn-primary">Allocate</button>
+                    data-item="{{ $order->id }}" class="btn btn-mm">Allocate</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -144,7 +146,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Allocate</button>
+                    <button type="submit" class="btn btn-mm">Allocate</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>

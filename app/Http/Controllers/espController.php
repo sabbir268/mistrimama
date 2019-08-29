@@ -143,6 +143,12 @@ class espController extends Controller
         // return $shcedeuledOrders;
     }
 
+
+    public function NewService($category_id , $order_id){
+        $SubCategory = SubCategory::where('c_id',$category_id)->get();
+        return view('new_service',compact('SubCategory','order_id'));
+    }
+
     public function jobHistory()
     {
         $providers = User::find(Auth::user()->id)->serviceProvider->first();
@@ -203,8 +209,9 @@ class espController extends Controller
     public function comrade()
     {
         $providers = User::find(Auth::user()->id)->serviceProvider;
+        $services_category = DB::select("SELECT categories.id,categories.name FROM categories");
         $comrades = Comrades::where('s_id', $providers[0]->id)->paginate(10);
-        return view('esp.comrade.index', compact('comrades'));
+        return view('esp.comrade.index', compact('comrades','services_category'));
     }
 
     public function ComradeEdit($id)
@@ -282,6 +289,7 @@ class espController extends Controller
                 $comrade->c_phone_no = $request->c_phone_no;
                 $comrade->email = $request->email;
                 $comrade->c_nid = $request->c_nid;
+                $comrade->category = $request->category;
 
 
                 // $comrade->c_pic = $request->c_pic;

@@ -410,7 +410,7 @@
 
 <script>
     $(document).ready(function(){
-        $('.others-area').show();
+       
         $('#others-checkbox').click(function() {
             if($('#type-others').is(':checked')) { 
                 $('.others-area').show();
@@ -429,6 +429,8 @@
                 $('#others_addr').removeAttr('required');
             }
         });
+
+       // $('.others-area').show();
     });
 </script>
 @endsection

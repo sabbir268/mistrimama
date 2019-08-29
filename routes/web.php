@@ -246,9 +246,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get("withdraw_request/export", "Admin\WithdrawController@withdrawRequestExport")->name('admin.withdraw.export');
 
         Route::post("withdraw_request/import", "Admin\WithdrawController@withdrawRequestImport")->name('admin.withdraw.import');
-
-        
-
     });
 });
 
@@ -265,7 +262,6 @@ Route::post('/sub-services-details/add', 'BookingController@AddSubService')->nam
 Route::post('/sub-services-details/delete', 'BookingController@DeleteSubService')->name('delete.sub-service'); // add sub service details
 Route::post('/sub-services/quantity-update', 'BookingController@QtyUpdate')->name('update.qty'); // area and service category store
 Route::post('/sub-services-details/selected', 'BookingController@SelectedSubService')->name('selected.sub-service'); // add sub service details
-
 // total price 
 Route::get('/sub-services-details/total_price', 'BookingController@TotalPrice')->name('order.total_price');
 
@@ -278,6 +274,8 @@ Route::post('/confirm', 'BookingController@OrderConfirmDone')->name('add.order-c
 Route::post('/cancel', 'BookingController@CancelOrder')->name('cancel.order'); // booking cancel
 Route::post('/order-cancel', 'BookingController@CancelOrder')->name('order.cancel'); // booking cancel
 Route::get('/order-bit-done/{id}', 'BookingController@OrderBitFinish')->name('order.finish'); // booking cancel
+
+
 
 /** Bookings route in BookingController end*/
 
@@ -342,6 +340,9 @@ Route::group(['prefix' => 'comrade', 'middleware' => ['auth']], function () {
     Route::get('/faq', 'comradeController@faq')->name('comrade.faq');
     Route::get('/order-cancel/{id}', 'comradeController@cancelOrder')->name('comrade.cancel-order');
 });
+
+/** Add new serivce in ongoing order from ESP and Comrade */
+Route::get('new_service/{category_id}/{order_id}','espController@NewService')->name('new_service');
 
 /** New Available order  */
 Route::get('new_available_order', 'espController@NewAvailAbleOrder')->name('new.available.order');

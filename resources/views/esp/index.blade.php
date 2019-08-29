@@ -59,69 +59,69 @@
                             <div class="tbl-cell">
                                 <div class="">
                                     <div class="title">রিওয়ার্ড পয়েন্ট</div>
-                                    <div class="amount-sm">টাকা ৳{{$rp/20}}/-</div>
-                                </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong>{{$rp}}</strong> </header>
-                                </div>
-                            </div>
-                        </div>
+                                    <div class="amount-sm">টাকা ৳{{$rp/20}}/-
+            </div>
+        </div>
+    </div>
+    <div class="tbl-cell">
+        <div class="col-md-4">
+            <header> <strong>{{$rp}}</strong> </header>
+        </div>
+    </div>
+    </div>
+    </div>
+    <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif " style="width:100%"
+        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে
+        পরিবর্তন করুন </a>
+    </div> --}}
+    <div class="tbl-cell pb-0">
+        <div class="tbl tbl-item">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <div class="">
+                        <div class="title">সহকারীর সংখ্যা</div>
+                        <div class="amount-sm">এক্টিভ - {{count($comrades)}} / এক্টিভ নয় -
+                            {{count($totalcomrades) - count($comrades)}}</div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target=" @if($rp < 4000) #rp_withdraw @endif "
-                        style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2 @if($rp < 3999 ) disabled @endif ">ক্যাশে
-                        পরিবর্তন করুন </a>
-                </div> --}}
-                <div class="tbl-cell pb-0">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="">
-                                    <div class="title">সহকারীর সংখ্যা</div>
-                                    <div class="amount-sm">এক্টিভ - {{count($comrades)}} / এক্টিভ নয় -
-                                        {{count($totalcomrades) - count($comrades)}}</div>
-                                </div>
-                            </div>
-                            <div class="tbl-cell">
-                                <div class="col-md-4">
-                                    <header> <strong>{{count($totalcomrades)}}</strong> </header>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="{{route('esp.comrade')}}" style="width:100%"
-                        class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
                 </div>
                 <div class="tbl-cell">
-                    <div class="tbl tbl-item">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <div class="title">রেটিং </div>
-                            </div>
-                            <div class="tbl-cell tbl-cell-progress">
-                                <div class="circle-progress-bar-typical size-56 pieProgress pie_progress"
-                                    role="progressbar" data-goal="75" data-barcolor="#929faa" data-barsize="10"
-                                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
-                                    <span class="pie_progress__number text-secondary">{{$ratings}} <i
-                                            class="fa fa-star "></i> </span>
-                                    <div class="pie_progress__svg"><svg version="1.1"
-                                            preserveAspectRatio="xMinYMin meet" viewBox="0 0 160 160">
-                                            <ellipse rx="75" ry="75" cx="80" cy="80" stroke="#f2f2f2" fill="none"
-                                                stroke-width="10"></ellipse>
-                                            <path fill="none" stroke-width="10" stroke="#929faa"
-                                                d="M80,5 A75,75 0 1 1 5,80.00000000000001"
-                                                style="stroke-dasharray: 353.479, 353.479; stroke-dashoffset: 0;">
-                                            </path>
-                                        </svg></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-4">
+                        <header> <strong>{{count($totalcomrades)}}</strong> </header>
                     </div>
                 </div>
             </div>
         </div>
+        <a href="{{route('esp.comrade')}}" style="width:100%"
+            class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
+    </div>
+    <div class="tbl-cell">
+        <div class="tbl tbl-item">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <div class="title">রেটিং </div>
+                </div>
+                <div class="tbl-cell tbl-cell-progress">
+                    <div class="circle-progress-bar-typical size-56 pieProgress pie_progress" role="progressbar"
+                        data-goal="75" data-barcolor="#929faa" data-barsize="10" aria-valuemin="0" aria-valuemax="100"
+                        aria-valuenow="75">
+                        <span class="pie_progress__number text-secondary">{{$ratings}} <i class="fa fa-star "></i>
+                        </span>
+                        <div class="pie_progress__svg"><svg version="1.1" preserveAspectRatio="xMinYMin meet"
+                                viewBox="0 0 160 160">
+                                <ellipse rx="75" ry="75" cx="80" cy="80" stroke="#f2f2f2" fill="none" stroke-width="10">
+                                </ellipse>
+                                <path fill="none" stroke-width="10" stroke="#929faa"
+                                    d="M80,5 A75,75 0 1 1 5,80.00000000000001"
+                                    style="stroke-dasharray: 353.479, 353.479; stroke-dashoffset: 0;">
+                                </path>
+                            </svg></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
     </div>
 </header>
 
@@ -233,6 +233,7 @@
         <section class="box-typical box-typical-dashboard panel panel-default scrollable mb-3">
             <div class="card-header">নতুন কাজ </div>
             <div class="box-typical-body panel-body" id="avail_able_order">
+                <div class="table-responsive">
                 @if($balance >= 500)
                 @if(count($newOrders) != 0)
                 <table class="table table-bordered">
@@ -269,18 +270,32 @@
                                     data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত </button>
                             </td>
                             <td>
+                                @if(auth()->user()->serviceProvider->first()->type == 0)
                                 @if($order->status == '0')
                                 <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                    data-target="#allocate-{{$order->id}}"
-                                    data-item="{{ $order->id }}">সহকারী</button> @else
+                                    data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}">সহকারী</button>
+                                @else
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}" disabled>
-                                    এলোকেটেড </button> @endif
+                                    এলোকেটেড </button>
+                                @endif
+                                @else
+                                <form method="post" action="{{ route('service_provider_allocate') }}">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="order_id" value="{{$order->id}}" />
+                                    <input type="hidden" name="service_provider_id"
+                                        value="{{$providers->first()->id}}" />
+                                    <input type="hidden" name="comrade_id" value="{{$comrades[0]->id}}" />
+                                    <input type="hidden" name="user_id"
+                                        value="{{ $order->user ? $order->user->id : '-' }}" />
+                                    <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
+                                </form>
+
+                                @endif
 
                             </td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
                 @else
@@ -291,7 +306,7 @@
                 <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ
                     করে কাজ অব্যাহত রাখুন। </div>
                 @endif
-
+            </div>
             </div>
             <!--.box-typical-body-->
         </section>
@@ -483,7 +498,7 @@
                                     <label for="email">সহকারী নির্বাচন করুন :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach ($comrades as $comrade)
+                                        @foreach (availComrade(auth()->user()->sp->id,$order->category_id) as $comrade)
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>
@@ -617,14 +632,13 @@
                     <div class="form-group ">
                         <label for="mfs_number" class="col-sm-12 col-form-label">To Conferm Enter your password</label>
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" id="mfs_number" name="mfs_number"
-                                 required>
+                            <input type="password" class="form-control" id="mfs_number" name="password" required>
                         </div>
                     </div>
 
             </div>
             <div class="modal-footer">
-              
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             </form>
@@ -692,7 +706,7 @@
                                     <label for="email">Services Provider List:</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">Select Comrade</option>
-                                        @foreach ($comrades as $comrade)
+                                        @foreach (availComrade(auth()->user()->sp->id,$actord->category_id) as $comrade)
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>

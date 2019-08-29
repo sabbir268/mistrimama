@@ -438,3 +438,10 @@ function totalBalance($id){
    }
    
 }
+
+
+function availComrade($sp_id , $cate_id){
+    $comrade = \App\Models\service_providers_comrads::where('s_id',$sp_id)->where('category',$cate_id)->get();
+
+    return $comrade;
+}

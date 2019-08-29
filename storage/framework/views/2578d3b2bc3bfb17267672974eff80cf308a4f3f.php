@@ -100,24 +100,24 @@
 
 
 <style>
-<?php if($balance >= 500): ?>
-#jobs_get{
-    display: block;
-}
-
-#get_order_alert{
-    display: none;
-}
-
-<?php else: ?> 
-#jobs_get{
-    display: none;
-}
-
-#get_order_alert{
-    display: block;
-}
-<?php endif; ?>
+    <?php if($balance >= 500): ?>
+    #jobs_get{
+        display: block;
+    }
+    
+    #get_order_alert{
+        display: none;
+    }
+    
+    <?php else: ?> 
+    #jobs_get{
+        display: none;
+    }
+    
+    #get_order_alert{
+        display: block;
+    }
+    <?php endif; ?>
 
 </style> 
 
@@ -206,7 +206,8 @@
                                         <!-- <button class="btn btn-sm btn-danger" data-item="<?php echo e($order->id); ?>"> <i
                                                 data-toggle="tooltip" data-placement="top" title="Reject"
                                                 class="fa fa-times"></i> </button> -->
-                                        <a href="<?php echo e(route('esp.cancel-request',$order->id)); ?>" class="btn btn-sm btn-danger">বাতিল</a>
+                                        <a href="<?php echo e(route('esp.cancel-request',$order->id)); ?>"
+                                            class="btn btn-sm btn-danger">বাতিল</a>
                                     </div>
                                 </td>
                             </tr>
@@ -247,6 +248,9 @@
                                 </th>
                                 <th>
                                     <div>সহকারী পরিবর্তন </div>
+                                </th>
+                                <th>
+                                    <div>নতুন সার্ভিস যোগ </div>
                                 </th>
                             </tr>
                         </thead>
@@ -315,7 +319,7 @@
                                         <input type="text" value="5" name="status" hidden>
                                         <input type="text"
                                             value="<?php echo e((($actord->total_price + $actord->extra_price) - $actord->disc)); ?>"
-                                        name="amount" hidden> 
+                                            name="amount" hidden>
                                         <input type="text" value="<?php echo e($actord->sp_id); ?>" name="service_provider_id" hidden>
                                         <input type="text" value="<?php echo e($actord->user_id); ?>" name="client_id" hidden>
                                         <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন
@@ -330,6 +334,11 @@
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-<?php echo e($actord->id); ?>" data-item="<?php echo e($actord->id); ?>">সহকারী
                                         পরিবর্তন</button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-mm" id="new_service" data-order_id="<?php echo e($actord->id); ?>"
+                                        data-category_id="<?php echo e($actord->category_id); ?>"> <i class="fa fa-plus"></i>
+                                    </button>
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -375,7 +384,7 @@
                                 <tbody>
                                     <?php $__currentLoopData = $order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($booking->service_name); ?></td>
+                                        <td><?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
                                         <td><?php echo e($booking->price); ?></td>
                                         <td><?php echo e($booking->quantity); ?></td>
                                         <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
@@ -597,13 +606,13 @@
                                         <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
                                         <th>মোট মূল্য </th>
-                                        <th>একশন  </th>
+                                        <th>একশন </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $__currentLoopData = $actOrder->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($booking->service_name); ?></td>
+                                        <td><?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
                                         <td><?php echo e($booking->price); ?></td>
                                         <td><?php echo e($booking->quantity); ?></td>
                                         <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
@@ -617,7 +626,7 @@
                                                    finsih_sub" data-id="<?php echo e($booking->id); ?>"
                                                 id="finsih_sub<?php echo e($booking->id); ?>"><i class="fa fa-thumbs-up"></i>
                                                 <?php if($booking->status == 0): ?>
-                                                 শেষ
+                                                শেষ
                                                 <?php else: ?>
                                                 কাজ শেষ
                                                 <?php endif; ?>
@@ -691,6 +700,9 @@
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php endif; ?>
 
+<div id="showModal"></div>
+<div id="showModal2"></div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -699,7 +711,7 @@
 <script type="text/javascript" src="<?php echo e(asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')); ?>"></script>
 
 <script>
-   $('.finsih_sub').click(function(){
+    $('.finsih_sub').click(function(){
             $id = $(this).data('id');
             // console.log($id);
             // console.log("<?php echo e(asset('/order-bit-done/')); ?>/"+$id);
@@ -718,6 +730,28 @@
                 });
             
         });
+
+
+        $('#new_service').click(function(){
+            $category_id = $(this).data('category_id');
+            $order_id = $(this).data('order_id');
+            $.ajax({
+                    type: "get",
+                    url: "<?php echo e(asset('/new_service/')); ?>/"+$category_id+"/"+$order_id,
+                    dataType: "html",
+                    success: function (response) {
+                        $('#showModal').html(response);
+                        $('#all_services').modal({
+                            show: true,
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+        })
+
+
+        
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

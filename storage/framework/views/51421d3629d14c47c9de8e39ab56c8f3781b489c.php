@@ -12,6 +12,9 @@
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/bootstrap/bootstrap.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/main.css')); ?>">
+
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
 	<?php if(!Auth::check()): ?>
 	<style>
 		.with-side-menu .page-content {
@@ -230,6 +233,8 @@
 	<script src="<?php echo e(asset('dashboard/js/lib/bootstrap/bootstrap.min.js')); ?>"></script>
 	<script src="<?php echo e(asset('dashboard/js/lib/bootstrap-notify/bootstrap-notify.min.js')); ?>"></script>
 	
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script src="<?php echo e(asset('dashboard/js/plugins.js')); ?>"></script>
 
 	<?php echo $__env->yieldContent('scripts'); ?>

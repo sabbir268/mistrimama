@@ -25,6 +25,7 @@ use DB;
 use Session;
 use App\SMS;
 
+
 class Service_provider extends Controller
 {
 
@@ -54,6 +55,17 @@ class Service_provider extends Controller
         $ur->user_id = $user->id;
         $ur->roles_id = 3;
         $ur->save();
+
+        $comrade = new SPC();
+
+        $comrade->c_name = $serviceProvider->name;
+        $comrade->s_id = $serviceProvider->id;
+        $comrade->user_id = $user->id;
+        $comrade->c_phone_no = $serviceProvider->phone_no;
+        $comrade->email = $serviceProvider->email;
+        $comrade->c_nid = $serviceProvider->smart_card;
+       
+        $comrade->save();
 
 
         $msgText = "Your Service Provider request has been approved, Login to your account. \n Phone: " . $serviceProvider->phone_no . "\n Password: " . $pass;
@@ -371,6 +383,10 @@ class Service_provider extends Controller
                     $i++;
                 }
             }
+
+            // if($type == 'FSP'){
+
+            // }
 
 
             // !NO NEED 
