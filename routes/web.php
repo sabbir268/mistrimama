@@ -94,6 +94,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
 
     /** Booking routes from user dashboard */
     Route::get('/booking', 'UsersController@selfBook')->name('book-self'); // booking for self
+
     Route::get('/booking/others', 'UsersController@othersBook')->name('book-others'); // booking for others
     Route::get('/order-details-view', 'UsersController@viewOrder')->name('order-details'); // booking for others
 
@@ -246,6 +247,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get("withdraw_request/export", "Admin\WithdrawController@withdrawRequestExport")->name('admin.withdraw.export');
 
         Route::post("withdraw_request/import", "Admin\WithdrawController@withdrawRequestImport")->name('admin.withdraw.import');
+
+
+        Route::get("special-user", "Admin\HomeController@specialUserADD")->name('admin.special-user');
     });
 });
 
@@ -274,6 +278,8 @@ Route::post('/confirm', 'BookingController@OrderConfirmDone')->name('add.order-c
 Route::post('/cancel', 'BookingController@CancelOrder')->name('cancel.order'); // booking cancel
 Route::post('/order-cancel', 'BookingController@CancelOrder')->name('order.cancel'); // booking cancel
 Route::get('/order-bit-done/{id}', 'BookingController@OrderBitFinish')->name('order.finish'); // booking cancel
+
+Route::get('/booking/back-first', 'BookingController@BackTofirst')->name('book.first'); // booking for self
 
 
 

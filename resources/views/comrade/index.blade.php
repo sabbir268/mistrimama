@@ -162,9 +162,10 @@
                                 @break
                                 @case(3)
                                 @if($allord->type == 'self')
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
+                                </button>
                                 <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য
                                     অপেক্ষা করুন </button>
-
                                 @else
                                 <input type="text" value="5" name="status" hidden>
                                 <input type="text"
@@ -173,6 +174,8 @@
                                 <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
+                                </button>
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
                                 </button>
                                 @endif

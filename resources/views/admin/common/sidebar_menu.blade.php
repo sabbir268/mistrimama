@@ -56,12 +56,12 @@
         </li>
 
         <li class="nav-item ">
-                <a href="{{route('admin.service_provider.accounts')}}" class="nav-link">
-                    <i class="fa fa-gear"></i>
-                    <span class="title">Service Providers Accounts</span>
-                    <span class="arrow "></span>
-                </a>
-            </li>
+            <a href="{{route('admin.service_provider.accounts')}}" class="nav-link">
+                <i class="fa fa-gear"></i>
+                <span class="title">Service Providers Accounts</span>
+                <span class="arrow "></span>
+            </a>
+        </li>
         @endif
 
         @if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') )
@@ -233,6 +233,14 @@
             <a href="{{url('admin/spf')}}" class="nav-link">
                 <i class="fa fa-gear"></i>
                 <span class="title">Add Service Partners</span>
+                <span class="arrow {{ menuActiveClass(['booking'],false) }}"></span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{route('admin.special-user')}}" class="nav-link">
+                <i class="fa fa-gear"></i>
+                <span class="title">Add Special User</span>
                 <span class="arrow {{ menuActiveClass(['booking'],false) }}"></span>
             </a>
         </li>

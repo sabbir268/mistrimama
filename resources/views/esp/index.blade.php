@@ -234,79 +234,83 @@
             <div class="card-header">নতুন কাজ </div>
             <div class="box-typical-body panel-body" id="avail_able_order">
                 <div class="table-responsive">
-                @if($balance >= 500)
-                @if(count($newOrders) != 0)
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div>অর্ডার নং #</div>
-                            </th>
-                            <th>
-                                <div> সার্ভিস </div>
-                            </th>
-                            <th>
-                                <div>এলাকা </div>
-                            </th>
-                            <th>
-                                <div>সময় </div>
-                            </th>
-                            <th>
-                                <div> বিস্তারিত </div>
-                            </th>
-                            <th>
-                                <div> একশন </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($newOrders as $order)
-                        <tr>
-                            <td>{{$order->order_no}}</td>
-                            <td>{{$order->category->name}}</td>
-                            <td>{{$order->area}}</td>
-                            <td>{{$order->order_date}}/{{$order->order_time}}</td>
-                            <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত </button>
-                            </td>
-                            <td>
-                                @if(auth()->user()->serviceProvider->first()->type == 0)
-                                @if($order->status == '0')
-                                <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                    data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}">সহকারী</button>
-                                @else
-                                <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}" disabled>
-                                    এলোকেটেড </button>
-                                @endif
-                                @else
-                                <form method="post" action="{{ route('service_provider_allocate') }}">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="order_id" value="{{$order->id}}" />
-                                    <input type="hidden" name="service_provider_id"
-                                        value="{{$providers->first()->id}}" />
-                                    <input type="hidden" name="comrade_id" value="{{$comrades[0]->id}}" />
-                                    <input type="hidden" name="user_id"
-                                        value="{{ $order->user ? $order->user->id : '-' }}" />
-                                    <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
-                                </form>
+                    @if($balance >= 500)
+                    @if(count($newOrders) != 0)
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div>অর্ডার নং #</div>
+                                </th>
+                                <th>
+                                    <div> সার্ভিস </div>
+                                </th>
+                                <th>
+                                    <div>এলাকা </div>
+                                </th>
+                                <th>
+                                    <div>সময় </div>
+                                </th>
+                                <th>
+                                    <div> বিস্তারিত </div>
+                                </th>
+                                <th>
+                                    <div> একশন </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($newOrders as $order)
+                            <tr>
+                                <td>{{$order->order_no}}</td>
+                                <td>{{$order->category->name}}</td>
+                                <td>{{$order->area}}</td>
+                                <td>{{$order->order_date}}/{{$order->order_time}}</td>
+                                <td> <button class="btn btn-sm btn-success" data-toggle="modal"
+                                        data-target="#view-{{$order->id}}" data-item="{{ $order->id }}">বিস্তারিত
+                                    </button>
+                                </td>
+                                <td>
+                                    @if(auth()->user()->serviceProvider->first()->type == 0)
+                                    @if($order->status == '0')
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-{{$order->id}}"
+                                        data-item="{{ $order->id }}">সহকারী</button>
+                                    @else
+                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#allocate-{{$order->id}}" data-item="{{ $order->id }}" disabled>
+                                        এলোকেটেড </button>
+                                    @endif
+                                    @else
+                                    <form method="post" action="{{ route('service_provider_allocate') }}">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="order_id" value="{{$order->id}}" />
+                                        <input type="hidden" name="service_provider_id"
+                                            value="{{$providers->first()->id}}" />
+                                        <input type="hidden" name="comrade_id" value="{{$comrades[0]->id}}" />
+                                        <input type="hidden" name="user_id"
+                                            value="{{ $order->user ? $order->user->id : '-' }}" />
+                                        <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
+                                    </form>
 
-                                @endif
+                                    @endif
 
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                @else
-                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই
-                    ।</div>
-                @endif
-                @else
-                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ
-                    করে কাজ অব্যাহত রাখুন। </div>
-                @endif
-            </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ
+                        নাই
+                        ।</div>
+                    @endif
+                    @else
+                    <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি
+                        রিচার্জ
+                        করে কাজ অব্যাহত রাখুন। </div>
+                    @endif
+                </div>
             </div>
             <!--.box-typical-body-->
         </section>
@@ -429,6 +433,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -456,8 +463,8 @@
                                         <td>{{$booking->service_name}}</td>
                                         <td>{{$booking->price}}</td>
                                         <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                            - 1)) }} @endif</td>
+                                        <td>@if($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
+                                            - 1))}} @endif</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -469,7 +476,7 @@
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-{{$order->id}}"
                     data-item="{{ $order->id }}" class="btn btn-primary">সহকারী</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
+                {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button> --}}
             </div>
         </div>
 

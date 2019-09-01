@@ -118,7 +118,19 @@
                             <option value="11:00 PM">11:00 PM</option>
                         </select> --}}
 
-                        <input type="text" class="from-control" name="order_time" id="order_time" style="    display: block;
+                        <input type="text" class="from-control" name="order_time" id="order_time1" style="    display: block;
+                        width: 94%;
+                        padding: .375rem .75rem;
+                        font-size: 1rem;
+                        line-height: 1.5;
+                        color: #495057;
+                        background-color: #fff;
+                        background-clip: padding-box;
+                        border: 1px solid #f3b400;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+
+                        <input type="text" class="from-control" name="order_time" id="order_time2" style="  display: none;
                         width: 94%;
                         padding: .375rem .75rem;
                         font-size: 1rem;
@@ -165,16 +177,9 @@
         // maxDate: weeklet,
         minDate: today,
         locale: {
-            format: 'DD-MM-YYYY'
+            format: 'DD/MM/YYYY'
         }
 	});
-
-    // $('#order_time').change(function(){
-        
-            
-            
-
-    //     })
 
         // function for time picker help
         function getCurrentTime(date) {
@@ -189,19 +194,28 @@
                 return hours + ':' + '00' + ' ' + ampm;
         }
 
-    console.log(getCurrentTime(new Date()));
+        
+
+
+       $('#order_date').change(function(){
+            if(today != $('#order_date').val()){
+                $('#order_time1').hide();
+                $('#order_time2').show();
+            }else{
+                $('#order_time1').show();
+                $('#order_time2').hide();
+            } 
+       });
+       
+
 
 // only time picker
-        $('#order_time').timepicker({
-
+        $('#order_time1').timepicker({
             change: function(time) {
                 $time = $(this).val();
                 $time = $time.split(" ");
                 $num = parseInt($time[0]);
                 $met = $time[1];
-                console.log($num);
-                console.log($met);
-                
                 if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
                     //alert("In this case we'll charge 500 tk extra for emergency ");
                     $('.imergency').show();
@@ -212,8 +226,8 @@
                     $('.imergency').hide();   
                 }
 
+                
             },
-
 
             timeFormat: 'h:mm p',
             interval: 60,
@@ -226,5 +240,39 @@
             dropdown: true,
             scrollbar: true
         });
+
+        $('#order_time2').timepicker({
+            change: function(time) {
+                $time = $(this).val();
+                $time = $time.split(" ");
+                $num = parseInt($time[0]);
+                $met = $time[1];
+                if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
+                    //alert("In this case we'll charge 500 tk extra for emergency ");
+                    $('.imergency').show();
+                    if($num == 12  && $met == 'PM'){
+                        $('.imergency').hide();
+                    }
+                }else{
+                    $('.imergency').hide();   
+                }
+
+                
+            },
+
+            timeFormat: 'h:mm p',
+            interval: 60,
+            minTime: '08:00am',
+            // minTime: '08:00am',
+            // maxTime: '12:00pm',
+             defaultTime: '08:00am',
+            // startTime: '12:00pm',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+
+        
 </script>
 @endsection

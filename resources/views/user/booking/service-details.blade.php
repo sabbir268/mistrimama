@@ -126,6 +126,7 @@
                 "service_id": service_id,
                 "id": id,
                 "qty": qty,
+                "order_id": {{$order_id}}
             },
             dataType: 'html',
             success: function(response) {
@@ -148,7 +149,8 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id": $service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": {{$order_id}}
             },
             dataType: 'html',
             success: function(response) {

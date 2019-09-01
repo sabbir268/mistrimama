@@ -9,7 +9,7 @@
                 <div class="col-md-12" style="height:280px;overflow-y: scroll;">
                     @foreach($SubCategory as $data)
                     <div class="card mb-1 pl-3">
-                        <div class="card-body ">
+                        <div class="card-body">
                             <input type="hidden" name="ID" value="{{$data->id}}">
                             <div class="row">
                                 <div class="col-md-8">

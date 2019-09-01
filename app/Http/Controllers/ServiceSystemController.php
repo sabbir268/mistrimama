@@ -11,6 +11,7 @@ use App\RewardPoint;
 use App\Models\service_providers as ServiceProvider;
 use App\OrderDetails;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\SMS;
 
 class ServiceSystemController extends Controller
 {
@@ -21,12 +22,16 @@ class ServiceSystemController extends Controller
         $ordId = $request->order_id;
         $sSysId = $request->s_sys_id;
        // return $request->amount;
-        if($request->has('order_id')) {
+        if($request->has('order_id')){
             $order = Order::find($ordId);
             $order->status = $sts;
             $orderDetails = OrderDetails::find($ordId);
             if($sts == 3){
                 $order->disc = promocheck($order->user_id, $orderDetails->total_price);
+
+                $msg = "Thank you so much for taking service from Mistri Mama. Your total payable bill amount is BDT ".$order->total_price."/-";
+
+                SMS::send($order->phone,$msg);
             }
             $ssysidu = $order->serviceSystem->first()->id;
             if ($ssysidu) {
@@ -46,8 +51,10 @@ class ServiceSystemController extends Controller
                     $data['cus_phone'] = $order->user->phone_no;
                     $data['order_no'] = $order->order_no;
                     $data['order_cat'] = $order->category->name;
+                    $data['pay_type'] = $request->pay_type;
+                    $order->status = 3;
                    // return SslCommerzPaymentController::index();
-                   $order->save();
+                    $order->save();
                   return SslCommerzPaymentController::payment($data);
                 }
             }
@@ -120,12 +127,16 @@ class ServiceSystemController extends Controller
             }
             
             $accountsp->save();
-
+            /** Reward point add to referar */
             if($order->ref_code != null){
                 $ruser = User::where('ref_code',$order->ref_code)->first();
                 $rp = new RewardPoint();
                 $rp->user_id = $ruser->id;
-                $rp->rp = ($request->amount / 50);
+                if(checkRole(auth()->user()->id, 'special')){
+                    $rp->rp = ($request->amount / 50);
+                }else{
+                    $rp->rp = ($request->amount / 50);
+                }   
                 $rp->status = 'add';
                 $rp->details = "Service referred (BDT". $request->amount .")";
                 $rp->save();

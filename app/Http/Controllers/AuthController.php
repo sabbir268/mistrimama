@@ -34,7 +34,7 @@ class AuthController extends Controller
             return redirect()->to('/register')->withErrors($validator->errors());
         } else {
             $userType = $request->user_type;
-            $user = new User($request->except(['reason','type','ref_code']));
+            $user = new User($request->except(['reason', 'type', 'ref_code']));
             // return $user->phone_no = $phone = "+88".$request['phone_no'];
             $refcode = explode(" ", $request->name)[0] . rand(0, 9) . generateRandomString(3);
             $user->ref_code =  $refcode;
@@ -43,12 +43,21 @@ class AuthController extends Controller
                 if ($request->has('reason')) {
                     $roles = new user_roles();
                     $roles->user_id = $user->id;
-                    $roles->roles_id = 2;
+                    if($request->reason == 'special_user'){
+                        $roles->roles_id = 9;
+                    }else{
+                        $roles->roles_id = 2;
+                    }
+                    
                     $roles->save();
                 }
 
-                $msg = "Dear ".explode(" ", $request->name)[0]."! Thanks for registering in Mistri Mama. Use this referrer code “".$refcode."” to earn reward points. Call +8809610222111 for details.";
-                SMS::send($request->phone_no , $msg);
+                $msg = "Dear " . explode(" ", $request->name)[0] . "! Thanks for registering in Mistri Mama. Use this referrer code “ " . $refcode . " ” to earn reward points. Call +8809610222111 for details.";
+                SMS::send($request->phone_no, $msg);
+
+                if($request->reason == 'special_user'){
+                    return redirect()->back()->with("success","Special User created successfully");
+                }
 
                 return $this->doLogin($request);
             } else {
@@ -84,9 +93,9 @@ class AuthController extends Controller
             if ($request->reason == 'true') {
                 return redirect()->route('show.services');
             } else {
-                if($request->reason == 'ok'){
+                if ($request->reason == 'ok') {
                     $ord = new \App\Http\Controllers\BookingController();
-                 return  $ord->OrderConfirmDone($request);
+                    return  $ord->OrderConfirmDone($request);
                 }
                 switch ($userType) {
                     case "user":
@@ -151,5 +160,3 @@ class AuthController extends Controller
         }
     }
 }
-
-

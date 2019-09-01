@@ -108,4 +108,8 @@ class HomeController extends Controller {
         return redirect(route('profile'));
     }
 
+    public function specialUserADD(){
+        return view('admin.special_user.index');
+    }
+
 }

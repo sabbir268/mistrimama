@@ -79,13 +79,11 @@
         </div>
     </section>
 
-    <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="<?php echo e(route('book-self')); ?>" class="text-white">←
+    <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="<?php echo e(route('book.first')); ?>" class="text-white">←
     Back</a></button> 
     <button type="button" id="dateTime" class="btn btn-rounded float-right btn-mm"> <a href="#" class="text-white"> Next →</a></button>
 
 </section>
-
-
 <div id="showModal">
 
 </div>

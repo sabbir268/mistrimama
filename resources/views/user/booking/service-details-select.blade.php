@@ -27,7 +27,7 @@
                     </span>
 
                     <span style="cursor :pointer" class="bg-danger ml-3 p-1 text-white mr-0 rounded-0 remove-item"
-                        data-id="{{$SubType->sub_cat_details_id}}" data-service="{{$service_id}}"><i class="fa fa-times"></i>
+                        data-id="{{$SubType->sub_cat_details_id}}" data-order_id ="{{$SubType->order_id}}" data-service="{{$service_id}}"><i class="fa fa-times"></i>
                     </span>
                 </div>
             </div>
@@ -154,7 +154,8 @@
         $id = $(this).data('id');
         $service_id = $(this).data('service');
         
-        $qty = $('#qty' + $id).val();
+        $qty = $('#qty'+$id).val();
+        $order_id = $(this).data('order_id');
 
         $.ajax({
             url: "{{route('delete.sub-service')}}",
@@ -163,7 +164,8 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id": $service_id,
                 "id": $id,
-                "qty": $qty
+                "qty": $qty,
+                "order_id": $order_id
             },
             dataType: 'html',
             success: function(response) {
@@ -171,6 +173,7 @@
                     jQuery('#addRemove' + $service_id).html('ADD');
                     // jQuery('#collapsePanel' + $service_id).html(response);
                     jQuery('#collapsePanel' + $service_id).hide();
+                    $('#qty'+$id).val(1);
                 }
                 $('#main-carear-'+$id).hide();
                 $.ajax({

@@ -25,6 +25,7 @@ use DB;
 use App\Offer;
 use App\Models\category;
 use Image;
+use App\Booking;
 
 class espController extends Controller
 {
@@ -145,7 +146,8 @@ class espController extends Controller
 
 
     public function NewService($category_id , $order_id){
-        $SubCategory = SubCategory::where('c_id',$category_id)->get();
+       $addedServicesId = Booking::where("order_id",$order_id)->pluck('sub_categories_id')->toArray();
+        $SubCategory = SubCategory::where('c_id',$category_id)->whereNotIn('id',$addedServicesId)->get();
         return view('new_service',compact('SubCategory','order_id'));
     }
 

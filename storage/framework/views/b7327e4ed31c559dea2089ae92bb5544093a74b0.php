@@ -127,6 +127,8 @@
                 "service_id": service_id,
                 "id": id,
                 "qty": qty,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {
@@ -149,7 +151,9 @@
                 "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": $service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {

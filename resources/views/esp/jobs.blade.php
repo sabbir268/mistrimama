@@ -448,7 +448,7 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach ($comrades as $comrade)
+                                        @foreach(availComrade(auth()->user()->sp->id,$order->category_id) as $comrade) 
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>
@@ -693,7 +693,7 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach ($comrades as $comrade)
+                                        @foreach(availComrade(auth()->user()->sp->id,$actOrder->category_id) as $comrade) 
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>
