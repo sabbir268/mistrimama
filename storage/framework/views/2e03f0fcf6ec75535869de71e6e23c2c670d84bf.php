@@ -53,6 +53,7 @@
                         আউট করুন </a>
                 </div>
                 
+    <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
     <div class="tbl-cell pb-0">
         <div class="tbl tbl-item">
             <div class="tbl-row">
@@ -73,6 +74,7 @@
         <a href="<?php echo e(route('esp.comrade')); ?>" style="width:100%"
             class="btn btn-sm btn-inline btn-mm-outline text-mm mt-2">সহকারীর বিস্তারিত </a>
     </div>
+    <?php endif; ?>
     <div class="tbl-cell">
         <div class="tbl tbl-item">
             <div class="tbl-row">
@@ -158,80 +160,84 @@
             <div class="card-header">নতুন কাজ </div>
             <div class="box-typical-body panel-body" id="avail_able_order">
                 <div class="table-responsive">
-                <?php if($balance >= 500): ?>
-                <?php if(count($newOrders) != 0): ?>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div>অর্ডার নং #</div>
-                            </th>
-                            <th>
-                                <div> সার্ভিস </div>
-                            </th>
-                            <th>
-                                <div>এলাকা </div>
-                            </th>
-                            <th>
-                                <div>সময় </div>
-                            </th>
-                            <th>
-                                <div> বিস্তারিত </div>
-                            </th>
-                            <th>
-                                <div> একশন </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $__currentLoopData = $newOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
-                            <td><?php echo e($order->order_no); ?></td>
-                            <td><?php echo e($order->category->name); ?></td>
-                            <td><?php echo e($order->area); ?></td>
-                            <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
-                            <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিস্তারিত </button>
-                            </td>
-                            <td>
-                                <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
-                                <?php if($order->status == '0'): ?>
-                                <button class="btn btn-sm btn-mm" data-toggle="modal"
-                                    data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">সহকারী</button>
-                                <?php else: ?>
-                                <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>" disabled>
-                                    এলোকেটেড </button>
-                                <?php endif; ?>
-                                <?php else: ?>
-                                <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
-                                    <?php echo e(csrf_field()); ?>
+                    <?php if($balance >= 500): ?>
+                    <?php if(count($newOrders) != 0): ?>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div>অর্ডার নং #</div>
+                                </th>
+                                <th>
+                                    <div> সার্ভিস </div>
+                                </th>
+                                <th>
+                                    <div>এলাকা </div>
+                                </th>
+                                <th>
+                                    <div>সময় </div>
+                                </th>
+                                <th>
+                                    <div> বিস্তারিত </div>
+                                </th>
+                                <th>
+                                    <div> একশন </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $newOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($order->order_no); ?></td>
+                                <td><?php echo e($order->category->name); ?></td>
+                                <td><?php echo e($order->area); ?></td>
+                                <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
+                                <td> <button class="btn btn-sm btn-success" data-toggle="modal"
+                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিস্তারিত
+                                    </button>
+                                </td>
+                                <td>
+                                    <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
+                                    <?php if($order->status == '0'): ?>
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-<?php echo e($order->id); ?>"
+                                        data-item="<?php echo e($order->id); ?>">সহকারী</button>
+                                    <?php else: ?>
+                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>" disabled>
+                                        এলোকেটেড </button>
+                                    <?php endif; ?>
+                                    <?php else: ?>
+                                    <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
+                                        <?php echo e(csrf_field()); ?>
 
-                                    <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>" />
-                                    <input type="hidden" name="service_provider_id"
-                                        value="<?php echo e($providers->first()->id); ?>" />
-                                    <input type="hidden" name="comrade_id" value="<?php echo e($comrades[0]->id); ?>" />
-                                    <input type="hidden" name="user_id"
-                                        value="<?php echo e($order->user ? $order->user->id : '-'); ?>" />
-                                    <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
-                                </form>
+                                        <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>" />
+                                        <input type="hidden" name="service_provider_id"
+                                            value="<?php echo e($providers->first()->id); ?>" />
+                                        <input type="hidden" name="comrade_id" value="<?php echo e($comrades[0]->id); ?>" />
+                                        <input type="hidden" name="user_id"
+                                            value="<?php echo e($order->user ? $order->user->id : '-'); ?>" />
+                                        <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
+                                    </form>
 
-                                <?php endif; ?>
+                                    <?php endif; ?>
 
-                            </td>
-                        </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </tbody>
-                </table>
-                <?php else: ?>
-                <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ নাই
-                    ।</div>
-                <?php endif; ?>
-                <?php else: ?>
-                <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি রিচার্জ
-                    করে কাজ অব্যাহত রাখুন। </div>
-                <?php endif; ?>
-            </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                    <?php else: ?>
+                    <div class="card-body col-md-12 text-secodary text-center p-5  p-auto"> দুঃখিত, এই মূহুর্তে কোনো কাজ
+                        নাই
+                        ।</div>
+                    <?php endif; ?>
+                    <?php else: ?>
+                    <div class="card-body col-md-12 text-danger text-center p-5  p-auto"> দয়া করে আপনার একাউন্টটি
+                        রিচার্জ
+                        করে কাজ অব্যাহত রাখুন। </div>
+                    <?php endif; ?>
+                </div>
             </div>
             <!--.box-typical-body-->
         </section>
@@ -287,6 +293,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -323,7 +332,7 @@
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
                     data-item="<?php echo e($order->id); ?>" class="btn btn-primary">সহকারী</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">বাতিল</button>
+                
             </div>
         </div>
 

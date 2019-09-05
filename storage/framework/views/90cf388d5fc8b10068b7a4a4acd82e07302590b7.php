@@ -31,9 +31,11 @@
                             <th>SL</th>
                             <th>SP Name</th>
                             <th>SP Category</th>
-                            <th>MFS</th>
-                            <th>Trx. NO</th>
-                            <th>Amount</th>
+                            <th>Media</th>
+                            <th>Actual Amount</th>
+                            <th>Media Charge</th>
+                            <th>ESP Amount</th>
+                            <th>TXN. NO</th>
                             <th class="align-center">Action</th>
                         </tr>
                     </thead>
@@ -53,8 +55,10 @@
                                 <?php endif; ?>
                             </td>
                             <td><?php echo e($request->mfs); ?></td>
-                            <td><?php echo e($request->trxn); ?></td>
+                            <td><?php echo e($request->amount - ($request->amount * MfsCharge($request->mfs)/100)); ?></td>
+                            <td><?php echo e(MfsCharge($request->mfs)); ?></td>
                             <td><?php echo e($request->amount); ?></td>
+                            <td><?php echo e($request->trxn); ?></td>
                             <td class="align-center">
                                 <div class="btn-group">
                                     <?php if($request->status == 0): ?>

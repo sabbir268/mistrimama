@@ -5,13 +5,18 @@
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('topbar'); ?>
 <?php echo $__env->make('user.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('sidebar'); ?>
 <?php echo $__env->make('user.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
+
 
 <?php $__env->startSection('content'); ?>
 

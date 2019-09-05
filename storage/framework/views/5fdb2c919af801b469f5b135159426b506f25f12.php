@@ -1,7 +1,7 @@
 <?php $__env->startSection('body'); ?>
 
 <h1 class="page-title">Cash Out
- Request
+    Request
     <small></small>
     <!--    <a href="<?php echo e(route('cms.create')); ?>" class="btn btn-primary float-right"> Create </a>-->
 </h1>
@@ -16,8 +16,10 @@
                 <div class="caption">
                     <i class="fa fa-cogs"></i>Cash Out Request
                 </div>
-                <a href="#" data-toggle="modal" data-target="#withdraw_import" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Mass Import</a>
-                <a href="<?php echo e(route('admin.withdraw.export')); ?>" style="margin-top: 3px;" class="btn btn-default float-right pt-2">Export CSV</a>
+                <a href="#" data-toggle="modal" data-target="#withdraw_import" style="margin-top: 3px;"
+                    class="btn btn-default float-right pt-2">Mass Import</a>
+                <a href="<?php echo e(route('admin.withdraw.export')); ?>" style="margin-top: 3px;"
+                    class="btn btn-default float-right pt-2">Export CSV</a>
             </div>
 
             <div class="portlet-body flip-scroll">
@@ -28,8 +30,9 @@
                             <th>User Type</th>
                             <th>Amount</th>
                             <th>MFS Number</th>
+                            <th>MFS Type</th>
                             <th>Details</th>
-                            <th class="align-center">Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -40,16 +43,9 @@
                             <td> <?php if($withdraw->type == 'rp' ): ?> User <?php else: ?> Service Provider <?php endif; ?></td>
                             <td><?php echo e($withdraw->amount); ?></td>
                             <td><?php echo e($withdraw->mfs_number); ?></td>
+                            <td><?php echo e($withdraw->type); ?></td>
                             <td><?php echo e($withdraw->details); ?></td>
-                            <td class="align-center">
-                                <form action="<?php echo e(route('admin.withdraw.approve')); ?>" method="POST">
-                                    <?php echo csrf_field(); ?>
-                                    <input type="text" value="<?php echo e($withdraw->id); ?>" name="id" hidden>
-                                    <input type="text" value="1" name="status" hidden>
-                                    <button type="submit" class="btn btn-primery">Accept</button>
-                                </form>
-                                
-                            </td>
+                            
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
@@ -57,12 +53,14 @@
                 <?php echo e($WithDrawAll->links()); ?>
 
 
-                <?php endif; ?>
+               
 
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -94,5 +92,9 @@
     </div>
 </div>
 
+
+
+
+<?php endif; ?>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

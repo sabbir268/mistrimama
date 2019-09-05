@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegisterEvent;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             $userType = $request->user_type;
             $user = new User($request->except(['reason', 'type', 'ref_code']));
             // return $user->phone_no = $phone = "+88".$request['phone_no'];
-            $refcode = explode(" ", $request->name)[0] . rand(0, 9) . generateRandomString(3);
+            $refcode = strtolower(substr(str_replace(" ","",str_replace(".","",$request->name)),0,5)). rand(0, 9) . generateRandomString(3);
             $user->ref_code =  $refcode;
             $user->password = Hash::make($request->input('password'));
             if ($user->save()) {
@@ -52,8 +53,10 @@ class AuthController extends Controller
                     $roles->save();
                 }
 
-                $msg = "Dear " . explode(" ", $request->name)[0] . "! Thanks for registering in Mistri Mama. Use this referrer code “ " . $refcode . " ” to earn reward points. Call +8809610222111 for details.";
-                SMS::send($request->phone_no, $msg);
+                $msg = "Dear " . $user->name . "! Thanks for registering in Mistri Mama. Login your account with ".$user->phone_no;
+                SMS::send($user->phone_no, $msg);
+                
+                //event(new UserRegisterEvent($user));
 
                 if($request->reason == 'special_user'){
                     return redirect()->back()->with("success","Special User created successfully");
@@ -99,7 +102,7 @@ class AuthController extends Controller
                 }
                 switch ($userType) {
                     case "user":
-                        if (checkRole(auth()->user()->id, 'user')) {
+                        if (checkRole(auth()->user()->id, 'user') || checkRole(auth()->user()->id, 'special')) {
                             return redirect()->intended(route('dashboard'));
                         } else {
                             auth()->logout();

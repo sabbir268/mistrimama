@@ -4,6 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Service Option</h5>
+                <button type="button" class="close nextOpt" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
@@ -19,7 +22,7 @@
                                             id="check-bird-<?php echo e($SubType->id); ?>">
                                         <label for="check-bird-<?php echo e($SubType->id); ?>"><?php echo e($SubType->name); ?></label>
                                     </div>
-                                    <div id="qtyCont-<?php echo e($SubType->id); ?>" class="col-md-4" style="display:none">
+                                    <div id="qtyCont-<?php echo e($SubType->id); ?>" class="col-md-4" style="display:none;">
                                         <div class="input-group input-group-sm">
                                             <div class="input-group-prepend ">
                                                 <span class="input-group-text btn-mm decrease" style="cursor :pointer"
@@ -30,9 +33,9 @@
                                                 aria-describedby="inputGroup-sizing-sm" placeholder="Qty"
                                                 id="qty<?php echo e($SubType->id); ?>" value="1">
                                             <div class="input-group-append ">
-                                                <span class="input-group-text btn-mm text increase" style="cursor :pointer"
-                                                    data-id="<?php echo e($SubType->id); ?>" id="inputGroup-sizing-sm"><i
-                                                        class="fa fa-plus"></i></span>
+                                                <span class="input-group-text btn-mm text increase"
+                                                    style="cursor :pointer" data-id="<?php echo e($SubType->id); ?>"
+                                                    id="inputGroup-sizing-sm"><i class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -48,19 +51,19 @@
             <div class="modal-footer row p-0 m-0">
                 
 
-                    <div class="col-md-4 text-left p-0 m-0 pt-2 pl-2">
-                        <ul class="remarks">
-                        </ul>
-                    </div>
-                    <div class="col-md-8 text-right p-0 m-0 pt-3 pr-2">
-                        <button class="btn btn-secondary ">Approx. Price:<span class="sub_total">0</span></button>
-                        <button type="button" class="btn btn-mm" id="nextOpt" data-dismiss="modal">Next
-                            →</button>
-                    </div>
-                    
-                    <div class="col-md-12 offset-md-1 pull-left m-1 brief ">
-                        
-                    </div>
+                <div class="col-md-4 text-left p-0 m-0 pt-2 pl-2">
+                    <ul class="remarks">
+                    </ul>
+                </div>
+                <div class="col-md-8 text-right p-0 m-0 pt-3 pr-2">
+                    <button class="btn btn-secondary ">Approx. Price:<span class="sub_total">0</span></button>
+                    <button type="button" class="btn btn-mm nextOpt" id="nextOpt" data-dismiss="modal">Next
+                        →</button>
+                </div>
+
+                <div class="col-md-12 offset-md-1 pull-left m-1 brief ">
+
+                </div>
                 
 
             </div>
@@ -77,6 +80,7 @@
             jQuery('#qtyCont-' + $id).show();
             addSubServices($service_id, $id, $qty);
         } else {
+            jQuery('#qty'+$id).val(1);
             jQuery('#qtyCont-' + $id).hide();
             delSubServices($service_id, $id, $qty);
         }
@@ -90,7 +94,9 @@
                 "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {
@@ -120,7 +126,9 @@
                 "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {
@@ -143,7 +151,9 @@
                 "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": $service_id,
                 "id": id,
-                "qty": qty
+                "qty": qty,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {
@@ -184,14 +194,16 @@
         qtyUpdate($id, $qty);
     });
 
-    jQuery('#nextOpt').click(function() {
+    jQuery('.nextOpt').click(function() {
         $service_id = jQuery('#pservice_id').val();
         jQuery.ajax({
             url: "<?php echo e(route('selected.sub-service')); ?>",
             type: 'post',
             data: {
                 "_token": "<?php echo e(csrf_token()); ?>",
-                "service_id": $service_id
+                "service_id": $service_id,
+                "order_id": <?php echo e($order_id); ?>
+
             },
             dataType: 'html',
             success: function(response) {

@@ -21,7 +21,7 @@
                             <tbody>
                                 <tr>
                                     <th>Name</th>
-                                    <td>{{ $serviceProvider->name }}
+                                    <td>{{ $serviceProvider->name ? $serviceProvider->name : "-" }}
                                     </td>
                                 </tr>
                                 <tr>

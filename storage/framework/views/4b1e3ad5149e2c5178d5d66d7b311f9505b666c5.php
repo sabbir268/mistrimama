@@ -5,13 +5,18 @@
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('topbar'); ?>
 <?php echo $__env->make('user.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('sidebar'); ?>
 <?php echo $__env->make('user.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
+
 
 <?php $__env->startSection('content'); ?>
 
@@ -62,17 +67,10 @@
                             </div>
                         </div>
                         <div class="col-md-4 text-center pt-2">
-                            
                             <span style="cursor :pointer" class="bg-mm pl-3 pr-3 pt-1 pb-1 text-white ml-3 rounded addRemove" data-id="<?php echo e($data->id); ?>" id="addRemove<?php echo e($data->id); ?>">ADD</span>
                         </div>
                     </div>
-
                     <div class="row collapse mb-0 text-left" id="collapsePanel<?php echo e($data->id); ?>">
-                        
-                        
-                        
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -81,13 +79,11 @@
         </div>
     </section>
 
-    <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="<?php echo e(route('book-self')); ?>" class="text-white">←
+    <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="<?php echo e(route('book.first')); ?>" class="text-white">←
     Back</a></button> 
     <button type="button" id="dateTime" class="btn btn-rounded float-right btn-mm"> <a href="#" class="text-white"> Next →</a></button>
 
 </section>
-
-
 <div id="showModal">
 
 </div>

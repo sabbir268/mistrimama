@@ -98,28 +98,26 @@
     </div>
 </header>
 
-
 <style>
-    <?php if($balance >= 500): ?>
-    #jobs_get{
+    <?php if($balance >=500): ?> #jobs_get {
         display: block;
     }
-    
-    #get_order_alert{
+
+    #get_order_alert {
         display: none;
     }
-    
-    <?php else: ?> 
-    #jobs_get{
+
+    <?php else: ?> #jobs_get {
         display: none;
     }
-    
-    #get_order_alert{
+
+    #get_order_alert {
         display: block;
     }
+
     <?php endif; ?>
 
-</style> 
+</style>
 
 
 <div class="col-md-12 alert alert-danger" id="get_order_alert">দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন।
@@ -246,9 +244,11 @@
                                 <th>
                                     <div>একশন</div>
                                 </th>
+                                <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                                 <th>
                                     <div>সহকারী পরিবর্তন </div>
                                 </th>
+                                <?php endif; ?>
                                 <th>
                                     <div>নতুন সার্ভিস যোগ </div>
                                 </th>
@@ -266,12 +266,13 @@
                                     </button>
                                 </td>
                                 <td>
+                                    <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                                     <?php if($actord->comrade): ?>
                                     <?php if($actord->status == 1): ?>
-                                    <span class="text-dark">সহকারী যাচ্ছে </span>
+                                    <span class="text-dark"> সহকারী যাচ্ছে </span>
                                     <?php endif; ?>
                                     <?php if($actord->status == 2): ?>
-                                    <span class="text-danger">সহকারী কাজ করছে</span>
+                                    <span class="text-danger"> সহকারী কাজ করছে  </span>
                                     <?php endif; ?>
                                     <?php if($actord->status == 3): ?>
                                     <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য
@@ -284,6 +285,28 @@
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-<?php echo e($actord->id); ?>"
                                         data-item="<?php echo e($actord->id); ?>">বন্টন</button>
+                                    <?php endif; ?>
+
+                                    <?php else: ?>
+                                    <?php if($actord->comrade): ?>
+                                    <?php if($actord->status == 1): ?>
+                                    <span class="text-dark"> অর্ডারকারী অপেক্ষামান</span>
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 2): ?>
+                                    <span class="text-danger">কাজ চলমান</span>
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 3): ?>
+                                    <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য
+                                        অপেক্ষামান</span>
+                                    <?php endif; ?>
+                                    <?php if($actord->status == 4): ?>
+                                    <span class="text-success"> পেমেন্ট গ্রহিত হয়েছে </span>
+                                    <?php endif; ?>
+                                    <?php else: ?>
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-<?php echo e($actord->id); ?>"
+                                        data-item="<?php echo e($actord->id); ?>">বন্টন</button>
+                                    <?php endif; ?>
                                     <?php endif; ?>
                                 </td>
 
@@ -301,8 +324,13 @@
                                         </button> <?php break; ?>
                                         <?php case (2): ?>
                                         <input type="text" value="3" name="status" hidden>
+                                        <?php if(in_array("1",$actord->bookings->pluck('status')->toArray())): ?>
                                         <button type="submit" class="btn  btn-success" style="width:100%"> কাজ শেষ
                                         </button>
+                                        <?php else: ?>
+                                        -
+                                        <?php endif; ?>
+
                                         <?php break; ?>
                                         <?php case (3): ?>
                                         <input type="text" value="5" name="status" hidden>
@@ -329,12 +357,13 @@
                                         <input type="text" value="" name="status" hidden> <?php endswitch; ?>
                                     </form>
                                 </td>
-
+                                <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                                 <td>
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-<?php echo e($actord->id); ?>" data-item="<?php echo e($actord->id); ?>">সহকারী
                                         পরিবর্তন</button>
                                 </td>
+                                <?php endif; ?>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-mm" id="new_service" data-order_id="<?php echo e($actord->id); ?>"
                                         data-category_id="<?php echo e($actord->category_id); ?>"> <i class="fa fa-plus"></i>
@@ -433,7 +462,7 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php $__currentLoopData = availComrade(auth()->user()->sp->id,$order->category_id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
@@ -591,6 +620,7 @@
                                     এলাকা : <strong><?php echo e($actOrder->area); ?></strong><br>
                                     ঠিকানা: <strong><?php echo e($actOrder->address); ?></strong>
                                 </div>
+                                <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                                 <div class="card-header col-md-6">
                                     <u><strong><span class="m-0 typical-header">সহকারী </span></strong></u><br>
                                     নাম
@@ -598,6 +628,7 @@
                                     ফোন :
                                     <strong><?php echo e($actOrder->comrade ? $actOrder->comrade->c_phone_no : '-'); ?></strong>
                                 </div>
+                                <?php endif; ?>
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -674,7 +705,7 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php $__currentLoopData = availComrade(auth()->user()->sp->id,$actOrder->category_id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
@@ -725,6 +756,8 @@
                             $("#finsih_sub"+$id).addClass('btn-success-outline');
                             $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
                             $("#finsih_sub"+$id).text('কাজ শেষ');
+
+                            location.reload();
                         }
                     }
                 });

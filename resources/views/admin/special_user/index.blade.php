@@ -17,8 +17,7 @@
                 <div id="first_step">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">
-                            <form id="spf_form"  method="post"
-                            action="{{route('user.do-register')}}">
+                            <form id="spf_form" method="post" action="{{route('add.user.special')}}" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 <div class="form-group">
                                     <label for="">Full Name: <span class="type_err"></span></label>
@@ -35,8 +34,7 @@
 
                                 <div class="form-group">
                                     <label for="">Phone No: <span class="type_err"></span></label>
-                                    <input  id="phone_no"
-                                        type="text"
+                                    <input id="phone_no" type="text"
                                         class="form-control{{ $errors->has('phone_no') ? ' is-invalid' : '' }}"
                                         name="phone_no" value="{{ old('phone_no') }}" minLength="11" maxLength="11"
                                         placeholder="Mobile Number" required>
@@ -119,6 +117,43 @@
                                     <label for="">Address: <span class="type_err"></span></label>
                                     <textarea name="address" rows="2" class="form-control" placeholder="Address"
                                         required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">MFS Type: <span class="type_err"></span></label>
+                                    <select name="mfs_type" id="mfs_type" style="text-transform:none;"
+                                        class="form-control" required>
+                                        <option value="bkash">bKash</option>
+                                        <option value="rocket">Rocket</option>
+                                        <option value="sure_cash">Sure Cash</option>
+                                    </select>
+
+                                    @if ($errors->has('mfs_type'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('mfs_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">MFS Number: <span class="type_err"></span></label>
+                                    <input type="text" class="form-control" name="mfs_number" id="mfs_number">
+
+                                    @if ($errors->has('mfs_number'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('mfs_number') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Profile Picture: <span class="type_err"></span></label>
+                                    <input type="file" class="form-control" name="profile_picture" id="profile_picture">
+                                    @if ($errors->has('profile_picture'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('profile_picture') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
                                 <input type="text" name="reason" value="special_user" hidden>

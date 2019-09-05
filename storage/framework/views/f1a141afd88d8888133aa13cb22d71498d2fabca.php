@@ -6,13 +6,17 @@
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('topbar'); ?>
 <?php echo $__env->make('user.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
 
+<?php if(Auth::check()): ?>
 <?php $__env->startSection('sidebar'); ?>
 <?php echo $__env->make('user.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php endif; ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -54,7 +58,8 @@
                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade show" role="alert">
                     
                     <i class="font-icon font-icon-warning"></i>
-                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be added.
+                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be
+                    added.
                 </div>
             </div>
 
@@ -82,38 +87,37 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="input-group">
-                        <select name="order_time" id="order_time" class="form-control" required>
-                            <option value="">Chose Time</option>
-                            <option value="12:00 AM">12:00 AM </option>
-                            <option value="1:00 AM">01:00 AM </option>
-                            <option value="2:00 AM">02:00 AM </option>
-                            <option value="3:00 AM">03:00 AM </option>
-                            <option value="4:00 AM">04:00 AM </option>
-                            <option value="5:00 AM">05:00 AM </option>
-                            <option value="6:00 AM">06:00 AM </option>
-                            <option value="7:00 AM">07:00 AM </option>
-                            <option value="8:00 AM">08:00 AM </option>
-                            <option value="9:00 AM">09:00 AM </option>
-                            <option value="10:00 AM">10:00 AM </option>
-                            <option value="11:00 AM">11:00 AM </option>
-                            <option value="12:00 PM">12:00 PM </option>
-                            <option value="1:00 PM">01:00 PM </option>
-                            <option value="2:00 PM">02:00 PM </option>
-                            <option value="3:00 PM">03:00 PM </option>
-                            <option value="4:00 PM">04:00 PM</option>
-                            <option value="5:00 PM">05:00 PM </option>
-                            <option value="6:00 PM">06:00 PM </option>
-                            <option value="7:00 PM">07:00 PM </option>
-                            <option value="8:00 PM">08:00 PM </option>
-                            <option value="9:00 PM">09:00 PM </option>
-                            <option value="10:00 PM">10:00 PM </option>
-                            <option value="11:00 PM">11:00 PM</option>
-                        </select>
+                        
+
+                        <input type="text" class="from-control" name="order_time" id="order_time1" style="    display: block;
+                        width: 94%;
+                        padding: .375rem .75rem;
+                        font-size: 1rem;
+                        line-height: 1.5;
+                        color: #495057;
+                        background-color: #fff;
+                        background-clip: padding-box;
+                        border: 1px solid #f3b400;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+
+                        <input type="text" class="from-control" name="order_time" id="order_time2" style="  display: none;
+                        width: 94%;
+                        padding: .375rem .75rem;
+                        font-size: 1rem;
+                        line-height: 1.5;
+                        color: #495057;
+                        background-color: #fff;
+                        background-clip: padding-box;
+                        border: 1px solid #f3b400;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
                     </div>
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white" href="<?php echo e(route('show.services')); ?>">←
+        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white"
+                href="<?php echo e(route('show.services')); ?>">←
                 Back</a></button>
         <button type="submit" class="btn btn-rounded float-right btn-mm">Next →</button>
     </form>
@@ -144,33 +148,103 @@
         // maxDate: weeklet,
         minDate: today,
         locale: {
-            format: 'DD-MM-YYYY'
+            format: 'DD/MM/YYYY'
         }
 	});
 
-    $('#order_time').change(function(){
-            $time = $('#order_time').val();
-            $time = $time.split(" ");
-            $num = parseInt($time[0]);
-            $met = $time[1];
-            console.log($num);
-            console.log($met);
-            
-            if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
-                //alert("In this case we'll charge 500 tk extra for emergency ");
-                $('.imergency').show();
-                if($num == 12  && $met == 'PM'){
-                    $('.imergency').hide();
-                }
+        // function for time picker help
+        function getCurrentTime(date) {
+                var hours = date.getHours()+1,
+                minutes = date.getMinutes(),
+                ampm = hours >= 12 ? 'pm' : 'am';
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+
+                return hours + ':' + '00' + ' ' + ampm;
+        }
+
+        
+
+
+       $('#order_date').change(function(){
+            if(today != $('#order_date').val()){
+                $('#order_time1').hide();
+                $('#order_time2').show();
             }else{
-                $('.imergency').hide();   
-            }
+                $('#order_time1').show();
+                $('#order_time2').hide();
+            } 
+       });
+       
 
-            
 
-        })
-    
+// only time picker
+        $('#order_time1').timepicker({
+            change: function(time) {
+                $time = $(this).val();
+                $time = $time.split(" ");
+                $num = parseInt($time[0]);
+                $met = $time[1];
+                if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
+                    //alert("In this case we'll charge 500 tk extra for emergency ");
+                    $('.imergency').show();
+                    if($num == 12  && $met == 'PM'){
+                        $('.imergency').hide();
+                    }
+                }else{
+                    $('.imergency').hide();   
+                }
 
+                
+            },
+
+            timeFormat: 'h:mm p',
+            interval: 60,
+            minTime: getCurrentTime(new Date()),
+            // minTime: '08:00am',
+            // maxTime: '12:00pm',
+             defaultTime: getCurrentTime(new Date()),
+            // startTime: '12:00pm',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $('#order_time2').timepicker({
+            change: function(time) {
+                $time = $(this).val();
+                $time = $time.split(" ");
+                $num = parseInt($time[0]);
+                $met = $time[1];
+                if(($num > 8  && $met == 'PM') || ($num < 8 && $met == 'AM')){
+                    //alert("In this case we'll charge 500 tk extra for emergency ");
+                    $('.imergency').show();
+                    if($num == 12  && $met == 'PM'){
+                        $('.imergency').hide();
+                    }
+                }else{
+                    $('.imergency').hide();   
+                }
+
+                
+            },
+
+            timeFormat: 'h:mm p',
+            interval: 60,
+            minTime: '08:00am',
+            // minTime: '08:00am',
+            // maxTime: '12:00pm',
+             defaultTime: '08:00am',
+            // startTime: '12:00pm',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+
+        
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.main-dash', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

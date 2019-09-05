@@ -211,7 +211,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource("cms", "Admin\CmsController");
 
         Route::resource("service-provider", "Admin\ServiceProviderController");
-        Route::get("service-provider/accounts", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
+        Route::get("service_provider_accounts", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
 
 
         Route::post("add-mmfirst-balance", "Admin\ServiceProviderController@addAmount")->name('add.mmfirstbalance');
@@ -250,6 +250,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 
         Route::get("special-user", "Admin\HomeController@specialUserADD")->name('admin.special-user');
+
+        // add special user
+        Route::post('add_special', 'UsersController@addUser')->name('add.user.special'); 
     });
 });
 
@@ -365,6 +368,9 @@ Route::group(['prefix' => 'withdraw', 'middleware' => ['auth']], function () {
     Route::post('/request', 'WithdrawRequestController@withdrawRequest')->name('withdraw.request'); // esp dahsboard
     Route::post('/approve', 'WithdrawRequestController@withdrawApprove')->name('withdraw.approve'); // esp job-history
 });
+
+
+
 
 
 // SSLCOMMERZ Start

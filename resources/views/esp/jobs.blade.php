@@ -98,28 +98,26 @@
     </div>
 </header>
 
-
 <style>
-    @if($balance >= 500)
-    #jobs_get{
+    @if($balance >=500) #jobs_get {
         display: block;
     }
-    
-    #get_order_alert{
+
+    #get_order_alert {
         display: none;
     }
-    
-    @else 
-    #jobs_get{
+
+    @else #jobs_get {
         display: none;
     }
-    
-    #get_order_alert{
+
+    #get_order_alert {
         display: block;
     }
+
     @endif
 
-</style> 
+</style>
 
 
 <div class="col-md-12 alert alert-danger" id="get_order_alert">দয়া করে আপনার একাউন্টটি রিচার্জ করে কাজ অব্যাহত রাখুন।
@@ -245,9 +243,11 @@
                                 <th>
                                     <div>একশন</div>
                                 </th>
+                                @if(auth()->user()->serviceProvider->first()->type == 0)
                                 <th>
                                     <div>সহকারী পরিবর্তন </div>
                                 </th>
+                                @endif
                                 <th>
                                     <div>নতুন সার্ভিস যোগ </div>
                                 </th>
@@ -265,12 +265,13 @@
                                     </button>
                                 </td>
                                 <td>
+                                    @if(auth()->user()->serviceProvider->first()->type == 0)
                                     @if($actord->comrade)
                                     @if($actord->status == 1)
-                                    <span class="text-dark">সহকারী যাচ্ছে </span>
+                                    <span class="text-dark"> সহকারী যাচ্ছে </span>
                                     @endif
                                     @if($actord->status == 2)
-                                    <span class="text-danger">সহকারী কাজ করছে</span>
+                                    <span class="text-danger"> সহকারী কাজ করছে  </span>
                                     @endif
                                     @if($actord->status == 3)
                                     <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য
@@ -282,7 +283,29 @@
                                     @else
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-{{$actord->id}}"
+                                        data-item="{{ $actord->id }}">বন্zটন</button>
+                                    @endif
+
+                                    @else
+                                    @if($actord->comrade)
+                                    @if($actord->status == 1)
+                                    <span class="text-dark"> অর্ডারকারী অপেক্ষামান</span>
+                                    @endif
+                                    @if($actord->status == 2)
+                                    <span class="text-danger">কাজ চলমান</span>
+                                    @endif
+                                    @if($actord->status == 3)
+                                    <span class="text-success">সফল ভাবে কাজ শেষ হয়েছে এবং পেমেন্টের জন্য
+                                        অপেক্ষামান</span>
+                                    @endif
+                                    @if($actord->status == 4)
+                                    <span class="text-success"> পেমেন্ট গ্রহিত হয়েছে </span>
+                                    @endif
+                                    @else
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-{{$actord->id}}"
                                         data-item="{{ $actord->id }}">বন্টন</button>
+                                    @endif
                                     @endif
                                 </td>
 
@@ -300,8 +323,13 @@
                                         </button> @break
                                         @case(2)
                                         <input type="text" value="3" name="status" hidden>
+                                        @if(in_array("1",$actord->bookings->pluck('status')->toArray()))
                                         <button type="submit" class="btn  btn-success" style="width:100%"> কাজ শেষ
                                         </button>
+                                        @else
+                                        -
+                                        @endif
+
                                         @break
                                         @case(3)
                                         <input type="text" value="5" name="status" hidden>
@@ -341,12 +369,13 @@
                                         <input type="text" value="" name="status" hidden> @endswitch
                                     </form>
                                 </td>
-
+                                @if(auth()->user()->serviceProvider->first()->type == 0)
                                 <td>
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-{{$actord->id}}" data-item="{{ $actord->id }}">সহকারী
                                         পরিবর্তন</button>
                                 </td>
+                                @endif
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-mm" id="new_service" data-order_id="{{$actord->id}}"
                                         data-category_id="{{$actord->category_id}}"> <i class="fa fa-plus"></i>
@@ -448,7 +477,7 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach(availComrade(auth()->user()->sp->id,$order->category_id) as $comrade) 
+                                        @foreach(availComrade(auth()->user()->sp->id,$order->category_id) as $comrade)
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>
@@ -609,6 +638,7 @@
                                     এলাকা : <strong>{{$actOrder->area}}</strong><br>
                                     ঠিকানা: <strong>{{$actOrder->address}}</strong>
                                 </div>
+                                @if(auth()->user()->serviceProvider->first()->type == 0)
                                 <div class="card-header col-md-6">
                                     <u><strong><span class="m-0 typical-header">সহকারী </span></strong></u><br>
                                     নাম
@@ -616,6 +646,7 @@
                                     ফোন :
                                     <strong>{{$actOrder->comrade ? $actOrder->comrade->c_phone_no : '-'}}</strong>
                                 </div>
+                                @endif
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -693,7 +724,8 @@
                                     <label for="email">সহকারীর তালিকা :</label>
                                     <select class="form-control" name="comrade_id" required="required">
                                         <option value="">নির্বাচন করুন </option>
-                                        @foreach(availComrade(auth()->user()->sp->id,$actOrder->category_id) as $comrade) 
+                                        @foreach(availComrade(auth()->user()->sp->id,$actOrder->category_id) as
+                                        $comrade)
                                         <option value="{{$comrade->id}}">{{$comrade->c_name}}</option>
                                         @endforeach
                                     </select>
@@ -744,6 +776,8 @@
                             $("#finsih_sub"+$id).addClass('btn-success-outline');
                             $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
                             $("#finsih_sub"+$id).text('কাজ শেষ');
+
+                            location.reload();
                         }
                     }
                 });

@@ -67,12 +67,12 @@
             display: none;
         }
     }
+
 </style>
 
 <?php if(Session::has('message')): ?>
 <p class="alert <?php echo e(Session::get('alert-class', 'alert-info')); ?>"><?php echo e(Session::get('message')); ?></p>
 <?php endif; ?>
-
 
 <div class="row">
     <div class="col-md-12">
@@ -89,7 +89,9 @@
                         <div class="col-md-6 col-md-offset-3">
 
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                    role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 0%"></div>
                             </div>
                             <div class="text-center">
                                 Progress: <span id="progress">0%</span>
@@ -104,8 +106,10 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="">Select a service type: <span class="type_err"></span></label>
-                                                <select class="form-control error" name="type" id="type" required="true" aria-required="true" aria-invalid="true">
+                                                <label for="">Select a service type: <span
+                                                        class="type_err"></span></label>
+                                                <select class="form-control error"  name="type" id="type"
+                                                    required="true">
                                                     <option value="">Select a service type</option>
                                                     <option value="ESP">Enterprise Service Partners</option>
                                                     <option value="FSP">Freelance Service Partners</option>
@@ -117,7 +121,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-primary btn-block" id="toStep2">Next</button>
+                                                <button type="button" class="btn btn-primary btn-block"
+                                                    id="toStep2">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -131,69 +136,81 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Name: <span class="fullname_err"></label>
-                                                <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Name" required>
+                                                <input type="text" id="fullname" name="fullname" class="form-control"
+                                                    placeholder="Name" required>
                                             </div>
 
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">E-mail: <span class="email_err"></label>
-                                                <input type="email" id="email" name="email" class="form-control" placeholder="E-mail">
+                                                <input type="email" id="email" name="email" class="form-control"
+                                                    placeholder="E-mail">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <label for="">Phone Number: <span class="phone_err"></label>
                                                 
-                                                <input type="number" id="phone" maxlength="1" minlength="11" name="phone" class="form-control" placeholder="015xxxxxxxx" required>
+                                                <input type="number" id="phone" maxlength="1" minlength="11"
+                                                    name="phone" class="form-control" placeholder="015xxxxxxxx"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Alternet Phone Number: <span class="altPhone_err"></label>
-                                                <input type="number" name="alt-phone" maxlength="1" minlength="11"  id="alt-phone" class="form-control" placeholder="012xxxxxxxx">
+                                                <input type="number" name="alt-phone" maxlength="1" minlength="11"
+                                                    id="alt-phone" class="form-control" placeholder="012xxxxxxxx">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Address: <span class="mailing_address_err"></label>
-                                                <input type="text" id="mailing_address" name="mailing_address" class="form-control" placeholder="Address">
+                                                <input type="text" id="mailing_address" name="mailing_address"
+                                                    class="form-control" placeholder="Address">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="">NID Smart Card Number: <span class="nid_number_err"></label>
-                                                <input type="number" id="nid_number" name="nid_number" class="form-control" placeholder="NID Smart Card Number" required>
+                                                <label for="">NID Smart Card Number: <span
+                                                        class="nid_number_err"></label>
+                                                <input type="number" id="nid_number" name="nid_number"
+                                                    class="form-control" placeholder="NID Smart Card Number" required>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">NID front</label>
-                                                <input name="front_id" type="file" class="form-control" placeholder="NID front">
+                                                <input name="front_id" type="file" class="form-control"
+                                                    placeholder="NID front">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">NID back</label>
-                                                <input name="nid_back" type="file" class="form-control" placeholder="NID back">
+                                                <input name="nid_back" type="file" class="form-control"
+                                                    placeholder="NID back">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Photograph</label>
-                                                <input name="photograph" type="file" class="form-control" placeholder="Photograph">
+                                                <input name="photograph" type="file" class="form-control"
+                                                    placeholder="Photograph">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">TIN Certificate or Trade License</label>
-                                                <input name="tin" type="file" class="form-control" placeholder="TIN Certificate or Trade License">
+                                                <input name="tin" type="file" class="form-control"
+                                                    placeholder="TIN Certificate or Trade License">
                                             </div>
                                         </div>
 
@@ -201,7 +218,8 @@
 
                                     <div class="form-group">
                                         <div>
-                                            <button type="button" class="btn btn-primary btn-block" id="toStep3">Next</button>
+                                            <button type="button" class="btn btn-primary btn-block"
+                                                id="toStep3">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -211,9 +229,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="">CHOOSE A SERVICE CATEGORY: <span class="service_category_err"></label>
+                                                <label for="">CHOOSE A SERVICE CATEGORY: <span
+                                                        class="service_category_err"></label>
 
-                                                <select class="form-control error" id="service_category" name="service_category" aria-invalid="true">
+                                                <select class="form-control error" id="service_category"
+                                                    name="service_category" aria-invalid="true">
                                                     <option value="">Select a service type</option>
                                                     <option value="20">Starter</option>
                                                     <option value="15">Expert</option>
@@ -223,8 +243,10 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for=""> CHOOSE A SERVICE TYPE: <span class="service_type_err"></label>
-                                                <select name="service_type" id="service_type" class="form-control error">
+                                                <label for=""> CHOOSE A SERVICE TYPE: <span
+                                                        class="service_type_err"></label>
+                                                <select name="service_type[]" id="service_type" class=" error"
+                                                multiple="multiple">
                                                     <option value="">Select</option>
                                                     <option value="1">Electrical Services</option>
                                                     <option value="2">CCTV Services</option>
@@ -240,12 +262,14 @@
                                         <div class="col-md-4">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Division</label>
-                                                <input name="division" type="text" class="form-control valid" value="Dhaka" readonly="" aria-invalid="false">
+                                                <input name="division" type="text" class="form-control valid"
+                                                    value="Dhaka" readonly="" aria-invalid="false">
                                                 <span class="material-input"></span></div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Zone / Thana: <span class="cluster_err"></label>
+                                                <label class="control-label">Zone / Thana: <span
+                                                        class="cluster_err"></label>
                                                 <select name="cluster" id="cluster" class="form-control cluster">
                                                     <option value="">--select--</option>
                                                     <?php $__currentLoopData = $clusters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -258,7 +282,8 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Zone / Thana: <span class="zone_err"></label>
+                                                <label class="control-label">Zone / Thana: <span
+                                                        class="zone_err"></label>
                                                 <select name="zone" id="zone" class="form-control">
                                                     <option value="">Select</option>
                                                 </select>
@@ -284,7 +309,8 @@
                                         </div>
                                         <div class="form-group">
                                             <div>
-                                                <button type="button" class="btn btn-primary btn-block" id="toStep4">Next</button>
+                                                <button type="button" class="btn btn-primary btn-block"
+                                                    id="toStep4">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -292,13 +318,16 @@
 
                                 <div id="step4">
                                     <div class="form-group ">
-                                        <label class="control-label">Bkash Number: <span class="account_number_err"></label>
-                                        <input id="account_number" minlength="1" maxlength="11" name="account_number" type="number" class="form-control" required="">
+                                        <label class="control-label">Bkash Number: <span
+                                                class="account_number_err"></label>
+                                        <input id="account_number" minlength="1" maxlength="11" name="account_number"
+                                            type="number" class="form-control" required="">
 
                                     </div>
                                     <div class="form-group">
                                         <div>
-                                            <button type="button" class="btn btn-primary btn-block" id="toStep5">Submit</button>
+                                            <button type="button" class="btn btn-primary btn-block"
+                                                id="toStep5">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -317,7 +346,7 @@
 
     <?php $__env->startSection('footer'); ?>
 
-    <script src="<?php echo e(asset('js/jquery.nice-select.min.js')); ?>"></script>
+    
 
     <script>
         $(document).ready(function() {
@@ -328,7 +357,7 @@
             var errBkash = '<span class="err_msg">(**Please enter a valid Bkash number**)</span>';
             var errPhn = '<span class="err_msg">(**Please enter a valid phone number**)</span>';
 
-            $("select").niceSelect();
+            // $("select").niceSelect();
 
             $(".xyz").on("click", function() {
                 event();
@@ -522,6 +551,7 @@
         });
     </script>
 
+   
 
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

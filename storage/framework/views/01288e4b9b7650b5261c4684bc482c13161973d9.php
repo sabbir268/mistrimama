@@ -17,7 +17,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col-md-6">
-        <section class="widget widget-simple-sm">
+        <section class="widget widget-simple-sm p-0 m-0" style="height: 132px;">
             <div class="widget-simple-sm-icon text-left p-2">
                 <div class="row">
                     <div class="col-10">
@@ -26,7 +26,7 @@
                             Order No #<?php echo e($activeOrders->order_no); ?>
 
                             <?php else: ?>
-                            Order Staus
+                            Order Status
                             <?php endif; ?>
                         </h5>
                         <h6 class="text-uppercase <?php if($activeOrders): ?> text-success <?php else: ?> text-danger <?php endif; ?> p-0 m-0">
@@ -41,7 +41,7 @@
 
                             <?php if($activeOrders->status == 1): ?>
 
-                            <p>Your order has been accepted. <br> <strong
+                            <p>Your order has been accepted. <strong
                                     class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
 
                                     <span class="text-warning">Mama</span> </strong> is on your way.</p>
@@ -51,10 +51,10 @@
                             <?php endif; ?>
 
                             <?php if($activeOrders->status == 2): ?>
-                            <p> <strong class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
+                            <p class="p-0 m-0"> <strong class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
 
                                     <span class="text-warning">Mama</span> </strong> start your service/work.</p>
-                            <p>Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?> </p>
+                            <p class="p-0 m-0">Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?> </p>
                             <?php endif; ?>
                             <?php if($activeOrders->status == 3): ?>
 
@@ -79,7 +79,7 @@
                             <?php endif; ?>
                             <?php endif; ?>
                             <?php else: ?>
-                            <p>No Service taken</p>
+                            <p>No Service is taken</p>
                             <?php endif; ?>
                         </h6>
                     </div>
@@ -89,7 +89,13 @@
 
                         <?php else: ?>
                         #
-                        <?php endif; ?>" class="btn btn-sm float-right btn-mm">View Details</a>
+                        <?php endif; ?>" class="btn btn-sm float-right btn-mm 
+                        <?php if($activeOrders): ?>
+                        -
+                        <?php else: ?>
+                        btn-disable
+                        <?php endif; ?>
+                        ">View Details</a>
                     </div>
                 </div>
             </div>
@@ -287,7 +293,7 @@
     </div>
     <div class="col-md-6">
         <div class="box-typical-body panel-body ">
-            <img style="width:100%" class="img-responsive" src="<?php echo e(asset('/images/Product-Promo-Banner.png')); ?>" alt="">
+            <img style="width:100%;    height: 383px;" class="img-responsive" src="<?php echo e(asset('/images/Product-Promo-Banner.png')); ?>" alt="">
         </div>
     </div>
 
@@ -328,8 +334,7 @@
                                         <select name="pay_type" class="custom-select border-mm" id="inputGroupSelect01">
                                             <option selected>Choose...</option>
                                             <option value="1">Cash</option>
-                                            <option value="2">Sure Cash</option>
-                                            <option value="3">Credit Card</option>
+                                            <option value="3">Digital Payment</option>
                                         </select>
                                     </div>
                                 </div>
@@ -410,7 +415,7 @@
                        }
                    }
                });
-            }, 4000);
+            }, 2000);
      });
 
 </script>

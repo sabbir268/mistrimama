@@ -56,12 +56,12 @@
         </li>
 
         <li class="nav-item ">
-                <a href="<?php echo e(route('admin.service_provider.accounts')); ?>" class="nav-link">
-                    <i class="fa fa-gear"></i>
-                    <span class="title">Service Providers Accouts</span>
-                    <span class="arrow "></span>
-                </a>
-            </li>
+            <a href="<?php echo e(route('admin.service_provider.accounts')); ?>" class="nav-link">
+                <i class="fa fa-gear"></i>
+                <span class="title">Service Providers Accounts</span>
+                <span class="arrow "></span>
+            </a>
+        </li>
         <?php endif; ?>
 
         <?php if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') ): ?>
@@ -151,7 +151,7 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item <?php echo e(menuActiveClass(['service-provider'],true)); ?> ">
-                    <a href="<?php echo e(asset('service-provider')); ?>" class="nav-link ">
+                    <a href="<?php echo e(asset('/admin/service-provider')); ?>" class="nav-link ">
                         <span class="title">Manage Service Provider</span>
                     </a>
                 </li>
@@ -233,6 +233,14 @@
             <a href="<?php echo e(url('admin/spf')); ?>" class="nav-link">
                 <i class="fa fa-gear"></i>
                 <span class="title">Add Service Partners</span>
+                <span class="arrow <?php echo e(menuActiveClass(['booking'],false)); ?>"></span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?php echo e(route('admin.special-user')); ?>" class="nav-link">
+                <i class="fa fa-gear"></i>
+                <span class="title">Add Special User</span>
                 <span class="arrow <?php echo e(menuActiveClass(['booking'],false)); ?>"></span>
             </a>
         </li>

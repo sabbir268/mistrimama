@@ -46,7 +46,7 @@
                         <div class="number">টাকা <?php echo e($spam); ?>/-
                         </div>
                         <div class="caption color-purple btn-link text-mm " data-toggle="modal"
-                            data-target="#lastServiceModal">View Details</div>
+                            data-target="#lastServiceModal" style="cursor:pointer">View Details</div>
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
                         <strong>সর্বশেষ সার্ভিস মূল্য </strong></div>
@@ -59,7 +59,7 @@
                     <div class="widget-simple-sm-statistic">
                         <div class="number">টাকা <?php echo e($lastCashOut ? $lastCashOut->amount : 0); ?> /-</div>
                         <div class="caption color-purple btn-link text-mm" data-toggle="modal"
-                            data-target="#lastCashOutModal">View Details</div>
+                            data-target="#lastCashOutModal" style="cursor:pointer">View Details</div>
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
                         <strong>শেষ ক্যাশ আউটের পরিমাণ</strong></div>
@@ -71,7 +71,7 @@
                     <div class="widget-simple-sm-statistic">
                         <div class="number">টাকা <?php echo e($lastRecharge ? $lastRecharge->amount : 0); ?>/-</div>
                         <div class="caption color-purple btn-link text-mm" data-toggle="modal"
-                            data-target="#lastRechargeModal">View Details</div>
+                            data-target="#lastRechargeModal" style="cursor:pointer">View Details</div>
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
                         <strong>শেষ রিচার্জ-এর পরিমাণ</strong></div>
@@ -203,7 +203,7 @@
 <!-- Modal -->
 <div class="modal fade" id="lastServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">সর্বশেষ সার্ভিস ডিটেইলস </h5>
@@ -299,34 +299,6 @@
 
                             </thead>
 
-                            <tbody>
-                                <?php if($lastCashOut): ?>
-                                <?php $__currentLoopData = $lastCashOut; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lastCash): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr>
-                                    <td><?php echo e(date("d-m-Y", strtotime($lastCash->created_at))); ?></td>
-                                    <td><?php echo e($lastCash->details); ?>(<?php echo e($lastCash->type); ?>)</td>
-                                    <td><?php echo e($lastCash->trxno); ?></td>
-                                    <td class="text-center"> <span> <?php if($lastCash->status == 'credit'): ?> <span
-                                                class="label rounded-circle label-success" data-toggle="tooltip"
-                                                data-placement="top" title="Credited"><i class="fa fa-plus"></i></span>
-                                            <?php elseif($lastCash->status == 'income'): ?> <span
-                                                class="label rounded-circle label-warning" data-toggle="tooltip"
-                                                data-placement="top" title="Earned">(e)</span> <?php else: ?> <span
-                                                class="label rounded-circle label-danger" data-toggle="tooltip"
-                                                data-placement="top" title="Debited"><i class="fa fa-minus"></i></span>
-                                            <?php endif; ?>
-                                        </span> <span
-                                            class="<?php if($lastCash->status == 'credit'): ?> text-success  <?php elseif($lastCash->status == 'income'): ?> text-warning <?php else: ?> text-danger <?php endif; ?>"><?php echo e($lastCash->amount); ?>/-</span>
-                                    </td>
-                                </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php else: ?>
-                                <tr>
-                                    <td colspan="4"> No data found</td>
-                                </tr>
-                                <?php endif; ?>
-
-                            </tbody>
                         </table>
                     </div>
                 </div>

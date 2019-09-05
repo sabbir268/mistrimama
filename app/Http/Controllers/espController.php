@@ -26,6 +26,7 @@ use App\Offer;
 use App\Models\category;
 use Image;
 use App\Booking;
+use App\Events\ImageUploadEvent;
 
 class espController extends Controller
 {
@@ -292,13 +293,14 @@ class espController extends Controller
                 $comrade->email = $request->email;
                 $comrade->c_nid = $request->c_nid;
                 $comrade->category = $request->category;
-
+               
+                
 
                 // $comrade->c_pic = $request->c_pic;
                 // $comrade->c_nic_back = $request->c_nic_back;
                 // $comrade->c_nic_back = $request->c_nic_back;
 
-                $destinationPath = public_path('/uploads/SP/');
+               // $destinationPath = public_path('/uploads/SP/');
 
                 // $image = $request->file('image');
                 // $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
@@ -310,46 +312,61 @@ class espController extends Controller
                 // $image->move($destinationPath, $input['imagename']);
 
                 if ($request->hasFile('c_pic')) {
-                    $image = $request->file('c_pic');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
+                    // $image = $request->file('c_pic');
+                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    // $img = Image::make($image->getRealPath());
 
-                    //  $image->move($destinationPath, $input['imagename']);
+                    // //  $image->move($destinationPath, $input['imagename']);
 
-                    $img->resize(250, 250, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
+                    // $img->resize(300, 300, function ($constraint) {
+                    //     $constraint->aspectRatio();
+                    // })->save($destinationPath . '/' . $input['imagename']);
 
-                    $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    // $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    $imageName1 = uniqid();
+                    event(new ImageUploadEvent($request->file('c_pic'),$imageName1));
+                    $comrade->c_pic = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_pic')->getClientOriginalExtension();
+                    
+    
                 }
 
                 if ($request->hasFile('c_nic_back')) {
-                    $image = $request->file('c_nic_back');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
-                    //  $image->move($destinationPath, $input['imagename']);
-                    $img->resize(250, 250, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
+                    // $image = $request->file('c_nic_back');
+                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    // $img = Image::make($image->getRealPath());
+                    // //  $image->move($destinationPath, $input['imagename']);
+                    // $img->resize(250, 250, function ($constraint) {
+                    //     $constraint->aspectRatio();
+                    // })->save($destinationPath . '/' . $input['imagename']);
 
 
 
-                    $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    // $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    
+                    $imageName2 = uniqid();
+                    event(new ImageUploadEvent($request->file('c_nic_back'),$imageName2));
+                    $comrade->c_nic_back = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_nic_back')->getClientOriginalExtension();
+                   
+                  
                 }
 
 
                 if ($request->hasFile('c_nic_front')) {
-                    $image = $request->file('c_nic_front');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
-                    //  $image->move($destinationPath, $input['imagename']);
-                    $img->resize(250, 250, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
+                    // $image = $request->file('c_nic_front');
+                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    // $img = Image::make($image->getRealPath());
+                    // //  $image->move($destinationPath, $input['imagename']);
+                    // $img->resize(250, 250, function ($constraint) {
+                    //     $constraint->aspectRatio();
+                    // })->save($destinationPath . '/' . $input['imagename']);
 
 
 
-                    $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    // $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
+
+                    $imageName3 = uniqid();
+                    event(new ImageUploadEvent($request->file('c_nic_front'),$imageName3));
+                    $comrade->c_nic_front = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_nic_front')->getClientOriginalExtension();
                 }
 
 

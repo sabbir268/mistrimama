@@ -18,7 +18,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-6">
-        <section class="widget widget-simple-sm">
+        <section class="widget widget-simple-sm p-0 m-0" style="height: 132px;">
             <div class="widget-simple-sm-icon text-left p-2">
                 <div class="row">
                     <div class="col-10">
@@ -26,7 +26,7 @@
                             @if ($activeOrders)
                             Order No #{{$activeOrders->order_no}}
                             @else
-                            Order Staus
+                            Order Status
                             @endif
                         </h5>
                         <h6 class="text-uppercase @if ($activeOrders) text-success @else text-danger @endif p-0 m-0">
@@ -41,7 +41,7 @@
 
                             @if ($activeOrders->status == 1)
 
-                            <p>Your order has been accepted. <br> <strong
+                            <p>Your order has been accepted. <strong
                                     class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
                                     <span class="text-warning">Mama</span> </strong> is on your way.</p>
                             <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}}
@@ -49,9 +49,9 @@
                             @endif
 
                             @if ($activeOrders->status == 2)
-                            <p> <strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
+                            <p class="p-0 m-0"> <strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
                                     <span class="text-warning">Mama</span> </strong> start your service/work.</p>
-                            <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
+                            <p class="p-0 m-0">Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
                             @endif
                             @if ($activeOrders->status == 3)
 
@@ -74,7 +74,7 @@
                             @endif
                             @endif
                             @else
-                            <p>No Service taken</p>
+                            <p>No Service is taken</p>
                             @endif
                         </h6>
                     </div>
@@ -83,7 +83,13 @@
                         {{route('order-details')}}
                         @else
                         #
-                        @endif" class="btn btn-sm float-right btn-mm">View Details</a>
+                        @endif" class="btn btn-sm float-right btn-mm 
+                        @if($activeOrders)
+                        -
+                        @else
+                        btn-disable
+                        @endif
+                        ">View Details</a>
                     </div>
                 </div>
             </div>
@@ -283,7 +289,7 @@
     </div>
     <div class="col-md-6">
         <div class="box-typical-body panel-body ">
-            <img style="width:100%" class="img-responsive" src="{{asset('/images/Product-Promo-Banner.png')}}" alt="">
+            <img style="width:100%;    height: 383px;" class="img-responsive" src="{{asset('/images/Product-Promo-Banner.png')}}" alt="">
         </div>
     </div>
 
@@ -327,8 +333,7 @@
                                         <select name="pay_type" class="custom-select border-mm" id="inputGroupSelect01">
                                             <option selected>Choose...</option>
                                             <option value="1">Cash</option>
-                                            <option value="2">Sure Cash</option>
-                                            <option value="3">Credit Card</option>
+                                            <option value="3">Digital Payment</option>
                                         </select>
                                     </div>
                                 </div>
@@ -409,7 +414,7 @@
                        }
                    }
                });
-            }, 4000);
+            }, 2000);
      });
 
 </script>

@@ -32,7 +32,7 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$p->id}}</td>
-                            <td>{{$p->name}}</td>
+                            <td>{{$p->name ? $p->name : 0}}</td>
                             <td>@if($p->type==0) ESP @else FSP @endif</td>
                             <td>{{$p->phone_no}}</td>
                             <td>{{totalBalance($p->u_id) ? totalBalance($p->u_id) : 0 }}</td>

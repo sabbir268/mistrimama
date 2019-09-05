@@ -31,7 +31,7 @@
                         <tr>
                             <td><?php echo e($loop->iteration); ?></td>
                             <td><?php echo e($p->id); ?></td>
-                            <td><?php echo e($p->name); ?></td>
+                            <td><?php echo e($p->name ? $p->name : 0); ?></td>
                             <td><?php if($p->type==0): ?> ESP <?php else: ?> FSP <?php endif; ?></td>
                             <td><?php echo e($p->phone_no); ?></td>
                             <td><?php echo e(totalBalance($p->u_id) ? totalBalance($p->u_id) : 0); ?></td>

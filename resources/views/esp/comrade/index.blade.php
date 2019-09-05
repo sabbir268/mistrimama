@@ -187,7 +187,7 @@
                                 <label class="control-label" for="c_pic">ছবি :</label>
                                 <div class="input-group mb-3">
                                     <label class="input-group-text rounded-0" for="">Choose file</label>
-                                    <input type="file" name="c_pic" class="form-control" id="inputGroupFile02" required
+                                    <input type="file" name="c_pic" class="form-control" id="inputGroupFile02" 
                                         placeholder="Chose file">
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text rounded-0" for="">Choose file</label>
                                     <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
-                                        required placeholder="Chose file">
+                                         placeholder="Chose file">
                                 </div>
                             </div>
                             <div class="form-group mb-1">
@@ -204,7 +204,7 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text rounded-0" for="">Choose file</label>
                                     <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
-                                        required placeholder="Chose file">
+                                         placeholder="Chose file">
                                 </div>
 
                             </div>

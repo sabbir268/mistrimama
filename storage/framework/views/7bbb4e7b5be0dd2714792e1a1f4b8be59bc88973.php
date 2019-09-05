@@ -70,7 +70,7 @@
                                     <span class="input-group-text" id="inputGroup-sizing-default">ব্রাঞ্চের নাম ও তারিখ
                                     </span>
                                 </div>
-                                <input type="text" name="trxn" class="form-control bg-white input-group-text"
+                                <input type="text" name="brance_name" class="form-control bg-white input-group-text"
                                     placeholder="ব্রাঞ্চের নাম ">
                                 <input type="date" name="deposit_date" class="form-control bg-white input-group-text"
                                     placeholder="তারিখ ">
@@ -81,7 +81,7 @@
                                     <span class="input-group-text" id="inputGroup-sizing-default">রশিদ নং ও এজেন্ট আই
                                         ডি</span>
                                 </div>
-                                <input type="text" name="trxn" class="form-control bg-white input-group-text"
+                                <input type="text" name="mm_trx_no" class="form-control bg-white input-group-text"
                                     placeholder="রশিদ নং ">
                                 <input type="text" name="agent_id" class="form-control bg-white input-group-text"
                                     placeholder="এজেন্ট আই ডি ">

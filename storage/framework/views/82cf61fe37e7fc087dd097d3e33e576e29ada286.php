@@ -4,6 +4,7 @@
     .sf-pricing-box-new .pricingtable-features li {
         text-transform: capitalize;
     }
+
 </style>
 
 <section class="sf-rev-slider-wrap">
@@ -168,6 +169,11 @@
 </section>
 
 <!-- rawscripter -->
+<div id="call-for-order" class="call-for-order">
+    <a href="tel: +8809610222111">
+        <img src="<?php echo e(asset('images/call.png')); ?>" alt="">
+    </a>
+</div>
 
 <div id="order-form" class="order-form">
     <div class="first_step">
@@ -178,39 +184,6 @@
                     <?php echo e(csrf_field()); ?>
 
                     <input type="text" hidden name="page" value="index">
-                    <!--<div class="form-group">
-                        <label for="sa" class="raw-order-label"> <strong> Select Area </strong></label>
-                        <select name="area" id="sa" onchange="combomap(this.value)" style="text-transform:none;"
-                            class="form-control" required>
-                            <option value="">Select Area</option>
-                            <option value="Adabor"> Adabor</option>
-                            <option value="Azampur"> Azampur</option>
-                            <option value="Badda"> Badda</option>
-                            <option value="Darus Salam"> Darus Salam</option>
-                            <option value="Dhanmondi"> Dhanmondi</option>
-                            <option value="Gulshan"> Gulshan</option>
-                            <option value="Kafrul"> Kafrul</option>
-                            <option value="Kalabagan"> Kalabagan</option>
-                            <option value="Khilgaon"> Khilgaon</option>
-                            <option value="Khilkhet"> Khilkhet</option>
-                            <option value="Mirpur">Mirpur</option>
-                            <option value="Mohammadpur"> Mohammadpur</option>
-                            <option value="Motijheel"> Motijheel</option>
-                            <option value="New Market"> New Market</option>
-                            <option value="Old Town"> Old Town</option>
-                            <option value="Pallabi"> Pallabi</option>
-                            <option value="Paltan"> Paltan</option>
-                            <option value="Ramna"> Ramna</option>
-                            <option value="Rampura"> Rampura</option>
-                            <option value="Sabujbagh"> Sabujbagh</option>
-                            <option value="Shahbagh"> Shahbagh</option>
-                            <option value="Sher-e-Bangla Nagar"> Sher-e-Bangla Nagar</option>
-                            <option value="Tejgaon"> Tejgaon</option>
-                            <option value="Uttar Khan"> Uttar Khan</option>
-                            <option value="Uttara"> Uttara</option>
-                            <option value="Vatara"> Vatara</option>
-                        </select>
-                    </div>-->
             </div>
 
             <div class="col-md-12">
@@ -233,155 +206,18 @@
         </div>
     </div>
 
-    <div class="second_step" style="display:none">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>All Services</h2>
-                <div class="form-group">
-                    <section class="rounde  ">
-                        <div class="card-header">
-                            <center>
-                                <h5>Total: <span class="grand_total" id="grand_total">0.00</span>৳</h5>
-                            </center>
-                        </div>
-                        <?php echo csrf_field(); ?>
-                        <div class="card mb-1">
-                            <div class="card-body ">
-                                <input type="hidden" name="ID" value="1">
-                                <div class="show_subCategories" style="padding:13px;">
-                                    <div class="row"
-                                        style="border-bottom: 1px solid #fff;margin-top: 0px;margin-bottom: 12px;">
-                                        <div class="col-md-8">
-                                            <div style="cursor:pointer" class="row pt-0 pm-0" data-toggle="collapse"
-                                                data-target="#collapsePanel39" aria-expanded="false"
-                                                aria-controls="collapseExample">
-                                                <h5 class="mb-0"> <span class=" rounded-circle "><i
-                                                            class="fa fa-chevron-down"></i></span> Hardware support</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 text-center pt-2">
-                                            <span style="cursor :pointer"
-                                                class="btn btn-sm btn-primary rounded addRemove" data-id="39"
-                                                id="addRemove39">ADD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </section>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="button" value="Previous" class="btn btn-block btn-primary backToStepOne">
-                </div>
-            </div>
-            <div class="col-md-4 pull-right">
-                <div class="form-group">
-                    <input type="button" value="Next" class="btn btn-block btn-primary forwardToThird">
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="third_step" style="display:none">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Date & Time </h2>
-                <form action="<?php echo e(route('add.date-time')); ?>" method="post" id="date-time">
-                    <?php echo csrf_field(); ?>
-                    <div class="col-xl-6 offset-md-3 ">
-                        <div class="row imergency" style="display:none">
-                            <div class="alert alert-warning alert-icon alert-close alert-dismissible fade show"
-                                role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <i class="font-icon font-icon-warning"></i>
-                                <strong>N.B.</strong>In this case we'll charge 500 tk extra for emergency.
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-xl-4">
-                                <label class="form-label">
-                                    <i class="font-icon font-icon-calend"></i>
-                                    Select Date
-                                </label>
-                            </div>
-                            <div class="col-xl-8">
-                                <div class="input-group date">
-                                    <input type="date" name="order_date" id="order_date" class="form-control"
-                                        placeholder="Chose Date" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-xl-4">
-                                <label class="form-label">
-                                    <i class="font-icon font-icon-speed"></i>
-                                    Select Time
-                                </label>
-                            </div>
-                            <div class="col-xl-8">
-                                <div class="input-group">
-                                    <select name="order_time" id="order_time" class="form-control">
-                                        <option value="">Chose Time</option>
-                                        <option value="12:00 AM">12:00 AM </option>
-                                        <option value="1:00 AM">01:00 AM </option>
-                                        <option value="2:00 AM">02:00 AM </option>
-                                        <option value="3:00 AM">03:00 AM </option>
-                                        <option value="4:00 AM">04:00 AM </option>
-                                        <option value="5:00 AM">05:00 AM </option>
-                                        <option value="6:00 AM">06:00 AM </option>
-                                        <option value="7:00 AM">07:00 AM </option>
-                                        <option value="8:00 AM">08:00 AM </option>
-                                        <option value="9:00 AM">09:00 AM </option>
-                                        <option value="10:00 AM">10:00 AM </option>
-                                        <option value="11:00 AM">11:00 AM </option>
-                                        <option value="12:00 PM">12:00 PM </option>
-                                        <option value="1:00 PM">01:00 PM </option>
-                                        <option value="2:00 PM">02:00 PM </option>
-                                        <option value="3:00 PM">03:00 PM </option>
-                                        <option value="4:00 PM">04:00 PM</option>
-                                        <option value="5:00 PM">05:00 PM </option>
-                                        <option value="6:00 PM">06:00 PM </option>
-                                        <option value="7:00 PM">07:00 PM </option>
-                                        <option value="8:00 PM">08:00 PM </option>
-                                        <option value="9:00 PM">09:00 PM </option>
-                                        <option value="10:00 PM">10:00 PM </option>
-                                        <option value="11:00 PM">11:00 PM</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="button" id="backToStepSecond" value="Previous" class="btn btn-block btn-primary">
-                </div>
-            </div>
-            <div class="col-md-4 pull-right">
-                <div class="form-group">
-                    <input type="submit" value="Next" class="btn btn-block btn-primary">
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
 </div>
 </div>
 </div>
 <!-- From started here -->
 
 <section>
+    <div id="call-for-order-mobile" class="call-for-order-mobile">
+        <a href="tel: +8809610222111">
+            <img style="max-width" src="<?php echo e(asset('images/call.png')); ?>" alt="">
+        </a>
+    </div>
+
     <div id="order-form-mobile">
         <div class="row">
             <div class="col-md-12">
@@ -389,7 +225,7 @@
                     <?php echo e(csrf_field()); ?>
 
                     <input type="text" hidden name="page" value="index">
-                   <!-- <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="sa" class="raw-order-label"> <strong> Select Area </strong></label>
                         <select name="area" id="sa" onchange="combomap(this.value)" style="text-transform:none;"
                             class="" required>
@@ -487,29 +323,30 @@
                 transition: 1s;
             }
 
-            .sf-categories-girds:hover .sf-categories-thum  {
+            .sf-categories-girds:hover .sf-categories-thum {
                 transform: scale(1.2, 1.2);
                 transition: 1s;
-                
+
             }
 
-            .sf-categories-girds:hover  .sf-overlay-box {
-               transition: 1s;
+            .sf-categories-girds:hover .sf-overlay-box {
+                transition: 1s;
                 background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.21) 100%);
             }
 
-            .sf-overlay-box{
+            .sf-overlay-box {
                 background: linear-gradient(to bottom, rgba(0, 0, 0, 0.46) 0%, rgba(0, 0, 0, 0.82) 100%);
             }
 
-            .sf-categories-content{
-                top: 17%  !important;
+            .sf-categories-content {
+                top: 17% !important;
             }
 
             .sf-categories-content .sf-categories-title {
                 font-size: 20px;
                 font-weight: 600;
             }
+
         </style>
         <div class="section-content">
             <div class="row">
@@ -522,14 +359,15 @@
 
                             <div class="sf-categories-thum" style='background-image:url(<?php echo e($item->main_image); ?>)'>
                             </div>
-                            <div class="sf-overlay-box" ></div>
+                            <div class="sf-overlay-box"></div>
 
                             <div class="sf-categories-content text-center">
 
                                 <!-- <span class="sf-categories-quantity"><img style="height:80px" src="<?php echo e($item->icon_image); ?>" alt=""></i></span> -->
 
                                 <div class="icons">
-                                    <img class="hover_icon_img" style="width:120px" src="<?php echo e($item->image_hover); ?>" alt="ICON">
+                                    <img class="hover_icon_img" style="width:120px" src="<?php echo e($item->image_hover); ?>"
+                                        alt="ICON">
                                     <img class="icon_img" style="width:120px" src="<?php echo e($item->icon_image); ?>" alt="ICON">
                                 </div>
                                 <div class="sf-categories-title">
@@ -555,7 +393,7 @@
     #about {
         background-image:url('<?php echo e(asset("new_theme/themes/images/background/background_wh.png")); ?>') !important;
         padding: 40px 0px !important;
-        
+
     }
 
 </style>
@@ -616,7 +454,7 @@
                         <div class="sf-why-choose w-t-element padding-lr-20 ">
                             <div class="sf-icon-xl margin-b-20 ">
                                 <img src='<?php echo e(asset("/new_theme/themes/images/icon/How_Mistri_Mama_Work.png")); ?>'
-                                width="240 " height="220" alt=" ">
+                                    width="240 " height="220" alt=" ">
                             </div>
                             <h4 class="sf-tilte margin-b-10 "><?php echo e($model->pageAttribute->aboutkey2); ?></h4>
                             <p><?php echo $model->pageAttribute->aboutkey2description; ?></p>
@@ -629,7 +467,7 @@
                         <div class="sf-why-choose w-t-element padding-lr-20 ">
                             <div class="sf-icon-xl margin-b-20 ">
                                 <img src='<?php echo e(asset("/new_theme/themes/images/icon/Why_Choose_Mistri_Mama.png")); ?>'
-                                width="240 " height="220" alt=" ">
+                                    width="240 " height="220" alt=" ">
                             </div>
                             <h4 class="sf-tilte margin-b-10 "><?php echo e($model->pageAttribute->aboutkey3); ?></h4>
                             <p><?php echo $model->pageAttribute->aboutkey3description; ?></p>
@@ -683,7 +521,10 @@
             <h2 style="color: #f3b400;text-transform: uppercase;">Our Corporate Packages</h2>
             <div class="after-titile-line"><span class="title-line-left" style="background:"></span><span
                     class="title-line-right" style="background:"></span></div>
-            <p style="padding: 10px 0px;">We offer corporate subscription packages which provide numerous options to fix your problems by our experienced technician. Our range of services suit to everyone, from small and medium to big corporates. All these subscription packages are designed individually to facilitate all kind of customer segment. No matter which package you choose, you will always get our core features.</p>
+            <p style="padding: 10px 0px;">We offer corporate subscription packages which provide numerous options to fix
+                your problems by our experienced technician. Our range of services suit to everyone, from small and
+                medium to big corporates. All these subscription packages are designed individually to facilitate all
+                kind of customer segment. No matter which package you choose, you will always get our core features.</p>
         </div>
         <div class="section-content">
             <div class="pricingtable-row m-b30 p-lr15 no-col-gap equal-col-outer">
@@ -763,7 +604,7 @@
                         <div class="pricingtable-wrapper sf-pricing-box-new sf-pricing-highlight">
                             <div class="pricingtable-inner">
                                 <div class="pricingtable-price" style="background-color: #f3b400;">
-                                    <span class="pricingtable-bx" >৳ 6,000 </span>
+                                    <span class="pricingtable-bx">৳ 6,000 </span>
                                     <span class="pricingtable-type">Month</span>
                                 </div>
                                 <div class="pricingtable-title" style=" background-color: #f3b400;">

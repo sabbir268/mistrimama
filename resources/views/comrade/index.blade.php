@@ -174,7 +174,7 @@
                                 <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
-                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ BDT {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}/-
                                 </button>
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
                                 </button>

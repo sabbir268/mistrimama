@@ -9,6 +9,7 @@ use DB;
 use App\Account;
 use App\User;
 use App\SMS;
+
 class ServiceProviderController extends Controller
 {
 
@@ -37,7 +38,7 @@ class ServiceProviderController extends Controller
         return view('admin.blog-category.create');
     }
 
- 
+
 
     public function show($id)
     {
@@ -46,10 +47,10 @@ class ServiceProviderController extends Controller
     }
 
 
-    public function addAmount(Request $request , Account $account)
+    public function addAmount(Request $request, Account $account)
     {
 
-       // return $request;
+        // return $request;
         $account->amount = $request->amount;
         $account->user_id = $request->user_id;
         $account->trxno = generateRandomString(10);
@@ -58,39 +59,42 @@ class ServiceProviderController extends Controller
         $account->ref = auth()->user()->name;
         $account->status = 'credit';
 
-        
-        
+
+
         //$account->save();
 
-        if($account->save()){
+        if ($account->save()) {
+            $balance = Account::where('user_id', $request->user_id)->where('status', 'credit')->sum('amount') - Account::where('user_id', $request->user_id)->where('status', 'debit')->sum('amount');
+
+            $SpPhone = User::find($request->user_id)->phone_no;
+            $msg = "Your account recharged with BDT " . round($request->amount) . "/-. Your current online balance: BDT Total " . round($balance) . "/-.";
+            SMS::send($SpPhone, $msg);
+
+            $acc = new Account();
+            $acc->amount = 500;
+            $acc->user_id = $request->user_id;
+            $acc->trxno = generateRandomString(10);
+            //$account->type = 'Mistrimama bonus';
+            $acc->type = 'Mistrimama Bonus';
+            $acc->ref = auth()->user()->name;
+            $acc->status = 'credit';
+            if ($acc->save()) {
                 $balance = Account::where('user_id', $request->user_id)->where('status', 'credit')->sum('amount') - Account::where('user_id', $request->user_id)->where('status', 'debit')->sum('amount');
-
-                $SpPhone = User::find($request->user_id)->phone_no;
-                $msg = "Your account recharged with BDT ". round($request->amount) ."/-. Your current online balance: BDT Total ". round($balance) ."/-.";
-                SMS::send($SpPhone,$msg);
-
-                $acc = new Account();
-                $acc->amount = 500;
-                $acc->user_id = $request->user_id;
-                $acc->trxno = generateRandomString(10);
-                //$account->type = 'Mistrimama bonus';
-                $acc->type = 'Mistrimama Bonus';
-                $acc->ref = auth()->user()->name;
-                $acc->status = 'credit';
-                if($acc->save()){
-                    $balance = Account::where('user_id', $request->user_id)->where('status', 'credit')->sum('amount') - Account::where('user_id', $request->user_id)->where('status', 'debit')->sum('amount');
-                    $msg2 = "You got ". 500 ."/-. Bonus from Mistri Mama. Your current online balance: BDT Total ". round($balance) ."/-.";
-                    SMS::send($SpPhone,$msg2);
-                }
-                
+                $msg2 = "You got " . 500 . "/-. Bonus from Mistri Mama. Your current online balance: BDT Total " . round($balance) . "/-.";
+                SMS::send($SpPhone, $msg2);
             }
+        }
 
         return back();
     }
 
-    public function spAccounts(){
+    public function spAccounts()
+    {
+       
         $ServiceProviders = ServiceProviders::paginate(10);
+        //  return $ServiceProviders;
         return view('admin.service-provider.accounts', compact('ServiceProviders'));
+        
     }
 
     //

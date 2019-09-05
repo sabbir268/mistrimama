@@ -20,15 +20,15 @@
 
         <ol class="breadcrumb bg-white mb-1">
             <li><a href="<?php echo e(route('esp-dashboard')); ?>">ড্যাশবোর্ড </a></li>
-            <li><a href="#">কমরেড </a></li>
+            <li><a href="#">সহকারী</a></li>
         </ol>
 
-        <section class="box-typical box-typical-dashboard panel panel-default " >
+        <section class="box-typical box-typical-dashboard panel panel-default ">
             <header class="box-typical-header panel-heading">
                 <div class="row">
                     <div class="col-md-6 float">
                         <button type="button" class="btn btn-sm btn-mm btn-inline " data-toggle="modal"
-                            data-target="#addComradeMdl">নতুন যোগ করুন </button>
+                            data-target="#addComradeMdl">নতুন সহকারী যোগ করুন </button>
                     </div>
                     <div class="col-md-6">
                         <form class="site-header-search sr-only">
@@ -68,8 +68,8 @@
                     <tbody>
                         <?php $__currentLoopData = $comrades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><img style="height:50px;width:50px" src="<?php echo e($comrade->c_pic); ?>"
-                                    class="rounded-circle" alt="some"></td>
+                            <td><img style="height:50px;width:50px" src="<?php echo e($comrade->c_pic); ?>" class="rounded-circle"
+                                    alt="some"></td>
                             <td><?php echo e($comrade->c_name); ?></td>
                             <td><?php echo e($comrade->c_phone_no); ?></td>
                             <td><?php echo e($comrade->email); ?></td>
@@ -77,13 +77,18 @@
                             <td>
                                 <div class="btn-gorup">
                                     <button class="btn btn-sm btn-success sr-only"><i class="fa fa-eye"></i></button>
-                                    <a href="/esp/comrade/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
+                                    <a href="/esp/comrade/<?php echo e($comrade->id); ?>" data-toggle="tooltip" data-placement="top"
+                                        title="Edit" class="btn btn-sm btn-warning "><i class="fa fa-edit"></i></a>
                                     <?php if($comrade->status == 1): ?>
-                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-danger "><i class="fa fa-ban"></i></a>
-                                    <?php else: ?> 
-                                        <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" class="btn btn-sm btn-info "><i class="fa fa-check-square"></i></a>
+                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" data-toggle="tooltip"
+                                        data-placement="top" title="De-active" class="btn btn-sm btn-danger "><i
+                                            class="fa fa-ban"></i></a>
+                                    <?php else: ?>
+                                    <a href="/esp/comrade/ban/<?php echo e($comrade->id); ?>" data-toggle="tooltip"
+                                        data-placement="top" title="Active" class="btn btn-sm btn-success "><i
+                                            class="fa fa-check-square"></i></a>
                                     <?php endif; ?>
-                                    
+
                                     <button class="btn btn-sm btn-danger sr-only"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
@@ -138,7 +143,7 @@
                                 <label class="control-label" for="email">ইমেইল :</label>
                                 <div class="">
                                     <input type="email" name="email" class="form-control"
-                                        placeholder="Ex: amaila@gmail.com" >
+                                        placeholder="Ex: amaila@gmail.com">
                                 </div>
                             </div>
 
@@ -146,6 +151,18 @@
                                 <label class="control-label" for="password">পাসওয়ার্ড :</label>
                                 <div class="">
                                     <input type="password" name="password" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-1">
+                                <label class="control-label" for="category">ক্যাটেগরি:</label>
+                                <div class="">
+                                    <select name="category" id="" class="form-control">
+                                        <option selected="true" value="">ক্যাটেগরি নির্বাচন করুন</option>
+                                        <?php $__currentLoopData = $services_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($data->id); ?>"><?php echo e($data->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
                                 </div>
                             </div>
 
@@ -162,35 +179,38 @@
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_pic">ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_pic" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_pic" class="form-control" id="inputGroupFile02" required
+                                        placeholder="Chose file">
                                 </div>
                             </div>
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_front">NID সামনের ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
+                                        required placeholder="Chose file">
                                 </div>
                             </div>
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_back">NID পিছনের ছবি :</label>
                                 <div class="input-group mb-3">
-                                        <label class="input-group-text rounded-0" for="">Choose file</label>
-                                        <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
-                                             required placeholder="Chose file">
+                                    <label class="input-group-text rounded-0" for="">Choose file</label>
+                                    <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
+                                        required placeholder="Chose file">
                                 </div>
-                                
+
                             </div>
 
 
                         </div>
+                        <span>Max Upload Image is 4MB. </span>
+                        <span><a href="https://resizeimage.net/" target="_blank">Click Here</a> To resize your image in
+                            online</span>
                     </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">বাতিল </button>
                 <button type="submit" class="btn btn-mm">যোগ করুন </button>
             </div>
             </form>

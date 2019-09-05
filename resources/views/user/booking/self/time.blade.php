@@ -145,9 +145,9 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white"
+        {{-- <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white"
                 href="{{route('show.services')}}">←
-                Back</a></button>
+                Back</a></button> --}}
         <button type="submit" class="btn btn-rounded float-right btn-mm">Next →</button>
     </form>
 </section>

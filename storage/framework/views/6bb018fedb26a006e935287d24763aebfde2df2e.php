@@ -93,6 +93,7 @@
                     <select class="form-control" name="user_type" placeholder="Choose User Type" id="user_type"
                         required>
                         <option value="esp">ESP</option>
+                        <option value="esp">FSP</option>
                         <option value="comrade">Comrade</option>
                     </select>
                 </div>

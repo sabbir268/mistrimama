@@ -132,7 +132,7 @@ class ServiceSystemController extends Controller
                 $ruser = User::where('ref_code',$order->ref_code)->first();
                 $rp = new RewardPoint();
                 $rp->user_id = $ruser->id;
-                if(checkRole(auth()->user()->id, 'special')){
+                if(checkRole($ruser->id, 'special')){
                     $rp->rp = ($request->amount / 50);
                 }else{
                     $rp->rp = ($request->amount / 50);

@@ -12,6 +12,24 @@
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/lib/bootstrap/bootstrap.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('css/separate/vendor/bootstrap-daterangepicker.min.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/main.css')); ?>">
+
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+	<?php if(!Auth::check()): ?>
+	<style>
+		.with-side-menu .page-content {
+			padding-left: 23px;
+		}
+
+		.page-content {
+			padding-left: 0px;
+			padding: 60px 15px 10px;
+		}
+
+	</style>
+
+	<?php endif; ?>
+
 	<style>
 		#preloader {
 			position: fixed;
@@ -215,6 +233,8 @@
 	<script src="<?php echo e(asset('dashboard/js/lib/bootstrap/bootstrap.min.js')); ?>"></script>
 	<script src="<?php echo e(asset('dashboard/js/lib/bootstrap-notify/bootstrap-notify.min.js')); ?>"></script>
 	
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script src="<?php echo e(asset('dashboard/js/plugins.js')); ?>"></script>
 
 	<?php echo $__env->yieldContent('scripts'); ?>
@@ -299,17 +319,7 @@
 	</script>
 
 
-<script>
-    (function (window, document) {
-        var loader = function () {
-            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
-            tag.parentNode.insertBefore(script, tag);
-        };
-
-        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-    })(window, document);
-</script>
+	
 </body>
 
 

@@ -166,9 +166,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">বাতিল </button>
-            </div>
+            
         </div>
     </div>
 </div>

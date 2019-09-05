@@ -20,7 +20,7 @@
                             <tbody>
                                 <tr>
                                     <th>Name</th>
-                                    <td><?php echo e($serviceProvider->name); ?>
+                                    <td><?php echo e($serviceProvider->name ? $serviceProvider->name : "-"); ?>
 
                                     </td>
                                 </tr>

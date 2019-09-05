@@ -35,8 +35,7 @@
                         </div>
                         <div class="profile-card">
                             <div class="profile-card-photo">
-                                <img style="width: 100% !important;height: 100px;"
-                                    src="
+                                <img style="width: 100% !important;height: 100px;" src="
                                     <?php if($allord->type == 'self'): ?>
                                      <?php echo e($allord->user->photo != null ? $allord->user->photo : asset('/dashboard/img/avatar-1-256.png')); ?>
 
@@ -48,9 +47,7 @@
                             </div>
                             <div class="profile-card-name"><strong><i class="fa fa-user text-secondary"></i></strong>
                                 <?php echo e($allord->order->name); ?></div>
-                            <a href="tel:<?php echo e($allord->user->phone_no); ?>" class="text-secondary"><div class="profile-card-status"><strong><i class="fa fa-phone text-secondary"></i></strong><?php echo e(substr($allord->user->phone_no, 3)); ?>
-
-                                </div></a>
+                            
                             <div class="profile-card-status "><strong><i class="fa fa-map text-secondary"></i></strong>
                                 <?php echo e($allord->user->address); ?></div>
 
@@ -66,7 +63,7 @@
                                 </div>
                                 <div class="tbl-cell">
                                     <b>5 <i class="font-icon font-icon-star text-secondary"></i> </b>
-                                    গড় রেটিং 
+                                    গড় রেটিং
                                 </div>
                             </div>
                         </div>
@@ -79,16 +76,16 @@
                         <div class="col-md-12 p-0 pb-2">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-mm btn-sm col-md-12 d-none">নতুন সার্ভিস যোগ করুন </button>
+                                    <button class="btn btn-mm btn-sm col-md-12" id="new_service"
+                                        data-order_id="<?php echo e($allord->order->id); ?>"
+                                        data-category_id="<?php echo e($allord->order->category_id); ?>">নতুন সার্ভিস যোগ করুন
+                                    </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <form action="<?php echo e(route('order.cancel')); ?>" method="POST" id="cancel_order">
-                                        <?php echo csrf_field(); ?>
-                                        <input type="text" name="id" value="<?php echo e($allord->order->id); ?>" hidden>
-                                        <button class="btn btn-danger col-md-12">অর্ডার বাতিল করুন </button>
-                                    </form>
-                                <!-- <button class="btn btn-danger btn-sm col-md-12 ">Cancel Order</button> -->
+                                    <a href="<?php echo e(route('comrade.cancel-order',$allord->order->id)); ?>"
+                                        class="btn btn-danger btn-sm col-md-12">অর্ডার বাতিল করুন</a>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card mb-3" style="height: 250px;overflow: auto;">
@@ -96,10 +93,10 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস</th>
-                                        <th>মূল্য</th>
-                                        <th>অতিরিক্ত </th>
-                                        <th>পরিমান </th>
-                                        <th>মোট  </th>
+                                        <th class="text-center">প্রথম<span class="invisible">s</span>ইউনিট-এর মূল্য</th>
+                                        <th>অতিরিক্ত<span class="invisible">s</span>ইউনিট-এর মূল্য</th>
+                                        <th>পরিমান</th>
+                                        <th>মোট </th>
                                         <th class="text-center">একশন </th>
                                     </tr>
                                 </thead>
@@ -112,8 +109,27 @@
                                         <td><?php echo e($booking->aditional_price); ?></td>
                                         <td><?php echo e($booking->quantity); ?></td>
                                         <td><?php echo e($booking->total_price); ?></td>
-                                        <td><button class="btn btn-rounded btn-sm btn-success-outline finsih_sub"><i
-                                                    class="fa fa-thumbs-up"></i> শেষ </button></td>
+                                        <td>
+                                            <?php if($allord->order->status > 1): ?>
+                                            <button class="btn btn-rounded btn-sm
+                                            <?php if($booking->status == 0): ?>
+                                                 btn-success-outline
+                                            <?php endif; ?>
+                                               finsih_sub" data-id="<?php echo e($booking->id); ?>"
+                                                id="finsih_sub<?php echo e($booking->id); ?>"><i class="fa fa-thumbs-up"></i>
+                                                <?php if($booking->status == 0): ?>
+                                                শেষ
+                                                <?php else: ?>
+                                                কাজ শেষ
+                                                <?php endif; ?>
+
+                                            </button>
+                                            <?php else: ?>
+                                            -
+                                            <?php endif; ?>
+                                        </td>
+
+
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
@@ -133,24 +149,35 @@
                                 <?php switch($allord->order->status):
                                 case (1): ?>
                                 <input type="text" value="2" name="status" hidden>
-                                <button type="submit" class="btn  btn-primary" style="width:100%">কাজ শুরু করুন </button> <?php break; ?>
+                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ শুরু করুন
+                                </button> <?php break; ?>
                                 <?php case (2): ?>
                                 <input type="text" value="3" name="status" hidden>
-                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন </button>
+                                <?php if(in_array("1",$allord->order->bookings->pluck('status')->toArray())): ?>
+                                <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন
+                                </button>
+                                <?php endif; ?>
                                 <?php break; ?>
                                 <?php case (3): ?>
                                 <?php if($allord->type == 'self'): ?>
-                                        <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য অপেক্ষা করুন </button>
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ <?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>
 
-                                <?php else: ?> 
-                                        <input type="text" value="5" name="status" hidden>
-                                        <input type="text" value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
-                                            name="amount" hidden>
-                                        <input type="text" value="<?php echo e($allord->service_provider_id); ?>"
-                                            name="service_provider_id" hidden>
-                                        <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
-                                        <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
-                                 <?php endif; ?>
+                                </button>
+                                <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য
+                                    অপেক্ষা করুন </button>
+                                <?php else: ?>
+                                <input type="text" value="5" name="status" hidden>
+                                <input type="text"
+                                    value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
+                                    name="amount" hidden>
+                                <input type="text" value="<?php echo e($allord->service_provider_id); ?>" name="service_provider_id"
+                                    hidden>
+                                <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ BDT <?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>/-
+                                </button>
+                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
+                                </button>
+                                <?php endif; ?>
                                 <?php break; ?>
                                 <?php case (4): ?>
                                 <ul class="list-group mb-2">
@@ -174,7 +201,8 @@
                                 <input type="text" value="<?php echo e($allord->service_provider_id); ?>" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
-                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন </button>
+                                <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
+                                </button>
                                 <?php break; ?>
                                 <?php default: ?>
                                 <input type="text" value="" name="status" hidden> <?php endswitch; ?>
@@ -196,6 +224,9 @@
 </section>
 <?php endif; ?>
 
+<div id="showModal"></div>
+<div id="showModal2"></div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -209,11 +240,25 @@
     $(document).ready(function() {
 
         $('.finsih_sub').click(function(){
-            $(this).removeClass('btn-primary-outline');
-            $(this).addClass('btn-success-outline');
-            $(this).find('i.fa').toggleClass('fa-user fa-thumbs-up');
-            // $(this).find('i').addClass('');
-            $(this).text('Finished');
+            $id = $(this).data('id');
+            // console.log($id);
+            // console.log("<?php echo e(asset('/order-bit-done/')); ?>/"+$id);
+            $.ajax({
+                    type: "get",
+                    url: "<?php echo e(asset('/order-bit-done/')); ?>/"+$id,
+                    dataType: "html",
+                    success: function (response) {
+                        if(response == 1){
+                            $("#finsih_sub"+$id).removeClass('btn-primary-outline');
+                            $("#finsih_sub"+$id).addClass('btn-success-outline');
+                            $("#finsih_sub"+$id).find('i.fa').toggleClass('fa-user fa-thumbs-up');
+                            $("#finsih_sub"+$id).text('কাজ শেষ');
+
+                            location.reload();
+                        }
+                    }
+                });
+            
         });
 
         // $('#cancel_order').submit(function(e){
@@ -228,6 +273,25 @@
 
         // });
 
+
+
+        $('#new_service').click(function(){
+            $category_id = $(this).data('category_id');
+            $order_id = $(this).data('order_id');
+            $.ajax({
+                    type: "get",
+                    url: "<?php echo e(asset('/new_service/')); ?>/"+$category_id+"/"+$order_id,
+                    dataType: "html",
+                    success: function (response) {
+                        $('#showModal').html(response);
+                        $('#all_services').modal({
+                            show: true,
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+        })
         
       });
 </script>

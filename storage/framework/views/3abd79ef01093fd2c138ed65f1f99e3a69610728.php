@@ -68,11 +68,14 @@
 
             </section>
             <!--.box-typical-->
-            <form action="<?php echo e(route('cancel.order')); ?>" method="POST">
+
+            <?php if($activeOrders->status == '0' || $activeOrders->status == '1'): ?>
+            <form action="<?php echo e(route('order.cancel')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <input type="text" name="id" value="<?php echo e($activeOrders->id); ?>" hidden>
                 <button class="btn btn-danger col-md-12">Cancel Order</button>
             </form>
+            <?php endif; ?>
         </div>
         <!--.col- -->
         <div class="col-md-8">
