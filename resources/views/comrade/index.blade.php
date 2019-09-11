@@ -109,8 +109,28 @@
                                             {{$booking->service_name}}({{$booking->service_details_name}})</td>
                                         <td>{{$booking->price}}</td>
                                         <td>{{$booking->aditional_price}}</td>
-                                        <td>{{$booking->quantity}}</td>
-                                        <td>{{$booking->total_price}}</td>
+                                        <td>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend ">
+                                                    <span class="input-group-text btn-mm decrease"
+                                                        style="cursor :pointer" data-id="{{$booking->id}}"  data-order_id ="{{$booking->order_id}}" id="inputGroup-sizing-sm"><i
+                                                            class="fa fa-minus"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control text-center p-0 m-0"
+                                                    aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                    placeholder="Qty" id="qty{{$booking->id}}" value="{{$booking->quantity}}">
+                                                <div class="input-group-append ">
+                                                    <span class="input-group-text btn-mm text increase"
+                                                        style="cursor :pointer" data-id="{{$booking->id}}"  data-order_id ="{{$booking->order_id}}" id="inputGroup-sizing-sm"><i
+                                                            class="fa fa-plus"></i></span>
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                        <td>
+                                            {{$booking->total_price}}
+                                        </td>
                                         <td>
                                             @if($allord->order->status > 1)
                                             <button class="btn btn-rounded btn-sm
@@ -162,7 +182,8 @@
                                 @break
                                 @case(3)
                                 @if($allord->type == 'self')
-                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ
+                                    {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}
                                 </button>
                                 <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য
                                     অপেক্ষা করুন </button>
@@ -174,7 +195,8 @@
                                 <input type="text" value="{{$allord->service_provider_id}}" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="{{$allord->user_id}}" name="client_id" hidden>
-                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ BDT {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}/-
+                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ BDT
+                                    {{ (($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)  }}/-
                                 </button>
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
                                 </button>
@@ -273,6 +295,57 @@
 
         // });
 
+        function qtyUpdate(id,qty,order_id) {
+        //$service_id = $('#pservice_id').val();
+        $.ajax({
+            url: "{{route('update.qty.comrade')}}",
+            type: 'post',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id": id,
+                "qty": qty,
+                "order_id": order_id
+            },
+            dataType: 'html',
+            success: function(response) {
+                // // if(!isNaN(response)){
+                //     var data = JSON.parse(response);
+                //     $('.sub_total').text(data.total_price);
+                //     $up = parseInt($('#unit_point').html());
+            
+                //     $upp = qty * parseInt(data.unit_point_adtnl);
+                //     $('#unit_point').html('');
+                //     $('#unit_point').html($upp);
+                // // }else{
+                // //     addSubServices($id , $qty);
+                // // }
+                console.log(response);
+            }
+        });
+    }
+
+        $(".decrease").click(function() {
+            $id = $(this).data('id');
+            $qty = $('#qty' + $id).val();
+            if ($qty != 1) {
+                $qty--;
+            }
+            $('#qty' + $id).val($qty);
+
+            $order_id = $(this).data('order_id');
+           qtyUpdate($id, $qty,$order_id);
+        });
+
+        $(".increase").click(function() {
+            $id = $(this).data('id');
+            $qty = $('#qty' + $id).val();
+            $qty++;
+            $('#qty' + $id).val($qty);
+
+            $order_id = $(this).data('order_id');
+             qtyUpdate($id, $qty,$order_id);
+        });
+
 
 
         $('#new_service').click(function(){
@@ -292,6 +365,9 @@
                     }
                 });
         })
+
+
+
         
       });
 </script>

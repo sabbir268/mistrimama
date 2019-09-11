@@ -9,7 +9,7 @@
                 <div class="col-md-12" style="height:280px;overflow-y: scroll;">
                     <?php $__currentLoopData = $SubCategory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="card mb-1 pl-3">
-                        <div class="card-body ">
+                        <div class="card-body">
                             <input type="hidden" name="ID" value="<?php echo e($data->id); ?>">
                             <div class="row">
                                 <div class="col-md-8">

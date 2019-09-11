@@ -98,9 +98,10 @@ class BookingController extends Controller
 
 
     /** back to first step */
-    public function BackTofirst(){
-        if(Session::has('order_id')){
-            $booking = Booking::where('order_id',Session::get('order_id'));
+    public function BackTofirst()
+    {
+        if (Session::has('order_id')) {
+            $booking = Booking::where('order_id', Session::get('order_id'));
             $booking->delete();
         }
         return redirect()->route('book-self');
@@ -225,10 +226,34 @@ class BookingController extends Controller
         } else {
             $order_id = Session::get('order_id');
         }
-        
+
         $bookData = $booking->where('sub_cat_details_id', $request->id)->where('sub_categories_id', $request->service_id)->where('order_id', $order_id)->pluck('id');
 
         $book = Booking::find($bookData[0]);
+
+        $book->quantity = $request->qty;
+        $book->total_price = 0;
+        /** this is only for inserting total_price , the price will be calculated in mutator  */
+        if ($book->save()) {
+            $data['unit_point_adtnl'] = SubServiceDetails::find($request->id)->addnl_service_remarks;
+            $data['total_price'] = Booking::where('order_id', $order_id)->where('sub_categories_id', $request->service_id)->where('sub_cat_details_id', $request->id)->sum('total_price');
+            return $data;
+        } else {
+            return 'false';
+        }
+    }
+
+    public function QtyUpdateComrade(Request $request, Booking $booking)
+    {
+        if ($request->has('order_id')) {
+            $order_id = $request->order_id;
+        } else {
+            $order_id = Session::get('order_id');
+        }
+
+        $bookData = $booking->where("id",$request->id)->where("order_id",$order_id)->first();
+
+        $book = Booking::find($bookData->id); //booking id 
 
         $book->quantity = $request->qty;
         $book->total_price = 0;

@@ -268,6 +268,7 @@ Route::post('/sub-services/add', 'BookingController@AddSubServiceDetails')->name
 Route::post('/sub-services-details/add', 'BookingController@AddSubService')->name('add.sub-service'); // add sub service details
 Route::post('/sub-services-details/delete', 'BookingController@DeleteSubService')->name('delete.sub-service'); // add sub service details
 Route::post('/sub-services/quantity-update', 'BookingController@QtyUpdate')->name('update.qty'); // area and service category store
+Route::post('/sub-services/quantity-update-comrade', 'BookingController@QtyUpdateComrade')->name('update.qty.comrade'); // area and service category store
 Route::post('/sub-services-details/selected', 'BookingController@SelectedSubService')->name('selected.sub-service'); // add sub service details
 // total price 
 Route::get('/sub-services-details/total_price', 'BookingController@TotalPrice')->name('order.total_price');

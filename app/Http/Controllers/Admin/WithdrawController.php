@@ -15,7 +15,8 @@ class WithdrawController extends Controller
     {
 
         $WithDrawAll = WithdrawRequest::where('status', '=', '0')->paginate(20);
-        return view('admin.withdraw.index', compact('WithDrawAll'));
+        $WithDrawHistory = Account::where('details', '=', 'Cashout')->paginate(20);
+        return view('admin.withdraw.index', compact('WithDrawAll','WithDrawHistory'));
     }
 
     public function approve(Request $request)
@@ -74,12 +75,12 @@ class WithdrawController extends Controller
     public function withdrawRequestImport(Request $request, WithdrawRequest $WithdrawRequest, Account $account)
     {
         $file = $request->file('withdraw_file');
-        $destinationPath = 'uploads';
+        $destinationPath = public_path('uploads/');
         $file->move($destinationPath, $file->getClientOriginalName());
         $file = public_path('uploads/' . $file->getClientOriginalName());
 
         $customerArr = csvToArray($file);
-        //dd($customerArr);
+     //   dd($customerArr);
         for ($i = 0; $i < count($customerArr); $i++) {
             if ($customerArr[$i]['Validation_Result'] == 'Success') {
                 $wr = WithdrawRequest::find($customerArr[$i]['Withdrawl_ID']);

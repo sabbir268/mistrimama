@@ -60,6 +60,7 @@
 
             </div>
         </div>
+
     </div>
 </div>
 
@@ -134,4 +135,44 @@
 </div> --}}
 
 @endif
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Cash Out History
+        </div>
+    </div>
+
+    <div class="portlet-body flip-scroll">
+        <table class="table table-bordered table-striped table-condensed flip-content">
+            <thead class="flip-content">
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Txn No.</th>
+                    <th>Date</th>
+                    {{-- <th class="align-center">Action</th> --}}
+                </tr>
+            </thead>
+            <tbody>
+                @if($WithDrawHistory)
+                @foreach ($WithDrawHistory as $withdraw)
+                <tr>
+                    <td>{{ $withdraw->user ? $withdraw->user->name : '-'}}</td>
+                    <td>{{ $withdraw->amount}}</td>
+                    <td>{{ $withdraw->trxno}}</td>
+                    <td>{{ $withdraw->updated_at}}</td>
+                    {{-- <td class="align-center">
+                        <button data-toggle="modal" data-target="#manual_accept"   
+                            class="btn btn-primery">Accept</button>
+                    </td> --}}
+                </tr>
+                
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+        {{$WithDrawHistory->links()}}
+    </div>
+</div>
 @endsection

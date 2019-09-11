@@ -118,7 +118,7 @@
                  </p>
                  <div class="col-md-12 text-center">
                     <a href="<?php echo e(asset('/register')); ?>" class="btn  btn-lg btn-mm"
-                        style="border-radius: 10px; margin-top:12%;">Register Now</a>
+                        style="border-radius: 10px;">Register Now</a>
                 </div>
                 </div>
 

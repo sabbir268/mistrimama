@@ -57,6 +57,7 @@
 
             </div>
         </div>
+
     </div>
 </div>
 
@@ -96,5 +97,43 @@
 
 
 <?php endif; ?>
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Cash Out History
+        </div>
+    </div>
+
+    <div class="portlet-body flip-scroll">
+        <table class="table table-bordered table-striped table-condensed flip-content">
+            <thead class="flip-content">
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Txn No.</th>
+                    <th>Date</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <?php if($WithDrawHistory): ?>
+                <?php $__currentLoopData = $WithDrawHistory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $withdraw): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                    <td><?php echo e($withdraw->user ? $withdraw->user->name : '-'); ?></td>
+                    <td><?php echo e($withdraw->amount); ?></td>
+                    <td><?php echo e($withdraw->trxno); ?></td>
+                    <td><?php echo e($withdraw->created_at); ?></td>
+                    
+                </tr>
+                
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        <?php echo e($WithDrawHistory->links()); ?>
+
+    </div>
+</div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

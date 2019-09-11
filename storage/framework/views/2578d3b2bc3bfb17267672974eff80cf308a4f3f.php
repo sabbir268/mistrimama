@@ -284,7 +284,7 @@
                                     <?php else: ?>
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-<?php echo e($actord->id); ?>"
-                                        data-item="<?php echo e($actord->id); ?>">বন্টন</button>
+                                        data-item="<?php echo e($actord->id); ?>">বন্zটন</button>
                                     <?php endif; ?>
 
                                     <?php else: ?>

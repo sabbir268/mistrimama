@@ -151,6 +151,7 @@
                             <td>মূল্য </td>
                             <td>অতিরিক্ত মূল্য </td>
                             <td>মোট মূল্য </td>
+                            <td>অবস্থা </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,7 @@
                             <td><?php echo e($service->price); ?></td>
                             <td><?php echo e($service->aditional_price); ?></td>
                             <td><?php echo e($service->total_price); ?></td>
+                            <td><span class=<?php echo e($service->status == 1 ? "text-success " : "text-danger "); ?>}><?php echo e($service->status == 1 ? "কাজ করা হয়েছে " : "কাজ করা হয় নি "); ?> </span></td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
