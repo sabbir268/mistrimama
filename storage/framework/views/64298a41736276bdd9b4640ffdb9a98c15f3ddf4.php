@@ -49,7 +49,7 @@
                             data-target="#lastServiceModal" style="cursor:pointer">View Details</div>
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
-                        <strong>সর্বশেষ সার্ভিস মূল্য </strong></div>
+                        <strong>সর্বশেষ সার্ভিস থেকে আয় </strong></div>
                 </section>
                 <!--.widget-simple-sm-->
             </div>
@@ -75,6 +75,32 @@
                     </div>
                     <div class="widget-simple-sm-bottom statistic">
                         <strong>শেষ রিচার্জ-এর পরিমাণ</strong></div>
+                </section>
+                <!--.widget-simple-sm-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <section class="widget widget-simple-sm">
+                    <div class="widget-simple-sm-statistic">
+                        <div class="number">টাকা <?php echo e($totalOrderValueSelf); ?>/-</div>
+                        <a class="caption color-purple btn-link text-mm" href="<?php echo e(route('job.all',['self','2019-01-01',date("Y-m-d")])); ?>">View Details</a>
+                    </div>
+                    <div class="widget-simple-sm-bottom statistic">
+                        <strong>মোট অর্ডার মূল্য (নিজের থেকে)</strong></div>
+                </section>
+                <!--.widget-simple-sm-->
+            </div>
+
+            <div class="col-xl-6">
+                <section class="widget widget-simple-sm">
+                    <div class="widget-simple-sm-statistic">
+                        <div class="number">টাকা <?php echo e($totalOrderValueMm); ?>/-</div>
+                            <a class="caption color-purple btn-link text-mm" href="<?php echo e(route('job.all',['others','2019-01-01',date("Y-m-d")])); ?>">View Details</a>
+                    </div>
+                    <div class="widget-simple-sm-bottom statistic">
+                        <strong>মোট অর্ডার মূল্য (মিস্ত্রিমামা থেকে)</strong></div>
                 </section>
                 <!--.widget-simple-sm-->
             </div>

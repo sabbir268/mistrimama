@@ -15,6 +15,7 @@ use App\SMS;
 use DB;
 use App\Models\roles;
 use App\Models\user_roles;
+use App\Http\Controllers\BookingController;
 
 
 
@@ -22,17 +23,21 @@ class AuthController extends Controller
 {
     public function doRegister(Request $request)
     {
+        if($request->has('user_type') && $request->user_type == 'guest'){
+            $bookingController = new BookingController();
+            return  $bookingController->OrderConfirmDone($request);
+        }
         // $request->phone_no = "+88".$request['phone_no'];
         $rules = [
-            'name' => 'string',
-            'phone_no' => 'string|required|unique:users,phone_no',
-            'password' => 'string|required',
-            'area' => 'string|required'
+            'name' => 'required|string',
+            'phone_no' => 'required|string|unique:users,phone_no',
+            'password' => 'required',
+            'area' => 'required|string'
         ];
         $validator = Validator::make($request->all(), $rules);
         // return dd($validator->fails());
         if ($validator->fails()) {
-            return redirect()->to('/register')->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors());
         } else {
             $userType = $request->user_type;
             $user = new User($request->except(['reason', 'type', 'ref_code']));

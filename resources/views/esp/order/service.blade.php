@@ -106,8 +106,8 @@
         </div>
     </section>
 
-    <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="{{route('book-self')}}" class="text-white">←
-    Back</a></button> 
+    {{-- <button type="button" class="btn btn-rounded float-left btn-mm "> <a href="{{route('book-self')}}" class="text-white">←
+    Back</a></button>  --}}
     <button type="button" id="dateTime" class="btn btn-rounded float-right btn-mm"> <a href="#" class="text-white"> Next →</a></button>
 
 </section>

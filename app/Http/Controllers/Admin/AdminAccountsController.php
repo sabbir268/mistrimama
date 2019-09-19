@@ -10,6 +10,8 @@ use App\Heading;
 
 class AdminAccountsController extends Controller
 {
+
+   
     public function index()
     {
         $accounts = Account::orderBy('id','DESC')->paginate(20);

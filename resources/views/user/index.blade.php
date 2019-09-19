@@ -17,7 +17,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="@if(checkRole(auth()->user()->id, 'special')) col-md-6 @else col-md-12 mb-3 @endif">
         <section class="widget widget-simple-sm p-0 m-0" style="height: 132px;">
             <div class="widget-simple-sm-icon text-left p-2">
                 <div class="row">
@@ -63,11 +63,11 @@
                             @endif
 
                             @if ($activeOrders->status == 4)
-                            <p><strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
+                            {{-- <p><strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
                                     <span class="text-warning">Mama</span> </strong> complete your work. <b>Wait for
                                     payment
-                                    confirmation.</b></p>
-                            <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
+                                    confirmation.</b></p> --}}
+                            <strong>Thank you, your Digital Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
                             @endif
                             @else
                             <p>Order has been accepted , a comrade will allocated soon!</p>
@@ -104,6 +104,7 @@
         </section>
         <!--.widget-simple-sm-->
     </div>
+    @if(checkRole(auth()->user()->id, 'special'))
     <div class="col-md-6  ">
         <section class="widget widget-simple-sm">
             <div class="widget-simple-sm-icon  p-3">
@@ -135,6 +136,7 @@
         </section>
         <!--.widget-simple-sm-->
     </div>
+    @endif
 </div>
 
 <style>

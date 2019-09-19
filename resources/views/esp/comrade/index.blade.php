@@ -204,7 +204,7 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text rounded-0" for="">Choose file</label>
                                     <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
-                                         placeholder="Chose file">
+                                    placeholder="Chose file">
                                 </div>
 
                             </div>

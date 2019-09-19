@@ -41,7 +41,7 @@ class espController extends Controller
 
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services = $providers->first()->category->pluck('cats')->toArray();
-        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(2000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
+        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(200)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
         $activeOrders = $providers->first()->orderDetails->where('status', '!=',  5)->where('status', '!=',  'cancel');
 
         $totalcomrades = $providers->first()->comrads; //total
@@ -55,49 +55,6 @@ class espController extends Controller
         return view('esp.index', compact('newOrders', 'comrades', 'providers', 'activeOrders', 'balance', 'totalcomrades', 'rp', 'ratings', 'miniStatements', 'services'));
     }
 
-    public function manualService()
-    {
-        return view('esp.manual.service-book');
-    }
-
-    public function manualPhoneDist()
-    {
-        return view('esp.manual.phone-dist');
-    }
-
-    public function manualComradeAddDel()
-    {
-        return view('esp.manual.comrade-add-del');
-    }
-
-    public function manualComradeLogin()
-    {
-        return view('esp.manual.comred-login');
-    }
-    public function manualComradeWork()
-    {
-        return view('esp.manual.comred-login');
-    }
-
-    public function manualRecharge()
-    {
-        return view('esp.manual.recharge');
-    }
-
-    public function manualCashout()
-    {
-        return view('esp.manual.cashout');
-    }
-
-    public function manualSelfOrder()
-    {
-        return view('esp.manual.self-order');
-    }
-
-    public function manualSPLogin()
-    {
-        return view('esp.manual.sp-login');
-    }
 
 
     public function NewAvailAbleOrder()
@@ -107,7 +64,7 @@ class espController extends Controller
 
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services = $providers->first()->category->pluck('cats')->toArray();
-        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(20000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->orderBy('id', 'DESC')->limit(2)->get();
+        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(200)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->orderBy('id', 'DESC')->limit(2)->get();
         $comrades = $providers->first()->comrads->where('status', 1); // active
 
         return view('neworder', compact('newOrders', 'providers', 'comrades'));
@@ -120,7 +77,7 @@ class espController extends Controller
 
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services = $providers->first()->category->pluck('cats')->toArray();
-        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(20000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->orderBy('id', 'DESC')->limit(10)->get();
+        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(200)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->orderBy('id', 'DESC')->limit(10)->get();
         // $comrades = $providers->first()->comrads->where('status', 1); // active
 
         // return view('neworder',compact('newOrders','providers','comrades'));
@@ -131,7 +88,7 @@ class espController extends Controller
     {
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services = $providers->first()->category->pluck('cats')->toArray();
-        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(1000)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
+        $newOrders = Order::where('status', '0')->whereIn('category_id', $services)->whereBetween('created_at', [Carbon::now('Asia/Dhaka')->subMinutes(200)->toDateTimeString(), Carbon::now('Asia/Dhaka')->toDateTimeString()])->paginate(5);
         $newOrdersRequests = $providers->first()->serviceSystem->where('status', '!=',  '5')->where('status', '!=',  'cancel')->where('service_provider_comrad_id', null);
         // $activeOrders = $providers->first()->serviceSystem->where('status', '!=',  5)->where('status', '!=',  'cancel')->where('service_provider_comrad_id', '!=', null);
         $activeOrders = OrderDetails::where('sp_id', $providers->first()->id)->where('status', '!=',  '5')->where('status', '!=',  'cancel')->get();
@@ -146,16 +103,17 @@ class espController extends Controller
     }
 
 
-    public function NewService($category_id , $order_id){
-       $addedServicesId = Booking::where("order_id",$order_id)->pluck('sub_categories_id')->toArray();
-        $SubCategory = SubCategory::where('c_id',$category_id)->whereNotIn('id',$addedServicesId)->get();
-        return view('new_service',compact('SubCategory','order_id'));
+    public function NewService($category_id, $order_id)
+    {
+        $addedServicesId = Booking::where("order_id", $order_id)->pluck('sub_categories_id')->toArray();
+        $SubCategory = SubCategory::where('c_id', $category_id)->whereNotIn('id', $addedServicesId)->get();
+        return view('new_service', compact('SubCategory', 'order_id'));
     }
 
     public function jobHistory()
     {
         $providers = User::find(Auth::user()->id)->serviceProvider->first();
-        $orders = OrderDetails::where('sp_id', '=', $providers->id)->orderBy('id', 'desc')->paginate(10);
+        $orders = OrderDetails::where('sp_id', '=', $providers->id)->orderBy('id', 'desc')->paginate(8);
         return view('esp.job-history', compact('orders', 'providers'));
     }
 
@@ -163,6 +121,20 @@ class espController extends Controller
     //     $services = ServiceSystem::Where('')->paginate(10);
     //     return view('esp.job-history','$services');
     // }
+
+    public function jobHistoryAll($orderFrom, $dateFrom, $dateTo)
+    {
+        //  return 'ok';
+        $providers = User::find(Auth::user()->id)->serviceProvider->first();
+        if ($orderFrom == 'self') {
+            $from = ['esp', 'comrade'];
+        } else {
+            $from = ['user', 'guest', 'admin', 'special'];
+        }
+        //sabbir
+        $orders = OrderDetails::where('sp_id', '=', $providers->id)->whereBetween('order_date', [$dateFrom, $dateTo])->whereIn('order_from', $from)->paginate(10);
+        return view('esp.job-all', compact('orders', 'providers', 'orderFrom'));
+    }
 
     public function refer()
     {
@@ -214,7 +186,7 @@ class espController extends Controller
         $providers = User::find(Auth::user()->id)->serviceProvider;
         $services_category = DB::select("SELECT categories.id,categories.name FROM categories");
         $comrades = Comrades::where('s_id', $providers[0]->id)->paginate(10);
-        return view('esp.comrade.index', compact('comrades','services_category'));
+        return view('esp.comrade.index', compact('comrades', 'services_category'));
     }
 
     public function ComradeEdit($id)
@@ -293,14 +265,14 @@ class espController extends Controller
                 $comrade->email = $request->email;
                 $comrade->c_nid = $request->c_nid;
                 $comrade->category = $request->category;
-               
-                
+
+
 
                 // $comrade->c_pic = $request->c_pic;
                 // $comrade->c_nic_back = $request->c_nic_back;
                 // $comrade->c_nic_back = $request->c_nic_back;
 
-               // $destinationPath = public_path('/uploads/SP/');
+                 $destinationPath = public_path('/uploads/SP/');
 
                 // $image = $request->file('image');
                 // $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
@@ -312,61 +284,57 @@ class espController extends Controller
                 // $image->move($destinationPath, $input['imagename']);
 
                 if ($request->hasFile('c_pic')) {
-                    // $image = $request->file('c_pic');
-                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    // $img = Image::make($image->getRealPath());
+                    $image = $request->file('c_pic');
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    $img = Image::make($image->getRealPath());
 
-                    // //  $image->move($destinationPath, $input['imagename']);
+                    //  $image->move($destinationPath, $input['imagename']);
 
-                    // $img->resize(300, 300, function ($constraint) {
-                    //     $constraint->aspectRatio();
-                    // })->save($destinationPath . '/' . $input['imagename']);
+                    $img->resize(300, 300, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' . $input['imagename']);
 
-                    // $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
-                    $imageName1 = uniqid();
-                    event(new ImageUploadEvent($request->file('c_pic'),$imageName1));
-                    $comrade->c_pic = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_pic')->getClientOriginalExtension();
-                    
-    
+                    $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    // $imageName1 = uniqid();
+                    // event(new ImageUploadEvent($request->file('c_pic'), $imageName1));
+                    // $comrade->c_pic = asset('/uploads/SP/') . "/" . $imageName1 . '.' . $request->file('c_pic')->getClientOriginalExtension();
                 }
 
                 if ($request->hasFile('c_nic_back')) {
-                    // $image = $request->file('c_nic_back');
-                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    // $img = Image::make($image->getRealPath());
-                    // //  $image->move($destinationPath, $input['imagename']);
-                    // $img->resize(250, 250, function ($constraint) {
-                    //     $constraint->aspectRatio();
-                    // })->save($destinationPath . '/' . $input['imagename']);
+                    $image = $request->file('c_nic_back');
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    $img = Image::make($image->getRealPath());
+                    //  $image->move($destinationPath, $input['imagename']);
+                    $img->resize(250, 250, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' . $input['imagename']);
 
 
 
-                    // $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
-                    
-                    $imageName2 = uniqid();
-                    event(new ImageUploadEvent($request->file('c_nic_back'),$imageName2));
-                    $comrade->c_nic_back = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_nic_back')->getClientOriginalExtension();
-                   
-                  
+                    $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
+
+                    // $imageName2 = uniqid();
+                    // event(new ImageUploadEvent($request->file('c_nic_back'), $imageName2));
+                    // $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $imageName2 . '.' .        $request->file('c_nic_back')->getClientOriginalExtension();
                 }
 
 
                 if ($request->hasFile('c_nic_front')) {
-                    // $image = $request->file('c_nic_front');
-                    // $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    // $img = Image::make($image->getRealPath());
-                    // //  $image->move($destinationPath, $input['imagename']);
-                    // $img->resize(250, 250, function ($constraint) {
-                    //     $constraint->aspectRatio();
-                    // })->save($destinationPath . '/' . $input['imagename']);
+                    $image = $request->file('c_nic_front');
+                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+                    $img = Image::make($image->getRealPath());
+                    //  $image->move($destinationPath, $input['imagename']);
+                    $img->resize(250, 250, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' . $input['imagename']);
 
 
 
-                    // $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
+                    $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
 
-                    $imageName3 = uniqid();
-                    event(new ImageUploadEvent($request->file('c_nic_front'),$imageName3));
-                    $comrade->c_nic_front = asset('/uploads/SP/')."/".$imageName1.'.'.$request->file('c_nic_front')->getClientOriginalExtension();
+                    // $imageName3 = uniqid();
+                    // event(new ImageUploadEvent($request->file('c_nic_front'), $imageName3));
+                    // $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $imageName3 . '.' . $request->file('c_nic_front')->getClientOriginalExtension();
                 }
 
 
@@ -436,7 +404,7 @@ class espController extends Controller
         $yesterdaysincome = Account::whereDate('created_at', Carbon::yesterday())->where('status', 'credit')->first();
         //return $todaysincome;
 
-        $thisWeekIncome =  Account::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', 'credit')->first();
+        //$thisWeekIncome =  Account::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', 'credit')->first();
 
         //  $now = Carbon::now();
         //  $start = Carbon::now()->startOfWeek(); 
@@ -450,10 +418,17 @@ class espController extends Controller
 
         $statements = auth()->user()->account()->where('status', '!=', 'income')->orderBy('id', 'DESC')->paginate(20);
 
+        $totalOrderValueSelf = OrderDetails::where('sp_id', '=', $providers->id)->whereIn('order_from', [auth()->user()->roles->first()->role, 'comrade'])->get()->sum('total_price');
+
+        $totalOrderValueMm = OrderDetails::where('sp_id', '=', $providers->id)->whereIn('order_from', ['user', 'guest', 'admin', 'special'])->get()->sum('total_price');
+
+
+
+
 
         //return $lastServiceAmount;
 
-        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome', 'statements', 'lasServiceDetails'));
+        return view('esp.income-statement', compact('balance', 'lastServiceAmount', 'providers', 'lastCashOut', 'lastRecharge', 'todaysincome', 'yesterdaysincome', 'thisWeekIncome', 'statements', 'lasServiceDetails', 'totalOrderValueSelf', 'totalOrderValueMm'));
     }
 
     // public function cashout()
@@ -529,4 +504,48 @@ class espController extends Controller
     // }
 
 
+
+    public function manualService()
+    {
+        return view('esp.manual.service-book');
+    }
+
+    public function manualPhoneDist()
+    {
+        return view('esp.manual.phone-dist');
+    }
+
+    public function manualComradeAddDel()
+    {
+        return view('esp.manual.comrade-add-del');
+    }
+
+    public function manualComradeLogin()
+    {
+        return view('esp.manual.comred-login');
+    }
+    public function manualComradeWork()
+    {
+        return view('esp.manual.comred-login');
+    }
+
+    public function manualRecharge()
+    {
+        return view('esp.manual.recharge');
+    }
+
+    public function manualCashout()
+    {
+        return view('esp.manual.cashout');
+    }
+
+    public function manualSelfOrder()
+    {
+        return view('esp.manual.self-order');
+    }
+
+    public function manualSPLogin()
+    {
+        return view('esp.manual.sp-login');
+    }
 }

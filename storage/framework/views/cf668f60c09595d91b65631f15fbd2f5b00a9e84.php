@@ -111,20 +111,21 @@
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend ">
                                                     <span class="input-group-text btn-mm decrease"
-                                                        style="cursor :pointer" data-id="<?php echo e($booking->id); ?>"  data-order_id ="<?php echo e($booking->order_id); ?>" id="inputGroup-sizing-sm"><i
-                                                            class="fa fa-minus"></i></span>
+                                                        style="cursor :pointer" data-id="<?php echo e($booking->id); ?>"
+                                                        data-order_id="<?php echo e($booking->order_id); ?>"
+                                                        id="inputGroup-sizing-sm"><i class="fa fa-minus"></i></span>
                                                 </div>
                                                 <input type="text" class="form-control text-center p-0 m-0"
                                                     aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                                    placeholder="Qty" id="qty<?php echo e($booking->id); ?>" value="<?php echo e($booking->quantity); ?>">
+                                                    placeholder="Qty" id="qty<?php echo e($booking->id); ?>"
+                                                    value="<?php echo e($booking->quantity); ?>">
                                                 <div class="input-group-append ">
                                                     <span class="input-group-text btn-mm text increase"
-                                                        style="cursor :pointer" data-id="<?php echo e($booking->id); ?>"  data-order_id ="<?php echo e($booking->order_id); ?>" id="inputGroup-sizing-sm"><i
-                                                            class="fa fa-plus"></i></span>
+                                                        style="cursor :pointer" data-id="<?php echo e($booking->id); ?>"
+                                                        data-order_id="<?php echo e($booking->order_id); ?>"
+                                                        id="inputGroup-sizing-sm"><i class="fa fa-plus"></i></span>
                                                 </div>
                                             </div>
-
-
                                         </td>
                                         <td>
                                             <?php echo e($booking->total_price); ?>
@@ -148,6 +149,14 @@
                                             <?php else: ?>
                                             -
                                             <?php endif; ?>
+
+                                            <?php if(count($allord->order->bookings) > 1): ?>
+                                            <a href="<?php echo e(url('comrade/remove-sub')); ?>/<?php echo e($booking->id); ?>"
+                                                class="btn btn-sm btn-danger "><i class="fa fa-times"></i></a>
+                                            <?php else: ?>
+                                            -
+                                            <?php endif; ?>
+
                                         </td>
 
 

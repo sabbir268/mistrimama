@@ -397,7 +397,8 @@ function promocheck($id, $am)
         } else {
             return 0.00;
         }
-    } else {
+    } 
+    else {
         return 0.00;
     }
 }

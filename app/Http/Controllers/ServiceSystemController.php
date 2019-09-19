@@ -28,8 +28,8 @@ class ServiceSystemController extends Controller
             $orderDetails = OrderDetails::find($ordId);
             if($sts == 3){
                 $order->disc = promocheck($order->user_id, $orderDetails->total_price);
-
-                $msg = "Thank you so much for taking service from Mistri Mama. Your total payable bill amount is BDT ".$order->total_price."/-";
+                
+                $msg = "Thank you so much for taking service from Mistri Mama. Your total payable bill amount is BDT ". $order->total_price  ."/-";
 
                 SMS::send($order->phone,$msg);
             }
@@ -127,15 +127,16 @@ class ServiceSystemController extends Controller
             }
             
             $accountsp->save();
+            
             /** Reward point add to referar */
             if($order->ref_code != null){
                 $ruser = User::where('ref_code',$order->ref_code)->first();
                 $rp = new RewardPoint();
                 $rp->user_id = $ruser->id;
                 if(checkRole($ruser->id, 'special')){
-                    $rp->rp = ($request->amount / 50);
+                    $rp->rp = (($request->amount * 30)/100);
                 }else{
-                    $rp->rp = ($request->amount / 50);
+                    $rp->rp = 0;
                 }   
                 $rp->status = 'add';
                 $rp->details = "Service referred (BDT". $request->amount .")";

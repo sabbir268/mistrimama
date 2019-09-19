@@ -26,7 +26,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text  btn-mm " id="">Enter The Promocode</span>
                         </div>
-                        <input type="text" placeholder="xxxxx" minlength="5" maxlength="5" name="promocode" class="form-control">
+                        <input type="text" placeholder="xxxxx" maxlength="20" name="promocode" class="form-control">
                         <input type="submit" class="btn btn-mm-border text-mm rounded-0" value="Check">
                         </div>
                 </form>

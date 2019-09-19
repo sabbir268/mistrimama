@@ -60,13 +60,13 @@ class SslCommerzNotification extends AbstractSslCommerz
                 curl_setopt($handle, CURLOPT_URL, $requested_url);
                 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 
-                 if ($this->config['connect_from_localhost']) {
-                     curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
-                     curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
-                 } else {
-                     curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, true);
-                     curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, true);
-                 }
+                //  if ($this->config['connect_from_localhost']) {
+                //      curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
+                //      curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+                //  } else {
+                //      curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, true);
+                //      curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, true);
+                //  }
 
 
                 $result = curl_exec($handle);

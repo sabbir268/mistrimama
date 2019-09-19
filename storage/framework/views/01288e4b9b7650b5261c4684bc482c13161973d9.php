@@ -16,7 +16,7 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="row">
-    <div class="col-md-6">
+    <div class="<?php if(checkRole(auth()->user()->id, 'special')): ?> col-md-6 <?php else: ?> col-md-12 mb-3 <?php endif; ?>">
         <section class="widget widget-simple-sm p-0 m-0" style="height: 132px;">
             <div class="widget-simple-sm-icon text-left p-2">
                 <div class="row">
@@ -67,12 +67,8 @@
                             <?php endif; ?>
 
                             <?php if($activeOrders->status == 4): ?>
-                            <p><strong class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
-
-                                    <span class="text-warning">Mama</span> </strong> complete your work. <b>Wait for
-                                    payment
-                                    confirmation.</b></p>
-                            <p>Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?> </p>
+                            
+                            <strong>Thank you, your Digital Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
                             <?php endif; ?>
                             <?php else: ?>
                             <p>Order has been accepted , a comrade will allocated soon!</p>
@@ -103,6 +99,7 @@
         </section>
         <!--.widget-simple-sm-->
     </div>
+    <?php if(checkRole(auth()->user()->id, 'special')): ?>
     <div class="col-md-6  ">
         <section class="widget widget-simple-sm">
             <div class="widget-simple-sm-icon  p-3">
@@ -134,6 +131,7 @@
         </section>
         <!--.widget-simple-sm-->
     </div>
+    <?php endif; ?>
 </div>
 
 <style>

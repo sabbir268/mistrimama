@@ -1,9 +1,10 @@
 @extends('layouts.main-dash')
 @section('styles')
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/lobipanel/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
-<link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
+<link rel="stylesheet" href="{{asset('dashboard/css/lib/flatpickr/flatpickr.min.css')}}">
+<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/flatpickr.min.css')}}">
+<link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('dashboard/css/lib/clockpicker/bootstrap-clockpicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
 @endsection
 
 @section('topbar')
@@ -19,7 +20,22 @@
 <div class="col-md-12">
     <section class="box-typical box-typical-dashboard panel panel-default">
         <header class="box-typical-header panel-heading">
-            <h3 class="panel-title pt-1">পূর্বের কাজ সমূহ </h3>
+            <div class="row">
+                <h3 class="panel-title p-2 col-md-6">পূর্বের কাজ সমূহ </h3>
+                <div class="input-group float-right col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">From</span>
+                    </div>
+                    <input type="text" name="orderFrom" value="slef" hidden>
+                    <input type="text" class="form-control" placeholder="Select Date From" id="dateFrom">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" >To</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Select Date To" id="dateTo">
+                    <button id="filterDate" class="input-group-append btn btn-success">Go</button>
+                </div>
+
+            </div>
         </header>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -178,22 +194,34 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="{{asset('dashboard/js/lib/jqueryui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/lobipanel/lobipanel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('dashboard/js/lib/match-height/jquery.matchHeight.min.js')}}"></script>
-<script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="{{asset('dashboard/js/lib/moment/moment-with-locales.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('dashboard/js/lib/flatpickr/flatpickr.min.js')}}"></script>
+<script src="{{asset('dashboard/js/lib/daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker.min.js')}}"></script>
+<script src="{{asset('dashboard/js/lib/clockpicker/bootstrap-clockpicker-init.js')}}"></script>
 
 <script>
-    $(document).ready(function() {
-            $('.panel').each(function () {
-                try {
-                    $(this).lobiPanel({
-                        sortable: true
-                    }).on('dragged.lobiPanel', function(ev, lobiPanel){
-                        $('.dahsboard-column').matchHeight();
-                    });
-                } catch (err) {}
-            });
+    $('#dateFrom').daterangepicker({
+		singleDatePicker: true,
+		showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+	});
 
+    $('#dateTo').daterangepicker({
+		singleDatePicker: true,
+		showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+	});
+
+    $('#filterDate').click(function(){
+        $df = $('#dateFrom').val();
+        $dt = $('#dateTo').val();
+       
+        window.location.href = "{{asset('/')}}esp/income-statement/{{$orderFrom}}/"+$df+"/"+$dt;
+    });
 </script>
 @endsection

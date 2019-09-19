@@ -35,9 +35,9 @@
             <td>
                 @if(auth()->user()->serviceProvider->first()->type == 0)
                     @if($order->status == '0')
-                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#allocate-{{$order->id}}"
+                        <button class="btn btn-sm btn-mm" data-toggle="modal" data-target="#allocate-{{$order->id}}"
                             data-item="{{ $order->id }}">সহকারী</button> @else
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#allocate-{{$order->id}}"
+                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#allocate-{{$order->id}}"
                             data-item="{{ $order->id }}" disabled>এলোকেটেড</button> 
                     @endif
                 @else 
@@ -116,7 +116,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Select Service Provider</h4>
+                <h4 class="modal-title">সহকারী নির্বাচন করুন</h4>
             </div>
             <form method="post" action="{{ route('service_provider_allocate') }}">
                 {{csrf_field()}}
@@ -137,7 +137,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Client:</label> <strong>
-                                        {{ $order->user ? $order->user->name : '-' }}</strong>
+                                        {{ $order->user ? $order->user->name : $order->name }}
+                                       </strong> 
                                     <input type="text" name="user_id"
                                         value="{{ $order->user ? $order->user->id : '-' }}" hidden>
                                 </div>

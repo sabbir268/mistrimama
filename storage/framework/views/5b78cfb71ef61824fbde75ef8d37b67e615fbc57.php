@@ -235,7 +235,7 @@
                 <label for="type-self">
                     <span class="checkbox-detailed-tbl">
                         <span class="checkbox-detailed-cell">
-                            <span class="checkbox-detailed-title">Guist</span>
+                            <span class="checkbox-detailed-title">Guest</span>
                             Order as Guest
                         </span>
                     </span>

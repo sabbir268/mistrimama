@@ -264,10 +264,10 @@
                                 <div class="row">
                                     <div class="card-header col-md-6">
                                             <u><strong><span class="m-0 typical-header">Client Info</span></strong></u><br>
-                                        Name:<strong><?php echo e($actOrder->order->user->name); ?></strong><br> Phone:
-                                        <strong><?php echo e($actOrder->order->user->phone_no); ?></strong><br>
-                                        Area: <strong><?php echo e($actOrder->order->area); ?></strong><br>
-                                        Address: <strong><?php echo e($actOrder->order->user->address); ?></strong>
+                                        Name:<strong><?php echo e($actOrder->order->name ? $actOrder->order->name : "-"); ?></strong><br> Phone:
+                                        <strong><?php echo e($actOrder->order->phone ? $actOrder->order->phone : "-"); ?></strong><br>
+                                        Area: <strong><?php echo e($actOrder->order->area ? $actOrder->order->area : "-"); ?></strong><br>
+                                        Address: <strong><?php echo e($actOrder->order->address ? $actOrder->order->address : "-"); ?></strong>
                                     </div>
                                     <div class="card-header col-md-6">
                                             <u><strong><span class="m-0 typical-header">Provider Info</span></strong></u><br>

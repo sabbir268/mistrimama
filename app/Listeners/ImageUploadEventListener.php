@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Image;
 
-class ImageUploadEventListener implements ShouldQueue
+class ImageUploadEventListener
 {
     /**
      * Create the event listener.

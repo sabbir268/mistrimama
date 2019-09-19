@@ -113,20 +113,21 @@
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend ">
                                                     <span class="input-group-text btn-mm decrease"
-                                                        style="cursor :pointer" data-id="{{$booking->id}}"  data-order_id ="{{$booking->order_id}}" id="inputGroup-sizing-sm"><i
-                                                            class="fa fa-minus"></i></span>
+                                                        style="cursor :pointer" data-id="{{$booking->id}}"
+                                                        data-order_id="{{$booking->order_id}}"
+                                                        id="inputGroup-sizing-sm"><i class="fa fa-minus"></i></span>
                                                 </div>
                                                 <input type="text" class="form-control text-center p-0 m-0"
                                                     aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                                    placeholder="Qty" id="qty{{$booking->id}}" value="{{$booking->quantity}}">
+                                                    placeholder="Qty" id="qty{{$booking->id}}"
+                                                    value="{{$booking->quantity}}">
                                                 <div class="input-group-append ">
                                                     <span class="input-group-text btn-mm text increase"
-                                                        style="cursor :pointer" data-id="{{$booking->id}}"  data-order_id ="{{$booking->order_id}}" id="inputGroup-sizing-sm"><i
-                                                            class="fa fa-plus"></i></span>
+                                                        style="cursor :pointer" data-id="{{$booking->id}}"
+                                                        data-order_id="{{$booking->order_id}}"
+                                                        id="inputGroup-sizing-sm"><i class="fa fa-plus"></i></span>
                                                 </div>
                                             </div>
-
-
                                         </td>
                                         <td>
                                             {{$booking->total_price}}
@@ -149,6 +150,14 @@
                                             @else
                                             -
                                             @endif
+
+                                            @if(count($allord->order->bookings) > 1)
+                                            <a href="{{url('comrade/remove-sub')}}/{{$booking->id}}"
+                                                class="btn btn-sm btn-danger "><i class="fa fa-times"></i></a>
+                                            @else
+                                            -
+                                            @endif
+
                                         </td>
 
 

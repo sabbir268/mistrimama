@@ -253,6 +253,16 @@ Route::group(['prefix' => 'admin'], function () {
 
         // add special user
         Route::post('add_special', 'UsersController@addUser')->name('add.user.special'); 
+
+        // search user ajax
+        Route::get("user_search/{val}","Admin\AdminOrderController@searchUser")->name('admin.user.search');
+        Route::get("user_slected/{id}","Admin\AdminOrderController@selectedUser")->name('admin.user.selected');
+        //order from admin
+      //Route::get("create_order","Admin\AdminOrderController@createOrder")->name('admin.order.');
+        Route::get("/new_order","Admin\AdminOrderController@createOrder")->name('admin.order.create');
+        Route::get("/new_order/{category_id}","Admin\AdminOrderController@allService")->name('admin.order.getallService');
+        Route::get("services_bit/{service_id}","Admin\AdminOrderController@allServiceBit")->name('admin.order.getServiceBit');
+        Route::post("add-service-bit","Admin\AdminOrderController@addServiceBit")->name('admin.order.addServiceBit');
     });
 });
 
@@ -334,6 +344,8 @@ Route::group(['prefix' => 'esp', 'middleware' => ['esp']], function () {
     Route::get('/manual-9', 'espController@manualSPLogin')->name('esp.manual-sp-login');
     // Route::get('/manual-1', 'espController@manualService')->name('esp.manual-service');
 
+    Route::get('/income-statement/{orderFrom}/{dateFrom}/{dateTo}', 'espController@jobHistoryAll')->name('job.all');
+
 });
 
 Route::group(['prefix' => 'fsp', 'middleware' => ['auth']], function () {
@@ -349,6 +361,8 @@ Route::group(['prefix' => 'comrade', 'middleware' => ['auth']], function () {
     Route::get('/order', 'comradeController@behalfOrder')->name('comrade.behalf.order');
     Route::get('/faq', 'comradeController@faq')->name('comrade.faq');
     Route::get('/order-cancel/{id}', 'comradeController@cancelOrder')->name('comrade.cancel-order');
+
+    Route::get('/remove-sub/{booking_id}', 'UsersController@removeItem');
 });
 
 /** Add new serivce in ongoing order from ESP and Comrade */

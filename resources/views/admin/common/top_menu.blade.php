@@ -70,7 +70,7 @@
             <!-- BEGIN INBOX DROPDOWN -->
             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 
-
+            <li><a href="{{route('admin.order.create')}}" style="padding: 0px;"> <button style="margin: 8px;" class="btn btn-primary"> <i class="fa fa-plus"></i> Place New Order</button> </a></li>
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                     <img alt="" class="img-circle" src="{{ asset('/admin/img/avatar3_small.jpg') }}" />

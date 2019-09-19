@@ -25,12 +25,14 @@
                 <span class="lbl">Promo Code</span>
             </a>
         </li>
+        @if(checkRole(auth()->user()->id, 'special'))
         <li class="grey">
             <a href="{{route('user.refer')}}">
                 <span class="glyphicon glyphicon-th"></span>
                 <span class="lbl">Refer</span>
             </a>
         </li>
+        @endif
         <li class="grey">
             <a href="{{route('offers')}}">
                 <span class="glyphicon glyphicon-th"></span>

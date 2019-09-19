@@ -67,7 +67,7 @@
         @if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') )
 
         
-        <li class="nav-item  {{ menuActiveClass(['service-provider'],true) }} ">
+       {{-- <li class="nav-item  {{ menuActiveClass(['service-provider'],true) }} ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
                 <span class="title">Service Provider</span>
@@ -80,7 +80,15 @@
                     </a>
                 </li>
             </ul>
+        </li> --}}
+
+        <li class="nav-item">
+            <a href="{{ asset('/admin/service-provider') }}" class="nav-link">
+                <i class="fa fa-gear"></i>
+                <span class="title">Manage Service Provider</span>
+            </a>
         </li>
+
         <li class="nav-item  {{ menuActiveClass(['booking'],true) }} ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>

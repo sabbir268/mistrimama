@@ -81,6 +81,8 @@
                                 </div>
                                 <input type="text" name="brance_name" class="form-control bg-white input-group-text"
                                     placeholder="ব্রাঞ্চের নাম ">
+                                <input type="text" name="serial_number" class="form-control bg-white input-group-text"
+                                    placeholder="সিরিয়াল নাম্বার ">
                                 <input type="date" name="deposit_date" class="form-control bg-white input-group-text"
                                     placeholder="তারিখ ">
                             </div>

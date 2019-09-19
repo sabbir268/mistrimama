@@ -187,6 +187,9 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if(Auth::check()): ?>
+                <?php if(checkRole(auth()->user()->id, 'special')): ?>
                 <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label ">
@@ -204,6 +207,8 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
+                <?php endif; ?>
 
             </div>
 
@@ -230,12 +235,12 @@
                 </label>
             </div>
 
-            <div class="checkbox-detailed text-left d-none" id="self-checkbox">
-                <input type="radio" name="type" id="type-self" value="self" />
+            <div class="checkbox-detailed text-left " id="guest-checkbox">
+                <input type="radio" name="type" id="type-self" value="guest" />
                 <label for="type-self">
                     <span class="checkbox-detailed-tbl">
                         <span class="checkbox-detailed-cell">
-                            <span class="checkbox-detailed-title">Guist</span>
+                            <span class="checkbox-detailed-title">Guest</span>
                             Order as Guest
                         </span>
                     </span>
@@ -243,7 +248,7 @@
                 </label>
             </div>
 
-            <div class="others-area" style="display:none">
+            <div class="others-area" style="display:block">
                 <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label">
@@ -253,16 +258,15 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="input-group">
-                            <input type="text" name="name" id="name" placeholder="Name" class="form-control m-0">
+                            <input type="text" name="name" value="<?php echo e(old('name')); ?>" value="<?php echo e(old('phone_no')); ?>"
+                                id="name" placeholder="Name" class="form-control m-0">
                         </div>
+                        <?php if($errors->has('name')): ?>
+                        <span class="text-danger" role="alert">
+                            <strong><?php echo e($errors->first('name')); ?></strong>
+                        </span>
+                        <?php endif; ?>
                     </div>
-
-                    <?php if($errors->has('name')): ?>
-                    <span class="invalid-feedback" role="alert">
-                        <strong><?php echo e($errors->first('name')); ?></strong>
-                    </span>
-                    <?php endif; ?>
-
                 </div>
                 <div class="form-group row">
                     <div class="col-xl-4">
@@ -276,13 +280,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">+88</span>
                             </div>
-                            <input type="text" name="phone_no" id="phone_no" placeholder="Others Phone"
+                            <input type="text" name="phone_no" minLength="11" maxLength="11"
+                                value="<?php echo e(old('phone_no')); ?>" id="phone_no" placeholder="Others Phone"
                                 class="form-control m-0">
                         </div>
+                        <?php if($errors->has('phone_no')): ?>
+                        <span class="text-danger" role="alert">
+                            <strong><?php echo e($errors->first('phone_no')); ?></strong>
+                        </span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row password">
                     <div class="col-xl-4">
                         <label class="form-label ">
                             <i class="font-icon font-icon-lock"></i>
@@ -292,10 +302,13 @@
                     <div class="col-xl-8">
                         <div class="input-group date">
                             <input type="password" id="password" name="password" class="form-control m-0">
-                            <?php if(Session::has('msg')): ?>
-                            <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
-                            <?php endif; ?>
                         </div>
+
+                        <?php if($errors->has('password')): ?>
+                        <span class="text-danger" role="alert">
+                            <strong><?php echo e($errors->first('password')); ?></strong>
+                        </span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -339,10 +352,16 @@
                                 <option value="Vatara"> Vatara</option>
                             </select>
                         </div>
+
+                        <?php if($errors->has('area')): ?>
+                        <span class="text-danger" role="alert">
+                            <strong><?php echo e($errors->first('area')); ?></strong>
+                        </span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <input type="text" name="user_type" value="user" hidden>
+                <input type="text" name="user_type" id="user_type" value="user" hidden>
                 <input type="text" name="reason" value="ok" hidden>
 
                 <div class="form-group row">
@@ -361,27 +380,29 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group row refer">
-                <div class="col-xl-4">
-                    <label class="form-label ">
-                        <i class="font-icon font-icon-answer"></i>
-                        Referral Code &nbsp;&nbsp;<small> (optional)</small>
-                    </label>
-                </div>
-                <div class="col-xl-8">
-                    <div class="input-group date">
-                        <input type="text" id="refrral" placeholder="34AVSD87" name="ref_code" class="form-control m-0">
-                        <?php if(Session::has('msg')): ?>
-                        <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
-                        <?php endif; ?>
-                    </div>
+        </div>
+        <?php if(Auth::check()): ?>
+        <?php if(checkRole(auth()->user()->id, 'special')): ?>
+        <div class="form-group row refer">
+            <div class="col-xl-4">
+                <label class="form-label ">
+                    <i class="font-icon font-icon-answer"></i>
+                    Referral Code &nbsp;&nbsp;<small> (optional)</small>
+                </label>
+            </div>
+            <div class="col-xl-8">
+                <div class="input-group date">
+                    <input type="text" id="refrral" placeholder="34AVSD87" name="ref_code" class="form-control m-0">
+                    <?php if(Session::has('msg')): ?>
+                    <span class="text-danger pl-2"><?php echo e(Session::get('msg')); ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
-
+        </div>
+        <?php endif; ?>
+        <?php endif; ?>
         </div>
 
-        </div>
 
         <button type="button" class="btn btn-rounded btn-mm float-left"><a href="<?php echo e(route('date.time')); ?>"
                 class="text-white">
@@ -403,10 +424,12 @@
         $('#others-checkbox').click(function() {
             if($('#type-others').is(':checked')) { 
                 $('.others-area').show();
-                $('.refer').hide();
+               // $('.refer').hide();
                 $('#others_name').attr('required','true');
                 $('#others_phone').attr('required','true');
                 $('#others_addr').attr('required','true');
+                $('.password').show();
+                $('#user_type').val('user');
             }
         });
 
@@ -417,6 +440,11 @@
                 $('#others_phone').removeAttr('required');
                 $('#others_addr').removeAttr('required');
             }
+        });
+
+        $('#guest-checkbox').click(function(){
+            $('.password').hide();
+            $('#user_type').val('guest');
         });
 
        // $('.others-area').show();

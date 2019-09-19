@@ -25,12 +25,14 @@
                 <span class="lbl">Promo Code</span>
             </a>
         </li>
+        <?php if(checkRole(auth()->user()->id, 'special')): ?>
         <li class="grey">
             <a href="<?php echo e(route('user.refer')); ?>">
                 <span class="glyphicon glyphicon-th"></span>
                 <span class="lbl">Refer</span>
             </a>
         </li>
+        <?php endif; ?>
         <li class="grey">
             <a href="<?php echo e(route('offers')); ?>">
                 <span class="glyphicon glyphicon-th"></span>

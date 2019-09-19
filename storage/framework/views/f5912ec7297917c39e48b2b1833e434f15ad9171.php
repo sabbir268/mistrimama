@@ -35,9 +35,9 @@
             <td>
                 <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                     <?php if($order->status == '0'): ?>
-                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
+                        <button class="btn btn-sm btn-mm" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
                             data-item="<?php echo e($order->id); ?>">সহকারী</button> <?php else: ?>
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
+                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
                             data-item="<?php echo e($order->id); ?>" disabled>এলোকেটেড</button> 
                     <?php endif; ?>
                 <?php else: ?> 
@@ -112,7 +112,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Select Service Provider</h4>
+                <h4 class="modal-title">সহকারী নির্বাচন করুন</h4>
             </div>
             <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
                 <?php echo e(csrf_field()); ?>
@@ -134,7 +134,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Client:</label> <strong>
-                                        <?php echo e($order->user ? $order->user->name : '-'); ?></strong>
+                                        <?php echo e($order->user ? $order->user->name : $order->name); ?>
+
+                                       </strong> 
                                     <input type="text" name="user_id"
                                         value="<?php echo e($order->user ? $order->user->id : '-'); ?>" hidden>
                                 </div>

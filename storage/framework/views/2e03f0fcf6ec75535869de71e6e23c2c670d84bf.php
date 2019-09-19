@@ -193,35 +193,22 @@
                                 <td><?php echo e($order->area); ?></td>
                                 <td><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></td>
                                 <td> <button class="btn btn-sm btn-success" data-toggle="modal"
-                                        data-target="#view-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>">বিস্তারিত
-                                    </button>
+                                        data-target="#view-<?php echo e($order->id); ?>"
+                                        data-item="<?php echo e($order->id); ?>">বিস্তারিত</button>
                                 </td>
                                 <td>
                                     <?php if(auth()->user()->serviceProvider->first()->type == 0): ?>
                                     <?php if($order->status == '0'): ?>
                                     <button class="btn btn-sm btn-mm" data-toggle="modal"
                                         data-target="#allocate-<?php echo e($order->id); ?>"
-                                        data-item="<?php echo e($order->id); ?>">সহকারী</button>
-                                    <?php else: ?>
-                                    <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>" disabled>
-                                        এলোকেটেড </button>
+                                        data-item="<?php echo e($order->id); ?>">সহকারী</button> <?php else: ?>
+                                    <button class="btn btn-sm btn-mm" data-toggle="modal"
+                                        data-target="#allocate-<?php echo e($order->id); ?>" data-item="<?php echo e($order->id); ?>"
+                                        disabled>এলোকেটেড</button>
                                     <?php endif; ?>
                                     <?php else: ?>
-                                    <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
-                                        <?php echo e(csrf_field()); ?>
-
-                                        <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>" />
-                                        <input type="hidden" name="service_provider_id"
-                                            value="<?php echo e($providers->first()->id); ?>" />
-                                        <input type="hidden" name="comrade_id" value="<?php echo e($comrades[0]->id); ?>" />
-                                        <input type="hidden" name="user_id"
-                                            value="<?php echo e($order->user ? $order->user->id : '-'); ?>" />
-                                        <button class="btn btn-mm" type="submit">গ্রহন করুন </button>
-                                    </form>
-
+                                    
                                     <?php endif; ?>
-
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -292,10 +279,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">অর্ডারের বিস্তারিত </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title">Order Details</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -307,10 +291,10 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>সার্ভিস </th>
-                                        <th>সার্ভিস মূল্য </th>
-                                        <th>পরিমান </th>
-                                        <th>মোট মূল্য </th>
+                                        <th>Service</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -331,8 +315,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-toggle="modal" data-target="#allocate-<?php echo e($order->id); ?>"
-                    data-item="<?php echo e($order->id); ?>" class="btn btn-primary">সহকারী</button>
-                
+                    data-item="<?php echo e($order->id); ?>" class="btn btn-mm">Allocate</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
 
@@ -347,7 +331,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"> সহকারী নির্বাচন করুন </h4>
+                <h4 class="modal-title">সহকারী নির্বাচন করুন</h4>
             </div>
             <form method="post" action="<?php echo e(route('service_provider_allocate')); ?>">
                 <?php echo e(csrf_field()); ?>
@@ -359,17 +343,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="email">সহকারী নির্বাচন করুন :</label>
+                                    <label for="email">Services Provider List:</label>
                                     <select class="form-control" name="comrade_id" required="required">
-                                        <option value="">নির্বাচন করুন </option>
+                                        <option value="">Select Comrade</option>
                                         <?php $__currentLoopData = availComrade(auth()->user()->sp->id,$order->category_id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($comrade->id); ?>"><?php echo e($comrade->c_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>কাস্টমার :</label> <strong>
-                                        <?php echo e($order->user ? $order->user->name : '-'); ?></strong>
+                                    <label>Client:</label> <strong>
+                                        <?php echo e($order->user ? $order->user->name : $order->name); ?>
+
+                                    </strong>
                                     <input type="text" name="user_id"
                                         value="<?php echo e($order->user ? $order->user->id : '-'); ?>" hidden>
                                 </div>
@@ -378,7 +364,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Ok</button>
+                    <button type="submit" class="btn btn-mm">Allocate</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -578,9 +564,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Client:</label> <strong>
-                                        <?php echo e($actord->user ? $actord->user->name : '-'); ?></strong>
+                                        <?php echo e($actord->user ? $actord->user->name : "-"); ?></strong>
                                     <input type="text" name="user_id"
-                                        value="<?php echo e($actord->user ? $actord->user->id : '-'); ?>" hidden>
+                                        value="<?php echo e($actord->user ? $actord->user->id : 0); ?>" hidden>
                                 </div>
                             </div>
                         </div>
@@ -675,7 +661,7 @@ $(document).ready(function() {
                         }
                     }
                 });
-            }, 2000);
+            }, 1000);
         // console.log($ndata);
         // $edata = <?php echo count($newOrders); ?>;
         // if($ndata == $edata ){

@@ -251,7 +251,7 @@ class BookingController extends Controller
             $order_id = Session::get('order_id');
         }
 
-        $bookData = $booking->where("id",$request->id)->where("order_id",$order_id)->first();
+        $bookData = $booking->where("id", $request->id)->where("order_id", $order_id)->first();
 
         $book = Booking::find($bookData->id); //booking id 
 
@@ -321,7 +321,7 @@ class BookingController extends Controller
 
     public function AddDateTime(Request $request)
     {
-
+       
         //return  $request;
         $order = Order::find(Session::get('order_id'));
 
@@ -335,12 +335,9 @@ class BookingController extends Controller
         if ($validator->fails()) {
             return redirect()->route('book-self')->withErrors($validator)->withInput();
         } else {
-            $order->order_date = date("Y-m-d", strtotime($request->order_date));
+            $order->order_date = date("Y-m-d", strtotime(str_replace("/","-",$request->order_date)));
 
             $order->order_time =  $request->order_time;
-
-
-
 
             $time = explode(' ', $request->order_time);
             $num = (int) $time[0];
@@ -368,7 +365,7 @@ class BookingController extends Controller
     public function OrderConfirm()
     {
         if (Auth::check()) {
-            if (auth()->user()->roles->first()->role == 'esp') {
+            if (auth()->user()->roles->first()->role == 'esp' || auth()->user()->roles->first()->role == 'fsp' ) {
                 $providers = User::find(Auth::user()->id)->serviceProvider->first();
                 $comrades = $providers->comrads->where('status', 1);
                 // return $comrades;
@@ -393,8 +390,11 @@ class BookingController extends Controller
 
     public function OrderConfirmDone(Request $request)
     {
+       // return $request;
+        
 
         $user = new User();
+       
         $order = Order::find(Session::get('order_id'));
 
         if ($request->has('ref_code') && $request->ref_code != '' || $request->ref_code != NULL) {
@@ -421,30 +421,50 @@ class BookingController extends Controller
             $order->type = 'others';
 
             // $order->save();
-        } else {
-            $order->area = auth()->user()->area;
-            $order->type = 'self';
         }
 
+        if ($request->type == 'guest') {
+            $order->area = $request->area;
+            $order->others_name = $request->name;
+            $order->others_phone = $request->phone_no;
+            $order->others_addr = $request->address;
+            $order->type = 'others';
+
+            // $order->save();
+        }
+        
+        if ($request->type == 'self') {
+           $order->area = auth()->user()->area;
+            $order->type = 'self';
+        }
 
 
         $order->status = '0';
         if (Auth::check()) {
             $order->user_id = auth()->user()->id;
+            $order->order_from = auth()->user()->roles->first()->role;
+        }else{
+            $order->user_id = 0;
+            $order->order_from = 'guest';
         }
+
 
         $order->save();
         Session::forget('order_id');
         // return $order->area;
         $ServiceAllowcate = new ServiceAllocatorController();
-        if (auth()->user()->roles->first()->role == 'esp') {
+        if (Auth::check() && auth()->user()->roles->first()->role == 'esp') {
             $ServiceAllowcate->service_allocate($request);
             return redirect('esp/jobs');
-        } elseif (auth()->user()->roles->first()->role == 'comrade') {
+        } elseif (Auth::check() && auth()->user()->roles->first()->role == 'comrade') {
             $ServiceAllowcate->service_allocate($request);
             return redirect('/comrade/dashboard');
-        } else {
+        } elseif(Auth::check() && (auth()->user()->roles->first()->role == 'user' || auth()->user()->roles->first()->role == 'special_user')) {
             return redirect()->route('dashboard');
+        }else{
+            return '<h1>Your order is placed. You will get confirmation SMS soon....Rdirecting to Home page.</h1> <script> window.location.href = "/" </script>';
+            
+
         }
     }
 
