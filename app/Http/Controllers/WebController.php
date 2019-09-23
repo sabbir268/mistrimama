@@ -132,6 +132,11 @@ class WebController extends Controller
         return view('new_template.career', compact('model'));
     }
 
+    public function addAgentUser()
+    {   
+        return view('new_template.agent');
+    }
+
     // public function booking()
     // {
     //     $Sub_categories = DB::select("SELECT * FROM sub_categories");

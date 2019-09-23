@@ -144,6 +144,10 @@ Route::post('/service_provider_allocate', 'Admin\ServiceAllocatorController@serv
 //     });
 // });
 
+// add agent user
+
+Route::get('agent', ['uses' => 'WebController@addAgentUser']);
+
 //Footer-Services//
 
 Route::get('generator', ['uses' => 'WebController@generator']);
@@ -251,8 +255,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get("special-user", "Admin\HomeController@specialUserADD")->name('admin.special-user');
 
-        // add special user
-        Route::post('add_special', 'UsersController@addUser')->name('add.user.special'); 
+        
 
         // search user ajax
         Route::get("user_search/{val}","Admin\AdminOrderController@searchUser")->name('admin.user.search');
@@ -263,9 +266,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get("/new_order/{category_id}","Admin\AdminOrderController@allService")->name('admin.order.getallService');
         Route::get("services_bit/{service_id}","Admin\AdminOrderController@allServiceBit")->name('admin.order.getServiceBit');
         Route::post("add-service-bit","Admin\AdminOrderController@addServiceBit")->name('admin.order.addServiceBit');
+        Route::post("delete-service-bit","Admin\AdminOrderController@deleteServiceBit")->name('admin.order.delServiceBit');
     });
 });
 
+
+// add special user
+Route::post('add_special', 'UsersController@addUser')->name('add.user.special'); 
 
 
 

@@ -116,4 +116,25 @@ class AdminOrderController extends Controller
             }
         }
     }
+
+    public function deleteServiceBit(Booking $booking, Request $request)
+    {
+        if ($request->has('order_id')) {
+            $order_id = $request->order_id;
+        } else {
+            $order_id = Session::get('order_id');
+        }
+
+        $bookCheck = $booking->where('sub_cat_details_id', $request->id)->where('sub_categories_id', $request->service_id)->where('order_id', $order_id);
+        if ($bookCheck->delete()) {
+            $SubServicesSelected = $booking->where('sub_categories_id', $request->service_id)->where('order_id', $order_id)->get();
+            // return $booking->where('order_id', Session::get('order_id'))->sum('total_price');
+
+            if (count($SubServicesSelected) > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }

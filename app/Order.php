@@ -36,7 +36,7 @@ class Order extends Model
         if($this->type == 'others'){
             return $this->others_name;
         }
-            return $this->user->name;
+            return $this->user ? $this->user->name : "-";
     }
 
     public function getPhoneAttribute()
@@ -44,7 +44,7 @@ class Order extends Model
         if($this->type == 'others'){
             return $this->others_phone;
         }
-            return $this->user->phone_no;
+            return $this->user ? $this->user->phone_no : "-";
     }
 
     public function getAddressAttribute()
@@ -52,7 +52,7 @@ class Order extends Model
         if($this->type == 'others'){
             return $this->others_addr;
         }
-            return $this->user->address;
+            return $this->user ? $this->user->address : "-";
     }
 
     public function getTotalPriceAttribute()

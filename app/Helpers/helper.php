@@ -383,12 +383,19 @@ function MfsCharge($mfs)
 
 function promocheck($id, $am)
 {
-    $promouser = \App\Userpromo::where('user_id', $id)->where('uses_status', 0)->first();
+    $promouser = \App\Userpromo::where('user_id', $id)->where('uses_status', 0)->orderBy('id', 'DESC')->first();
+    //return $promouser;
     if ($promouser) {
-        $promo = $promouser->promotion->first();
+        $promo = $promouser->promotion->where('promocode', strtoupper($promouser->promocode))->first();
         if ($promo) {
+            if ($promo->uses_count == $promouser->uses_count) {
+                return 0.00;
+            }
             $discount = ($am * $promo->percent / 100);
 
+            $promouser->uses_count = $promouser->uses_count + 1;
+            $promouser->save();
+            
             if ($promo->up_to < $discount) {
                 return $promo->up_to;
             } else {
@@ -397,8 +404,7 @@ function promocheck($id, $am)
         } else {
             return 0.00;
         }
-    } 
-    else {
+    } else {
         return 0.00;
     }
 }
@@ -411,14 +417,11 @@ function csvToArray($filename = '', $delimiter = ',')
 
     $header = null;
     $data = array();
-    if (($handle = fopen($filename, 'r')) !== false)
-    {
-        while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
-        {
-            if (!$header){
+    if (($handle = fopen($filename, 'r')) !== false) {
+        while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
+            if (!$header) {
                 $header = $row;
-            }
-            else{
+            } else {
                 $data[] = array_combine($header, $row);
             }
         }
@@ -429,20 +432,21 @@ function csvToArray($filename = '', $delimiter = ',')
 }
 
 
-function totalBalance($id){
-   $balance = \App\Account::where('user_id', $id)->where('status', 'credit')->sum('amount') - \App\Account::where('user_id', $id)->where('status', 'debit')->sum('amount');
+function totalBalance($id)
+{
+    $balance = \App\Account::where('user_id', $id)->where('status', 'credit')->sum('amount') - \App\Account::where('user_id', $id)->where('status', 'debit')->sum('amount');
 
-   if($balance){
-    return round($balance);
-   }else{
-    $balance = 0; 
-   }
-   
+    if ($balance) {
+        return round($balance);
+    } else {
+        $balance = 0;
+    }
 }
 
 
-function availComrade($sp_id , $cate_id){
-    $comrade = \App\Models\service_providers_comrads::where('s_id',$sp_id)->where('category',$cate_id)->get();
+function availComrade($sp_id, $cate_id)
+{
+    $comrade = \App\Models\service_providers_comrads::where('s_id', $sp_id)->where('category', $cate_id)->get();
 
     return $comrade;
 }

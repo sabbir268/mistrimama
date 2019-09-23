@@ -231,7 +231,7 @@ class UsersController extends Controller
 
             if ($request->hasFile('profile_picture')) {
                  $destinationPath = public_path('/uploads');
-                     $image = $request->file('profile_picture');
+                    $image = $request->file('profile_picture');
                     $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
                     $img = Image::make($image->getRealPath());
 
@@ -253,7 +253,6 @@ class UsersController extends Controller
                     } else {
                         $roles->roles_id = 2;
                     }
-
                     $roles->save();
                 }
 

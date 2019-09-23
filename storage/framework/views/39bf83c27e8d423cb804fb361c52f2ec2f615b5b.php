@@ -158,7 +158,7 @@
                 success: function(data) {
                     for($i=0; $i < data.length; $i++){
                        // console.log(data[$i].name);
-                        $output = '<div class="row"><div class="col-md-6"><span style="padding:5px">'+data[$i].name+'</span> </div> <div class="col-md-3"> <div class="input-group"> <div class="row" style="margin-bottom:10px"> <div class="col-md-3" style="padding:0px"> <button class="btn pull-right decrease" data-id="'+data[$i].id+'"><i class="fa fa-minus"></i></button> </div> <div class="col-md-6" style="padding:0px"> <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="qty'+data[$i].id+'" placeholder="Qty" value="1"> </div> <div class="col-md-3" style="padding:0px"> <button class="btn increase" data-id="'+data[$i].id+'"><i class="fa fa-plus"></i></button> </div> </div> </div> </div> <div class="col-md-3"> <button type="button" onclick="serviceBitAdd('+data[$i].id+','+data[$i].sub_categories_id+')" class="btn btn-primary float-right add-services">Add</button> </div> </div>';
+                        $output = '<div class="row"><div class="col-md-6"><span style="padding:5px">'+data[$i].name+'</span> </div> <div class="col-md-3"> <div class="input-group"> <div class="row" style="margin-bottom:10px"> <div class="col-md-3" style="padding:0px"> <button class="btn pull-right " onclick="decrease('+data[$i].id+')"><i class="fa fa-minus"></i></button> </div> <div class="col-md-6" style="padding:0px"> <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="qty'+data[$i].id+'" placeholder="Qty" value="1"> </div> <div class="col-md-3" style="padding:0px"> <button class="btn" onclick="increase('+data[$i].id+')"><i class="fa fa-plus"></i></button> </div> </div> </div> </div> <div class="col-md-3"> <button type="button" id="addServices'+data[$i].id+'" onclick="serviceBitAdd('+data[$i].id+','+data[$i].sub_categories_id+')" class="btn btn-primary float-right "><i class="fa fa-plus"></i></button> <button type="button" style="display:none" id="delServices'+data[$i].id+'" onclick="serviceBitDel('+data[$i].id+','+data[$i].sub_categories_id+')" class="btn btn-danger float-right "><i class="fa fa-trash"></i></button> </div> </div>';
 
                         $('.modal-body').append($output);
                     }
@@ -224,27 +224,26 @@
 
 
    
+        function increase(id){
+            $id = id;
+            $qty = $('#qty' + $id).val();
+            $qty++;
+            $('#qty' + $id).val($qty);
+        }
 
-
-        $(".decrease").click(function() {
-            $id = $(this).data('id');
+        function decrease(id){
+            $id = id;
             $qty = $('#qty' + $id).val();
             if ($qty != 1) {
                 $qty--;
             }
             $('#qty' + $id).val($qty);
 
-          //  qtyUpdate($id, $qty);
-        });
+            //  qtyUpdate($id, $qty);
+        }
 
-        $(".increase").click(function() {
-            $id = $(this).data('id');
-            $qty = $('#qty' + $id).val();
-            $qty++;
-            $('#qty' + $id).val($qty);
 
-            //qtyUpdate($id, $qty);
-        });
+       
 
         function serviceBitAdd(id,service_id){
             $qty = $('#qty'+id).val();
@@ -272,9 +271,28 @@
                     
                 //     $('.brief').html('<span class="p-2 d-block">'+data.brief+'</span>');
                 // }
+                    $('#addServices'+id).hide();
+                    $('#delServices'+id).show();
             }
          })
         }
+
+        function serviceBitDel(id,service_id) {
+        jQuery.ajax({
+            url: "<?php echo e(route('admin.order.delServiceBit')); ?>",
+            type: 'post',
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "service_id": service_id,
+                "id": id
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('#addServices'+id).show();
+                $('#delServices'+id).hide();
+            }
+        });
+    }
        
        
 

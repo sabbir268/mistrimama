@@ -44,8 +44,7 @@
                             <p>Your order has been accepted. <strong
                                     class="text-success"><?php echo e($activeOrders->serviceSystem->first()->comrade->c_name); ?>
 
-                                    <span class="text-warning">Mama</span> </strong> is on your way.</p>
-                            <p>Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?>
+                                    <span class="text-warning">Mama</span> </strong> is on your way.  Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?>
 
                             </p>
                             <?php endif; ?>
@@ -62,13 +61,11 @@
 
                                     <span class="text-warning">Mama</span> </strong> complete your work. <b>Waiting for
                                     payment.</b>
-                            </p>
-                            <p>Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?> </p>
+                            Phone No: <?php echo e($activeOrders->serviceSystem->first()->comrade->c_phone_no); ?> </p>
                             <?php endif; ?>
 
                             <?php if($activeOrders->status == 4): ?>
-                            
-                            <strong>Thank you, your Digital Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
+                            <strong>Thank you, your <?php echo e($activeOrders->pay_type == 3 ? 'Digital' : ""); ?>  Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
                             <?php endif; ?>
                             <?php else: ?>
                             <p>Order has been accepted , a comrade will allocated soon!</p>

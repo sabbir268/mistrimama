@@ -43,8 +43,7 @@
 
                             <p>Your order has been accepted. <strong
                                     class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
-                                    <span class="text-warning">Mama</span> </strong> is on your way.</p>
-                            <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}}
+                                    <span class="text-warning">Mama</span> </strong> is on your way.  Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}}
                             </p>
                             @endif
 
@@ -58,16 +57,11 @@
                             <p><strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
                                     <span class="text-warning">Mama</span> </strong> complete your work. <b>Waiting for
                                     payment.</b>
-                            </p>
-                            <p>Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
+                            Phone No: {{$activeOrders->serviceSystem->first()->comrade->c_phone_no}} </p>
                             @endif
 
                             @if ($activeOrders->status == 4)
-                            {{-- <p><strong class="text-success">{{$activeOrders->serviceSystem->first()->comrade->c_name}}
-                                    <span class="text-warning">Mama</span> </strong> complete your work. <b>Wait for
-                                    payment
-                                    confirmation.</b></p> --}}
-                            <strong>Thank you, your Digital Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
+                            <strong>Thank you, your {{$activeOrders->pay_type == 3 ? 'Digital' : "" }}  Payment is accepted. <span class="text-mm">Wait for confirmation.</span></strong>
                             @endif
                             @else
                             <p>Order has been accepted , a comrade will allocated soon!</p>

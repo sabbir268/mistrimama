@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-US">
-
-<!-- Mirrored from aonetheme.com/extend/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Apr 2019 04:05:30 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-<!-- /Added by HTTrack -->
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,15 +11,6 @@
     <!-- Favicons Icon -->
     <link rel="icon" href="<?php echo e(asset('images/favicon.ico')); ?>" type="image/ico" sizes="16x16">
     <title>Mistri Mama || Door step service provider.</title>
-
-    <meta name='robots' content='noindex,follow' />
-
-    <link rel='dns-prefetch' href='http://s.w.org/' />
-    <link rel="alternate" type="application/rss+xml" title="Service Finder Updated 3.3 &raquo; Feed"
-        href="feed/index.html" />
-    <link rel="alternate" type="application/rss+xml" title="Service Finder Updated 3.3 &raquo; Comments Feed"
-        href="comments/feed/index.html" />
-
     <style>
         /* width */
         ::-webkit-scrollbar {
