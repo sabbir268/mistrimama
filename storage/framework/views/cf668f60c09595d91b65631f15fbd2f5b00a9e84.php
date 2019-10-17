@@ -30,7 +30,7 @@
                 <div class="col-lg-4 col-lg-pull-6 col-md-3 col-sm-6 pl-5 pt-3">
                     <section class="box-typical">
                         <div class="card-header text-center">
-                            অর্ডার #<?php echo e($allord->order->order_no); ?>
+                            অর্ডার #<?php echo e($allord->order_no); ?>
 
                         </div>
                         <div class="profile-card">
@@ -46,10 +46,12 @@
                                      " alt="" />
                             </div>
                             <div class="profile-card-name"><strong><i class="fa fa-user text-secondary"></i></strong>
-                                <?php echo e($allord->order->name); ?></div>
+                                <?php echo e($allord->name); ?></div>
                             
                             <div class="profile-card-status "><strong><i class="fa fa-map text-secondary"></i></strong>
-                                <?php echo e($allord->user->address); ?></div>
+                                <?php echo e($allord->address); ?></div>
+                            <div class="profile-card-status "><strong><i class="fa fa-phone text-secondary"></i></strong>
+                                   <a class="text-dark" href="tel:<?php echo e($allord->phone); ?>"><?php echo e($allord->phone); ?></a></div>
 
                             
                         </div>
@@ -76,13 +78,13 @@
                         <div class="col-md-12 p-0 pb-2">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-mm btn-sm col-md-12" id="new_service"
-                                        data-order_id="<?php echo e($allord->order->id); ?>"
-                                        data-category_id="<?php echo e($allord->order->category_id); ?>">নতুন সার্ভিস যোগ করুন
+                                    <button class="btn btn-mm btn-sm col-md-12 new_service" id="new_service"
+                                        data-order_id="<?php echo e($allord->id); ?>"
+                                        data-category_id="<?php echo e($allord->category_id); ?>">নতুন সার্ভিস যোগ করুন
                                     </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="<?php echo e(route('comrade.cancel-order',$allord->order->id)); ?>"
+                                    <a href="<?php echo e(route('comrade.cancel-order',$allord->id)); ?>"
                                         class="btn btn-danger btn-sm col-md-12">অর্ডার বাতিল করুন</a>
                                 </div>
 
@@ -101,12 +103,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $__currentLoopData = $allord->order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $__currentLoopData = $allord->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td class="text-left">
                                             <?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
                                         <td><?php echo e($booking->price); ?></td>
-                                        <td><?php echo e($booking->aditional_price); ?></td>
+                                        <td><?php echo e($booking->quantity > 1 ? $booking->aditional_price : 0); ?></td>
                                         <td>
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend ">
@@ -132,7 +134,7 @@
 
                                         </td>
                                         <td>
-                                            <?php if($allord->order->status > 1): ?>
+                                            <?php if($allord->status > 1): ?>
                                             <button class="btn btn-rounded btn-sm
                                             <?php if($booking->status == 0): ?>
                                                  btn-success-outline
@@ -150,7 +152,7 @@
                                             -
                                             <?php endif; ?>
 
-                                            <?php if(count($allord->order->bookings) > 1): ?>
+                                            <?php if(count($allord->bookings) > 1): ?>
                                             <a href="<?php echo e(url('comrade/remove-sub')); ?>/<?php echo e($booking->id); ?>"
                                                 class="btn btn-sm btn-danger "><i class="fa fa-times"></i></a>
                                             <?php else: ?>
@@ -174,63 +176,72 @@
                             <form action="<?php echo e(route('service-update-sts')); ?>" method="post">
                                 <?php echo csrf_field(); ?>
                                 <!-- -->
-                                <input type="text" value="<?php echo e($allord->order->id); ?>" name="order_id" hidden>
-                                <input type="text" value="<?php echo e($allord->id); ?>" name="s_sys_id" hidden>
-                                <?php switch($allord->order->status):
+                                <input type="text" value="<?php echo e($allord->id); ?>" name="order_id" hidden>
+                                <input type="text" value="<?php echo e($allord->serviceSystem->id); ?>" name="s_sys_id" hidden>
+                                <?php switch($allord->status):
                                 case (1): ?>
                                 <input type="text" value="2" name="status" hidden>
                                 <button type="submit" class="btn  btn-success" style="width:100%">কাজ শুরু করুন
                                 </button> <?php break; ?>
                                 <?php case (2): ?>
                                 <input type="text" value="3" name="status" hidden>
-                                <?php if(in_array("1",$allord->order->bookings->pluck('status')->toArray())): ?>
+                                <?php if(in_array("1",$allord->bookings->pluck('status')->toArray())): ?>
                                 <button type="submit" class="btn  btn-success" style="width:100%">কাজ সম্পন্ন করুন
                                 </button>
                                 <?php endif; ?>
                                 <?php break; ?>
                                 <?php case (3): ?>
-                                <?php if($allord->type == 'self'): ?>
-                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ
-                                    <?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>
-
-                                </button>
-                                <button disabled="disabled" class="btn btn-warning" style="width:100%">পেমেন্ট এর জন্য
-                                    অপেক্ষা করুন </button>
-                                <?php else: ?>
+                                
                                 <input type="text" value="5" name="status" hidden>
                                 <input type="text"
-                                    value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
+                                    value="<?php echo e((($allord->total_price + $allord->extra_price) - $allord->disc)); ?>"
                                     name="amount" hidden>
-                                <input type="text" value="<?php echo e($allord->service_provider_id); ?>" name="service_provider_id"
+                                <input type="text" value="<?php echo e($allord->sp_id); ?>" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
-                                <button type="button" class="btn btn-sm btm-mm" style="width:100%"> সর্বমোট বিলঃ BDT
-                                    <?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>/-
-                                </button>
+
+                                <ul class="list-group mb-2">
+                                    <li class="list-group-item p-0 m-0 border-0 "> সার্ভিস চার্জ : <span
+                                            class="invisible">123assass2</span>
+                                        <strong><?php echo e(($allord->total_price + $allord->extra_price)); ?>
+
+                                            টাকা </strong></li>
+                                    <?php if($allord->disc != 0.00): ?>
+                                    <li class="list-group-item p-0 m-0 border-0 "> কাস্টমারের ডিসকাউন্ট :
+                                        <strong><?php echo e($allord->disc); ?> টাকা</strong></li>
+                                    <?php endif; ?>
+                                    <li class="list-group-item p-0 m-0"></li>
+                                    <li class="list-group-item p-0 m-0 border-0 "> আপনার ইনকাম : <span
+                                            class="invisible">123s2</span>
+                                        <strong><?php echo e((($allord->total_price + $allord->extra_price) - $allord->disc)); ?> টাকা</strong>
+                                    </li>
+                                </ul>
+
+                                
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
                                 </button>
-                                <?php endif; ?>
+                                
                                 <?php break; ?>
                                 <?php case (4): ?>
                                 <ul class="list-group mb-2">
                                     <li class="list-group-item p-0 m-0 border-0 ">কাস্টমার প্রদান করছেন : <span
                                             class="invisible">1232</span>
-                                        <strong><?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>
+                                        <strong><?php echo e((($allord->total_price + $allord->extra_price) - $allord->disc)); ?>
 
                                             টাকা </strong></li>
                                     <li class="list-group-item p-0 m-0 border-0 "> কাস্টমারের ডিসকাউন্ট :
-                                        <strong><?php echo e($sumOrder->disc); ?> টাকা</strong></li>
+                                        <strong><?php echo e($allord->disc); ?> টাকা</strong></li>
                                     <li class="list-group-item p-0 m-0"></li>
                                     <li class="list-group-item p-0 m-0 border-0 "> আপনার ইনকাম : <span
                                             class="invisible">123s2</span>
-                                        <strong><?php echo e((($sumOrder->total_price + $sumOrder->extra_price) )); ?> টাকা</strong>
+                                        <strong><?php echo e((($allord->total_price + $allord->extra_price) )); ?> টাকা</strong>
                                     </li>
                                 </ul>
                                 <input type="text" value="5" name="status" hidden>
                                 <input type="text"
-                                    value="<?php echo e((($sumOrder->total_price + $sumOrder->extra_price) - $sumOrder->disc)); ?>"
+                                    value="<?php echo e((($allord->total_price + $allord->extra_price) - $allord->disc)); ?>"
                                     name="amount" hidden>
-                                <input type="text" value="<?php echo e($allord->service_provider_id); ?>" name="service_provider_id"
+                                <input type="text" value="<?php echo e($allord->sp_id); ?>" name="service_provider_id"
                                     hidden>
                                 <input type="text" value="<?php echo e($allord->user_id); ?>" name="client_id" hidden>
                                 <button type="submit" class="btn  btn-success" style="width:100%">পেমেন্ট গ্রহন করুন
@@ -358,7 +369,7 @@
 
 
 
-        $('#new_service').click(function(){
+        $('.new_service').click(function(){
             $category_id = $(this).data('category_id');
             $order_id = $(this).data('order_id');
             $.ajax({

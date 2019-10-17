@@ -66,8 +66,8 @@
 
         <?php if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') ): ?>
 
+
         
-       
 
         <li class="nav-item">
             <a href="<?php echo e(asset('/admin/service-provider')); ?>" class="nav-link">
@@ -79,19 +79,19 @@
         <li class="nav-item  <?php echo e(menuActiveClass(['booking'],true)); ?> ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
-                <span class="title">Booking</span>
+                <span class="title">Order</span>
                 <span class="arrow <?php echo e(menuActiveClass(['booking'],true)); ?>"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item <?php echo e(menuActiveClass(['booking'],true)); ?> ">
                     <a href="<?php echo e(route('booking.index')); ?>" class="nav-link ">
-                        <span class="title">Manage Booking</span>
+                        <span class="title">Manage Order</span>
                     </a>
                 </li>
 
                 <li class="nav-item <?php echo e(menuActiveClass(['booking'],true)); ?> ">
                     <a href="<?php echo e(route('booking.history')); ?>" class="nav-link ">
-                        <span class="title">Booking History</span>
+                        <span class="title">Order History</span>
                     </a>
                 </li>
             </ul>
@@ -99,12 +99,26 @@
 
         
 
-        <li class="nav-item">
-            <a href="<?php echo e(route('register-users')); ?>" class="nav-link">
+        <li class="nav-item <?php echo e(request()->is('admin/users*') ? 'active open' : ''); ?>">
+            <a href="javascript::void(0)" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
-                <span class="title">Registered Users</span>
-                <span class="arrow <?php echo e(menuActiveClass(['booking'],false)); ?>"></span>
+                <span class="title">All Users</span>
+                <span class="arrow"></span>
             </a>
+            <ul class="sub-menu">
+                <li class="nav-item <?php echo e(request()->is('admin/users/agent') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('users.agent')); ?>" class="nav-link">
+                        <span class="title">Agent User</span>
+                    </a>
+                </li>
+
+                <li class="nav-item <?php echo e(request()->is('admin/users') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('users.index')); ?>" class="nav-link ">
+                        <span class="title">Normal User</span>
+                    </a>
+                </li>
+            </ul>
+
         </li>
 
 

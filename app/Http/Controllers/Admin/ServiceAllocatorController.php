@@ -49,7 +49,6 @@ class ServiceAllocatorController extends Controller
 
                 /** for sms only */
 
-
                 $orderNo = $order->order_no;
                 $category = $order->category->name;
 
@@ -78,15 +77,20 @@ class ServiceAllocatorController extends Controller
                     $ComradeName = $comrade->c_name;
                     $ComradePhone = $comrade->c_phone_no;
 
-                    $msgUsr = "Your order #" . $orderNo . " has been confirmed for.". $allServe ."
+                    $msgUsr = "Your order #" . $orderNo . " has been confirmed for." . $allServe . "
                     \nTechnician Details:\n" . $ComradeName . "\nPhone Number: " . $ComradePhone . "";
                     $smsuser = SMS::send($userPhn, $msgUsr);
 
                     if ($smsuser) {
-                        $msgComd = "Order#" . $orderNo . "\n" . $userName . "\n Cell:" . $userPhn . "\n" . $userAddr .",\n". $allServe;
+                        $msgComd = "Order#" . $orderNo . "\n" . $userName . "\n Cell:" . $userPhn . "\n" . $userAddr . ",\n" . $allServe;
 
                         SMS::send($ComradePhone, $msgComd);
                     }
+                }
+
+                /** Send notification to kushal boss for MM Ltd only */
+                if ($data->service_provider_id == 2) {
+                    SMS::send('01313476474', 'A new order is allowcated to MM Ltd. Order No #' . $order->order_no);
                 }
 
                 Session::flash('alert-success', 'Service allocated to Service provider Successfully!');

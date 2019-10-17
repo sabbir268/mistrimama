@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
 @endsection
 
-@if(Auth::check())
 @section('topbar')
+@if(Auth::check())
 @include('user.topbar')
-@endsection
+@else
+@include('user.topbar-guest')
 @endif
+@endsection
 
 @if(Auth::check())
 @section('sidebar')
@@ -119,7 +121,7 @@
                         </select> --}}
 
                         <input type="text" class="from-control" name="order_time" id="order_time1" style="    display: block;
-                        width: 94%;
+                        width: 88%;
                         padding: .375rem .75rem;
                         font-size: 1rem;
                         line-height: 1.5;
@@ -128,10 +130,11 @@
                         background-clip: padding-box;
                         border: 1px solid #f3b400;
                         border-radius: .25rem;
-                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                        margin-left: 20px;">
 
                         <input type="text" class="from-control" name="order_time" id="order_time2" style="  display: none;
-                        width: 94%;
+                        width: 88%;
                         padding: .375rem .75rem;
                         font-size: 1rem;
                         line-height: 1.5;
@@ -140,7 +143,8 @@
                         background-clip: padding-box;
                         border: 1px solid #f3b400;
                         border-radius: .25rem;
-                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                        margin-left: 20px;">
                     </div>
                 </div>
             </div>

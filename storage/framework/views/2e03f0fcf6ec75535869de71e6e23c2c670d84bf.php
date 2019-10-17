@@ -357,7 +357,7 @@
 
                                     </strong>
                                     <input type="text" name="user_id"
-                                        value="<?php echo e($order->user ? $order->user->id : '-'); ?>" hidden>
+                                        value="<?php echo e($order->user ? $order->user->id : 0); ?>" hidden>
                                 </div>
                             </div>
                         </div>

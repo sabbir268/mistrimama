@@ -1,3 +1,8 @@
+<style>
+.steps-icon-progress li {
+    width: 20% !important;
+}
+</style>
 <header class="site-header">
     <div class="container-fluid">
         <a href="#" class="site-logo">

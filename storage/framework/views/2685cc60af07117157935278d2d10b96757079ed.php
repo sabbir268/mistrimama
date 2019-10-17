@@ -33,6 +33,12 @@
             </li>
             <li class="active">
                 <div class="icon bg-mm">
+                    <i class="fa fa-list-ul"></i>
+                </div>
+                <div class="caption">Review</div>
+            </li>
+            <li class="active">
+                <div class="icon bg-mm">
                     <i class="font-icon font-icon-calend"></i>
                 </div>
                 <div class="caption">Date & Time</div>
@@ -54,7 +60,8 @@
                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade show" role="alert">
                     
                     <i class="font-icon font-icon-warning"></i>
-                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be added.
+                    <strong>N.B.</strong>For emergency service hour (8:00 pm to 8:00 am) an additional BDT 500 will be
+                    added.
                 </div>
             </div>
 
@@ -113,8 +120,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-rounded btn-mm float-left"> <a class="text-white" href="<?php echo e(route('show.services')); ?>">←
-                Back</a></button>
+        
         <button type="submit" class="btn btn-rounded float-right btn-mm">Next →</button>
     </form>
 </section>

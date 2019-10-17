@@ -173,38 +173,44 @@
                     </div> --}}
 
                     <div class="dropdown user-menu">
-                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{auth()->user()->photo != null ? auth()->user()->photo : asset('dashboard/img/avatar-2-64.png')}}" alt="">
+                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img src="{{auth()->user()->photo != null ? auth()->user()->photo : asset('dashboard/img/avatar-2-64.png')}}"
+                                alt="">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                            <a class="dropdown-item" href="{{route('user.edit-info')}}"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                            <a class="dropdown-item" href="{{route('user.edit-info')}}"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
+                            <a class="dropdown-item" href="{{route('user.edit-info')}}"><span
+                                    class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+                            <a class="dropdown-item" href="{{route('user.edit-info')}}"><span
+                                    class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
+                            <a class="dropdown-item" href="#"><span
+                                    class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                            document.getElementById('logout-form').submit();"><span
+                                    class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                         </div>
                     </div>
 
                     <button type="button" class="burger-right">
                         <i class="font-icon-menu-addl"></i>
                     </button>
-                </div><!--.site-header-shown-->
+                </div>
+                <!--.site-header-shown-->
                 <div class="mobile-menu-right-overlay"></div>
                 <div class="site-header-collapsed">
-                    {{-- <div class="site-header-collapsed-in">
-                        <div class="dropdown dropdown-typical">
+                    <div class="site-header-collapsed-in">
+                        {{-- <div class="dropdown dropdown-typical">
                                 <a href="#" class="dropdown-toggle no-arr">
                                     <span class="lbl">help</span>
                                     <i class="font-icon font-icon-help label-warning-primary"></i>
                                 </a>
-                            </div>
-                        <div class="dropdown dropdown-typical">
-                                <a href="#" class="dropdown-toggle no-arr">
-                                    <span class="lbl">balance</span>
-                                    <span class="label label-pill label-warning">Account Balance $102</span>
-                                </a>
                             </div> --}}
+                        @if(checkRole(auth()->user()->id, 'special'))
+                        <div class="dropdown dropdown-typical">
+                            <button class="btn btn-mm">Refer Code is: <b>{{auth()->user()->ref_code}}</button>
+                        </div>
+                        @endif
                         {{-- <div class="site-header-search-container">
                             <form class="site-header-search closed">
                                 <input type="text" placeholder="Search"/>
@@ -214,10 +220,14 @@
                                 <div class="overlay"></div>
                             </form>
                         </div> --}}
-                    </div><!--.site-header-collapsed-in-->
-                </div><!--.site-header-collapsed-->
-            </div><!--site-header-content-in-->
-        </div><!--.site-header-content-->
-    </div><!--.container-fluid-->
+                    </div>
+                    <!--.site-header-collapsed-in-->
+                </div>
+                <!--.site-header-collapsed-->
+            </div>
+            <!--site-header-content-in-->
+        </div>
+        <!--.site-header-content-->
+    </div>
+    <!--.container-fluid-->
 </header>
-

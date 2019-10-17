@@ -1,6 +1,4 @@
-@extends('admin.home.template')
-
-@section('body')
+<?php $__env->startSection('body'); ?>
 <style>
     .m-0 {
         margin: 0px !important;
@@ -15,12 +13,12 @@
 </h1>
 <div class="row">
     <div class="col-md-12">
-        {{-- {{ $Order}} --}}
+        
         <!-- BEGIN SAMPLE TABLE PORTLET-->
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i>Order# {{$order->order_no}}</div>
+                    <i class="fa fa-cogs"></i>Order# <?php echo e($order->order_no); ?></div>
             </div>
         </div>
 
@@ -30,56 +28,56 @@
                     <div class="well well-sm text-center" style="margin:0px">Order By</div>
                     <div class="thumbnail">
                         <img style="height:100px;width:100px"
-                            src="{{$order->user ? file_exists($order->user->photo)  ? $order->user->photo : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100' }}"
+                            src="<?php echo e($order->user ? file_exists($order->user->photo)  ? $order->user->photo : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100'); ?>"
                             class="img img-circle" alt="Img">
                         <div class="caption text-center">
-                            <h3 class="m-0">{{$order->name}}</h3>
-                            <p class="m-0">Phone: {{$order->phone}}</p>
-                            <p class="m-0">Area: {{$order->area}}</p>
-                            <p class="m-0">Address: {{$order->address}}</p>
+                            <h3 class="m-0"><?php echo e($order->name); ?></h3>
+                            <p class="m-0">Phone: <?php echo e($order->phone); ?></p>
+                            <p class="m-0">Area: <?php echo e($order->area); ?></p>
+                            <p class="m-0">Address: <?php echo e($order->address); ?></p>
                         </div>
                     </div>
                 </div>
 
-                {{-- {{$order->serviceSystem}} --}}
-                @if(count($order->serviceSystem) > 0)
+                
+                <?php if(count($order->serviceSystem) > 0): ?>
                 <div class="row m-0 col-md-12">
                     <div class="well well-sm text-center" style="margin:0px">Service Provider</div>
                     <div class="thumbnail">
                         <img style="height:100px;width:100px"
-                            src="{{$order->serviceSystem()->first()->provider ? file_exists($order->serviceSystem()->first()->provider->passport)  ? $order->serviceSystem()->first()->provider->passport : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100' }}"
+                            src="<?php echo e($order->serviceSystem()->first()->provider ? file_exists($order->serviceSystem()->first()->provider->passport)  ? $order->serviceSystem()->first()->provider->passport : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100'); ?>"
                             class="img img-circle" alt="Img">
                         <div class="caption text-center">
-                            <h3 class="m-0">{{$order->serviceSystem()->first()->provider->name}}</h3>
-                            <p class="m-0">Phone: {{$order->serviceSystem()->first()->provider->phone_no}}</p>
-                            <p class="m-0">Area: {{$order->serviceSystem()->first()->provider->zone->first()}}</p>
+                            <h3 class="m-0"><?php echo e($order->serviceSystem()->first()->provider->name); ?></h3>
+                            <p class="m-0">Phone: <?php echo e($order->serviceSystem()->first()->provider->phone_no); ?></p>
+                            <p class="m-0">Area: <?php echo e($order->serviceSystem()->first()->provider->zone->first()); ?></p>
                         </div>
                     </div>
                 </div>
-                @if($order->serviceSystem()->first()->provider->type == 0)
-                @if($order->serviceSystem()->first()->comrade)
+                <?php if($order->serviceSystem()->first()->provider->type == 0): ?>
+                <?php if($order->serviceSystem()->first()->comrade): ?>
                 <div class="row m-0 col-md-12">
                     <div class="well well-sm text-center" style="margin:0px">Allowcated Comrade</div>
                     <div class="thumbnail">
                         <img style="height:100px;width:100px"
-                            src="{{$order->serviceSystem()->first()->comrade ? file_exists($order->serviceSystem()->first()->provider->passport)  ? $order->serviceSystem()->first()->comrade->c_pic : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100' }}"
+                            src="<?php echo e($order->serviceSystem()->first()->comrade ? file_exists($order->serviceSystem()->first()->provider->passport)  ? $order->serviceSystem()->first()->comrade->c_pic : 'https://via.placeholder.com/100' : 'https://via.placeholder.com/100'); ?>"
                             class="img img-circle" alt="Img">
                         <div class="caption text-center">
-                            <h3 class="m-0">{{$order->serviceSystem()->first()->comrade->c_name}}</h3>
-                            <p class="m-0">Phone: {{$order->serviceSystem()->first()->comrade->c_phone_no}}</p>
+                            <h3 class="m-0"><?php echo e($order->serviceSystem()->first()->comrade->c_name); ?></h3>
+                            <p class="m-0">Phone: <?php echo e($order->serviceSystem()->first()->comrade->c_phone_no); ?></p>
                         </div>
                     </div>
                 </div>
-                @endif
-                @endif
-                @endif
+                <?php endif; ?>
+                <?php endif; ?>
+                <?php endif; ?>
             </div>
             <div class="col-md-8">
                 <div class="well well-sm " style="margin:0px">
                     <div class="row">
-                        <div class="col-md-4">Category: <b>{{$order->category->name}}</b></div>
-                        <div class="col-md-5">Date/Time: <b>{{$order->order_date}}/{{$order->order_time}}</b></div>
-                        <div class="col-md-3">Service Taken: <b>{{count($order->bookings)}}</b></div>
+                        <div class="col-md-4">Category: <b><?php echo e($order->category->name); ?></b></div>
+                        <div class="col-md-5">Date/Time: <b><?php echo e($order->order_date); ?>/<?php echo e($order->order_time); ?></b></div>
+                        <div class="col-md-3">Service Taken: <b><?php echo e(count($order->bookings)); ?></b></div>
                     </div>
 
                 </div>
@@ -96,47 +94,48 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($order->bookings as $booking)
+                            <?php $__currentLoopData = $order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class="">
-                                <td style="width:35%">{{$booking->service_name}}({{$booking->service_details_name}})
+                                <td style="width:35%"><?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)
                                 </td>
-                                <td>{{$booking->price}}</td>
-                                <td>{{$booking->quantity > 1 ? $booking->aditional_price : 0}}</td>
-                                <td>{{$booking->total_price}}</td>
+                                <td><?php echo e($booking->price); ?></td>
+                                <td><?php echo e($booking->quantity > 1 ? $booking->aditional_price : 0); ?></td>
+                                <td><?php echo e($booking->total_price); ?></td>
                                 <td style="width:20%">
-                                    <div class="only_quantity{{$booking->id}}">
-                                        {{$booking->quantity}}
+                                    <div class="only_quantity<?php echo e($booking->id); ?>">
+                                        <?php echo e($booking->quantity); ?>
+
                                     </div>
-                                    <div class="quantity_edit{{$booking->id}}" style="display:none">
+                                    <div class="quantity_edit<?php echo e($booking->id); ?>" style="display:none">
                                         <div class="col-md-2" style="padding:0px"> <button class="btn pull-right m-0"
-                                                onclick="decrease({{$booking->sub_cat_details_id}})"><i
+                                                onclick="decrease(<?php echo e($booking->sub_cat_details_id); ?>)"><i
                                                     class="fa fa-minus"></i></button>
                                         </div>
                                         <div class="col-md-4" style="padding:0px"> <input type="text"
                                                 class="form-control text-center" aria-label="Small"
                                                 aria-describedby="inputGroup-sizing-sm"
-                                                data-service_id="{{$booking->sub_categories_id}}"
-                                                id="qty{{$booking->sub_cat_details_id}}" placeholder="Qty"
-                                                value="{{$booking->quantity}}"> </div>
+                                                data-service_id="<?php echo e($booking->sub_categories_id); ?>"
+                                                id="qty<?php echo e($booking->sub_cat_details_id); ?>" placeholder="Qty"
+                                                value="<?php echo e($booking->quantity); ?>"> </div>
                                         <div class="col-md-2 " style="padding:0px"> <button class="btn pull-left"
-                                                onclick="increase({{$booking->sub_cat_details_id}})"><i
+                                                onclick="increase(<?php echo e($booking->sub_cat_details_id); ?>)"><i
                                                     class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
 
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary edit_service" data-id="{{$booking->id}}"><i
+                                    <button class="btn btn-primary edit_service" data-id="<?php echo e($booking->id); ?>"><i
                                             class="fa fa-pencil"></i></button>
-                                    @if(count($order->bookings) > 1)
+                                    <?php if(count($order->bookings) > 1): ?>
                                     <button class="btn btn-danger deleteServiceBit"
-                                        data-service_id="{{$booking->sub_categories_id}}"
-                                        data-id="{{$booking->sub_cat_details_id}}"><i class="fa fa-times"></i></button>
-                                    @endif
+                                        data-service_id="<?php echo e($booking->sub_categories_id); ?>"
+                                        data-id="<?php echo e($booking->sub_cat_details_id); ?>"><i class="fa fa-times"></i></button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
 
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -144,13 +143,13 @@
                 <div class="" id="service_box" style="overflow: auto !important;padding: 10px 25px 11px 10px;"> </div>
 
                 <button class="btn btn-primary" id="add_new_service">Add New Services</button>
-                @if ($order->status == '0' || $order->status == '1')
-                <form action="{{route('order.cancel')}}" method="POST" >
-                    @csrf
-                    <input type="text" name="id" value="{{$order->id}}" hidden>
+                <?php if($order->status == '0' || $order->status == '1'): ?>
+                <form action="<?php echo e(route('order.cancel')); ?>" method="POST" >
+                    <?php echo csrf_field(); ?>
+                    <input type="text" name="id" value="<?php echo e($order->id); ?>" hidden>
                     <button class="btn btn-danger pull-right" id="add_new_service">Cancel Order</button>
                 </form>
-                @endif
+                <?php endif; ?>
 
             </div>
         </div>
@@ -229,14 +228,15 @@ function increase(id){
 
         function qtyUpdate(id, qty , service_id) {
             jQuery.ajax({
-                url: "{{route('update.qty')}}",
+                url: "<?php echo e(route('update.qty')); ?>",
                 type: 'post',
                 data: {
-                    "_token": "{{ csrf_token() }}",
+                    "_token": "<?php echo e(csrf_token()); ?>",
                     "service_id": service_id,
                     "id": id,
                     "qty": qty,
-                    "order_id": {{$order->id}}
+                    "order_id": <?php echo e($order->id); ?>
+
                 },
                 dataType: 'html',
                 success: function(response){
@@ -262,13 +262,14 @@ function increase(id){
         $service_id = $(this).data('service_id');
         $id = $(this).data('id');
         $.ajax({
-            url: "{{route('admin.order.delServiceBit')}}",
+            url: "<?php echo e(route('admin.order.delServiceBit')); ?>",
             type: 'post',
             data: {
-                "_token": "{{ csrf_token() }}",
+                "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": $service_id,
                 "id": $id,
-                "order_id": {{$order->id}}
+                "order_id": <?php echo e($order->id); ?>
+
             },
             dataType: 'json',
             success: function(response) {
@@ -278,10 +279,10 @@ function increase(id){
     })
 
     $('#add_new_service').click(function(){
-        $cat_id = {{$order->category_id}};
+        $cat_id = <?php echo e($order->category_id); ?>;
         $.ajax({
                 type: "GET",
-                url: "{{asset('/')}}/admin/service_show/"+$cat_id,
+                url: "<?php echo e(asset('/')); ?>/admin/service_show/"+$cat_id,
                 dataType: 'json',
                 success: function(data) {
                     for($i=0; $i < data.length; $i++){
@@ -300,7 +301,7 @@ function increase(id){
             $('.modal-body').html('');
             $.ajax({
                 type: "GET",
-                url: "{{asset('/')}}/admin/services_bit/"+$service_id,
+                url: "<?php echo e(asset('/')); ?>/admin/services_bit/"+$service_id,
                 dataType: 'json',
                 success: function(data) {
                     for($i=0; $i < data.length; $i++){
@@ -320,14 +321,15 @@ function increase(id){
         function serviceBitAdd(id,service_id){
             $qty = $('#qty'+id).val();
             $.ajax({
-            url: "{{route('admin.order.addServiceBit')}}",
+            url: "<?php echo e(route('admin.order.addServiceBit')); ?>",
             type: 'post',
             data: {
-                "_token": "{{ csrf_token() }}",
+                "_token": "<?php echo e(csrf_token()); ?>",
                 "service_id": service_id,
                 "id": id,
                 "qty": $qty,
-                "order_id": {{$order->id}}
+                "order_id": <?php echo e($order->id); ?>
+
             },
             dataType: 'json',
             success: function(response) {
@@ -359,4 +361,5 @@ function increase(id){
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.home.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

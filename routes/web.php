@@ -194,8 +194,15 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/dashboard', 'Admin\HomeController@index')->name('admin.dashboard');
         //Route::get('/dashboard', 'Admin\HomeController@index')->name('admin');
+
+        Route::get('/csv', 'Admin\ServiceProviderController@csv');
+
         Route::get('/dashoard/index', 'Admin\HomeController@index')->name('admin.index');
-        Route::get('/users', 'Admin\HomeController@registerUsers')->name('register-users');
+        Route::get('/users/agent', 'Admin\HomeController@agentUsers')->name('users.agent');
+        Route::get('/users/agent/ajax', 'Admin\HomeController@agentUserAjax')->name('users.agent.ajax');
+        Route::get('/users/agent/export', 'Admin\HomeController@agentUsersExport')->name('users.agent.export');
+        Route::get('/users', 'Admin\HomeController@normalUsers')->name('users.index');
+
         Route::get("/change-password", 'Admin\UsersController@changePassword')->name('adminchangepassword');
         Route::post("/changepassword", 'Admin\UsersController@postChangePassword')->name('adminChangePasswordPost');
         Route::get('/profile', 'Admin\HomeController@showProfile')->name('profile');
@@ -215,6 +222,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource("cms", "Admin\CmsController");
 
         Route::resource("service-provider", "Admin\ServiceProviderController");
+        Route::post("service-provider/search", "Admin\ServiceProviderController@search")->name('admin.sp.search');
         Route::get("service_provider_accounts", "Admin\ServiceProviderController@spAccounts")->name('admin.service_provider.accounts');
 
 
@@ -227,7 +235,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::post('allowcate', 'Admin\ServiceAllocatorController@allowcateAdmin')->name('provider.allowcate');
 
-        /** */
+        /**  */
         Route::get("withdraw", "Admin\WithdrawController@index")->name('admin.withdraw');
         Route::get("accounts", "Admin\AdminAccountsController@index")->name('admin.accounts');
         Route::post("accounts", "Admin\AdminAccountsController@insert")->name('admin.accounts.insert');
@@ -264,9 +272,14 @@ Route::group(['prefix' => 'admin'], function () {
       //Route::get("create_order","Admin\AdminOrderController@createOrder")->name('admin.order.');
         Route::get("/new_order","Admin\AdminOrderController@createOrder")->name('admin.order.create');
         Route::get("/new_order/{category_id}","Admin\AdminOrderController@allService")->name('admin.order.getallService');
+        Route::get("/service_show/{category_id}","Admin\AdminOrderController@servicesShow")->name('admin.order.ServiceShow');
         Route::get("services_bit/{service_id}","Admin\AdminOrderController@allServiceBit")->name('admin.order.getServiceBit');
         Route::post("add-service-bit","Admin\AdminOrderController@addServiceBit")->name('admin.order.addServiceBit');
         Route::post("delete-service-bit","Admin\AdminOrderController@deleteServiceBit")->name('admin.order.delServiceBit');
+
+        Route::get("retrive_selected_service_bit/{service_id}","Admin\AdminOrderController@retriveSelectedServiceBit")->name('admin.order.retrive_service_bit');
+
+        Route::post("admin_order_done","Admin\AdminOrderController@orderFinish")->name('admin.order.done');
     });
 });
 
@@ -301,6 +314,10 @@ Route::post('/order-cancel', 'BookingController@CancelOrder')->name('order.cance
 Route::get('/order-bit-done/{id}', 'BookingController@OrderBitFinish')->name('order.finish'); // booking cancel
 
 Route::get('/booking/back-first', 'BookingController@BackTofirst')->name('book.first'); // booking for self
+
+/** only for service provider user -- added service review and price change -- */
+Route::get('service-review','BookingController@serviceReview')->name('service.review');
+Route::post('service/price-change','BookingController@priceChange')->name('service.price.change');
 
 
 

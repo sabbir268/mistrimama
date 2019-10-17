@@ -37,6 +37,21 @@
                         <form id="spf_form" method="post" action="{{route('add.user.special')}}"
                             enctype="multipart/form-data">
                             {{csrf_field()}}
+
+                            <div class="form-group">
+                                <label for="">Promoter: <span class="type_err"></span></label>
+                                <input id="promoter" type="text"
+                                    class="form-control" name="promoter"
+                                    value="{{ old('promoter') }}" placeholder="promoter" required autofocus>
+
+                                @if ($errors->has('promoter'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('promoter') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="">Full Name: <span class="type_err"></span></label>
                                 <input id="name" type="text"
@@ -154,7 +169,7 @@
 
                             <div class="form-group">
                                 <label for="">MFS Number: <span class="type_err"></span></label>
-                                <input type="text" class="form-control" name="mfs_number" id="mfs_number">
+                                <input type="text" class="form-control" maxlength="12" minlength="11" name="mfs_number" id="mfs_number">
 
                                 @if ($errors->has('mfs_number'))
                                 <span class="invalid-feedback" role="alert">
@@ -165,13 +180,19 @@
 
                             <div class="form-group">
                                 <label for="">Profile Picture: <span class="type_err"></span></label>
-                                <input type="file" class="form-control" name="profile_picture" id="profile_picture">
+                                <input type="file" class="form-control" name="profile_picture" id="profile_picture"
+                                    accept="image/*" onchange="uploadPhotos('/')">
                                 @if ($errors->has('profile_picture'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('profile_picture') }}</strong>
                                 </span>
                                 @endif
+
+                                <input type="text" name="profile_picture_base64" id="profile_picture_base64" hidden>
+                                <span style="display: none" id="show_img_upload">Image is uploading wait......</span>
+                                <img src="" style="height:100px;width:80" id="my_image" alt="">
                             </div>
+                           
 
                             <input type="text" name="reason" value="special_user" hidden>
                             <input type="text" name="user_type" value="user" hidden>
@@ -194,4 +215,65 @@
         <!-- .message -->
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    window.uploadPhotos = function (url) {
+
+        var file = event.target.files[0];
+
+        // Ensure it's an image
+        if (file.type.match(/image.*/)) {
+            console.log('An image has been loaded');
+
+            // Load the image
+            var reader = new FileReader();
+            reader.onload = function (readerEvent) {
+                var image = new Image();
+                image.onload = function (imageEvent) {
+
+                    // Resize the image
+                    var canvas = document.createElement('canvas'),
+                        max_size = 544,// TODO : pull max size from a site config
+                        width = image.width,
+                        height = image.height;
+                    if (width > height) {
+                        if (width > max_size) {
+                            height *= max_size / width;
+                            width = max_size;
+                        }
+                    } else {
+                        if (height > max_size) {
+                            width *= max_size / height;
+                            height = max_size;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+                    var dataUrl = canvas.toDataURL('image/jpeg');
+                    $.event.trigger({
+                        type: "imageResized",
+                        url: dataUrl
+                    });
+                }
+                image.src = readerEvent.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+    $(document).on("imageResized", function (event) {
+        if (event.url) {
+            $bb = event.url;
+            $('#show_img_upload').hide();
+            $('#profile_picture').hide();
+            $('#profile_picture').val("");
+            $('#profile_picture_base64').val($bb);
+            $('#my_image').attr('src',$bb);
+        }
+
+    });
+</script>
 @endsection

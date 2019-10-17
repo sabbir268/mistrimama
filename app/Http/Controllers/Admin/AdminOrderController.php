@@ -30,7 +30,7 @@ class AdminOrderController extends Controller
 
     public function searchUser($val)
     {
-        $results =  User::where('phone_no', 'like', '%' . $val . '%')->orWhere('name', 'like', '%' . $val . '%')->get();
+        $results =  User::where('phone_no', 'like', '%' . $val . '%')->orWhere('name', 'like', '%' . $val . '%')->take(10)->get();
 
         return $results;
     }
@@ -49,7 +49,6 @@ class AdminOrderController extends Controller
 
     public function allService($category_id)
     {
-        
         $order = new Order();
         $order_no = mt_rand(1, 1000) . substr(time(), -4);
         $order->order_no = $order_no;
@@ -60,6 +59,12 @@ class AdminOrderController extends Controller
         $order->save();
         Session::put('order_id', $order->id);
 
+        $allService = SubCategory::where('c_id', $category_id)->get();
+        return $allService;
+    }
+
+    public function servicesShow($category_id)
+    {
         $allService = SubCategory::where('c_id', $category_id)->get();
         return $allService;
     }
@@ -103,10 +108,10 @@ class AdminOrderController extends Controller
             $booking->service_details_name = $subCatDetails->name;
             $booking->price = $subCatDetails->price;
             $booking->aditional_price = $subCatDetails->additional_price;
-           /** this is only for inserting total_price , the price will be calculated in mutator  */
+            /** this is only for inserting total_price , the price will be calculated in mutator  */
             $booking->total_price = 0;
             $booking->status = 0;
-            
+
             if ($booking->save()) {
                 $data['unit_remarks'] = SubServiceDetails::find($request->id)->unit_remarks;
                 $data['unit_type'] = SubServiceDetails::find($request->id)->unit_type;
@@ -136,5 +141,71 @@ class AdminOrderController extends Controller
                 return 0;
             }
         }
+    }
+
+
+    public function retriveSelectedServiceBit($service_id)
+    {
+        //Session::forget('order_id');
+        $allServiceBit = Booking::where('order_id', Session::get('order_id'))->where('sub_categories_id', $service_id)->get();
+        return $allServiceBit;
+    }
+
+    public function orderFinish(Request $request)
+    {
+        $order = Order::find(Session::get('order_id'));
+
+        if ($request->user_type == 'new_user') {
+            $order->user_id = 0;
+            $order->others_name = $request->name;
+            $order->others_phone = $request->phone_no;
+            $order->area = $request->area;
+            $order->others_addr = $request->address;
+        } else {
+            $order->user_id = $request->user_id;
+            $order->type = $request->others;
+            $order->area = User::find($request->user_id)->area;
+        }
+
+        $order->order_date = $request->order_date;
+        $order->order_time =  $request->order_time;
+
+        $time = explode(' ', $request->order_time);
+        $num = (int) $time[0];
+        $met = $time[1];
+
+        if (($num > 8.00 && $met == 'PM') || ($num < 8.00 && $met == 'AM')) {
+            $order->extra_charge = 500.00;
+            if ($num == 12  && $met == 'PM') {
+                $order->extra_charge = 0;
+            }
+        } else {
+            $order->extra_charge = 0;
+            if ($num == 12  && $met == 'AM') {
+                $order->extra_charge = 500.00;
+            }
+        }
+
+        if ($request->has('ref_code')) {
+            $order->ref_code = $request->ref_code;
+        }
+
+        if ($request->has('disc')) {
+            $order->disc = $request->disc;
+        }
+
+        $order->status = '0';
+        
+        if($request->has('area') && $request->area == 'outside_dhaka' ){
+            $order->extra_charge = $order->extra_charge + 500; // add extra 500 taka for outside dhaka.
+        }
+
+        if($order->save()){
+            return 'ok';
+        }{
+            return 'Something went worng';
+        }
+
+        
     }
 }

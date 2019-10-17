@@ -206,7 +206,7 @@ class UsersController extends Controller
 
     public function addUser(Request $request)
     {
-       // return $request;
+        // return $request;
         // $request->phone_no = "+88".$request['phone_no'];
         $rules = [
             'name' => 'string',
@@ -222,26 +222,42 @@ class UsersController extends Controller
             $userType = $request->user_type;
             $user = new User($request->except(['reason', 'type', 'ref_code']));
             // return $user->phone_no = $phone = "+88".$request['phone_no'];
-            $refcode = strtolower(substr(str_replace(" ","",str_replace(".","",$request->name)),0,5)). rand(0, 9) . generateRandomString(3);
-            
-            $user->ref_code =  $refcode;
+            $refcode = strtolower(substr(str_replace(" ", "", str_replace(".", "", $request->name)), 0, 2)) . rand(000000, 999999);
+
+            $user->ref_code =  strtolower($refcode);
             $user->mfs_type = $request->mfs_type;
             $user->mfs_number = $request->mfs_number;
+            $user->area = $request->area;
             $user->password = Hash::make($request->input('password'));
 
-            if ($request->hasFile('profile_picture')) {
-                 $destinationPath = public_path('/uploads');
-                    $image = $request->file('profile_picture');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
+            if($request->has('promoter')){
+                $user->promoter= $request->promoter;
+            }
 
-                    //  $image->move($destinationPath, $input['imagename']);
+            // if ($request->hasFile('profile_picture')) {
+            //      $destinationPath = public_path('/uploads');
+            //         $image = $request->file('profile_picture');
+            //         $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
+            //         $img = Image::make($image->getRealPath());
 
-                    $img->resize(300, 300, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
+            //         //  $image->move($destinationPath, $input['imagename']);
 
-                    $user->photo = asset('/uploads') . "/" . $input['imagename'];
+            //         $img->resize(300, 300, function ($constraint) {
+            //             $constraint->aspectRatio();
+            //         })->save($destinationPath . '/' . $input['imagename']);
+
+            //         $user->photo = asset('/uploads') . "/" . $input['imagename'];
+            // }
+
+            
+
+            if ($request->has('profile_picture_base64')) {
+               // $file = $_SERVER['DOCUMENT_ROOT'].'/uploads/'. time() . ".jpg";
+
+             //   base64_to_image($request->profile_picture_base64,$file);
+
+              //  $user->photo = str_replace($_SERVER['DOCUMExzNT_ROOT'], asset(''), $file);
+                $user->photo = $request->profile_picture_base64;
             }
 
             if ($user->save()) {
@@ -256,7 +272,7 @@ class UsersController extends Controller
                     $roles->save();
                 }
 
-                $msg = "Dear " . $user->name . "! Thanks for registering in Mistri Mama. Use this referrer code “ " . $user->ref_code . " ” to earn reward points. Call +8809610222111 for details.";
+                $msg = "Dear " . $user->name . "! Thanks for registering in Mistri Mama. Use this referrer code '" . strtolower($user->ref_code) . "' to earn reward points. Call +8809610222111 for details.";
                 SMS::send($user->phone_no, $msg);
                 // event(new UserRegisterEvent($user));
 

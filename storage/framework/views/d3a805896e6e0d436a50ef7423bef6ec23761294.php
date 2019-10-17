@@ -1,5 +1,4 @@
-@extends('new_layout.template')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style> 
     .contact-info:hover{
@@ -25,7 +24,7 @@
     <div class="breadcrumb-row">
         <div class="container">
             <ul class="list-inline">
-                <li><a href="{{url('/')}}">
+                <li><a href="<?php echo e(url('/')); ?>">
                         Home </a></li>
                 <li>Contact Us</li>
             </ul>
@@ -45,7 +44,7 @@
                                 <div class="icon-bx-md rounded-bx" style="color: #f3b400;"> <i class="fa fa-phone"></i> </div>
                                 <h6>
                                     Phone </h6>
-                                <p>{{ getConfigValue('contact_phone') }}</p>
+                                <p><?php echo e(getConfigValue('contact_phone')); ?></p>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6 contact-info">
@@ -53,7 +52,7 @@
                                 <div class="icon-bx-md rounded-bx" style="color: #f3b400;"> <i class="fa fa-envelope"></i> </div>
                                 <h6>
                                     Email </h6>
-                                <p>{{ getConfigValue('contact_email') }}</p>
+                                <p><?php echo e(getConfigValue('contact_email')); ?></p>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6 contact-info">
@@ -61,7 +60,7 @@
                                 <div class="icon-bx-md rounded-bx" style="color: #f3b400;"> <i class="fa fa-map-marker"></i> </div>
                                 <h6>
                                     Address </h6>
-                                <p>{{ getConfigValue('contact_address') }}</p>
+                                <p><?php echo e(getConfigValue('contact_address')); ?></p>
                             </div>
                         </div>
                     </div>
@@ -72,7 +71,7 @@
                     <h4>
                         Contact Us</h4>
                     <div class="padding-30 bg-white clearfix margin-b-30 sf-rouned-box" style="padding-top: 78px !important;padding-bottom: 76px !important;">
-                        <form method="post" class="contactform" action="{{ route('contact-us') }}">
+                        <form method="post" class="contactform" action="<?php echo e(route('contact-us')); ?>">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -130,30 +129,7 @@
                     <h4>
                         Our Location</h4>
                     <div class="padding-10 bg-white sf-rouned-box">
-                        {{-- <div class='gmap-outer contact-area-bx'>
-                            <!-- Google Map -->
-                            <div id="gmap_wrapper" data-post_id="661" data-cur_lat="0" data-cur_long="0"
-                                style="height:350px">
-                                <span id="isgooglemap" data-isgooglemap="1"></span>
-
-                                <div id="gmap-controls-wrapper">
-                                    <div id="gmapzoomplus"><i class="fa fa-plus"></i></div>
-                                    <div id="gmapzoomminus"><i class="fa fa-minus"></i></div>
-                                    <div id="gmap-full"><i class="fa fa-arrows-alt"></i></div>
-                                </div>
-                                <div id="googleMap" style="height:350px">
-                                </div>
-                                <div class="tooltip"> click to enable zoom</div>
-                                <div id="gmap-loading">
-                                    <div class="loader-inner ball-pulse" id="listing_loader_maps">
-                                        <div class="double-bounce1"></div>
-                                        <div class="double-bounce2"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!-- END Google Map -->
-                        </div> --}}
+                        
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.3954437855978!2d90.40423571449267!3d23.733273895348347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b9590048c46b%3A0x4f2d99cc0463a1cc!2sMistri%20Mama!5e0!3m2!1sen!2sbd!4v1570599690294!5m2!1sen!2sbd" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
                     </div>
                 </div>
@@ -162,4 +138,5 @@
     </div>
     <!-- contact area  END -->
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('new_layout.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

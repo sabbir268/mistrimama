@@ -35,6 +35,12 @@
             </li>
             <li class="active">
                 <div class="icon bg-mm">
+                    <i class="fa fa-list-ul"></i>
+                </div>
+                <div class="caption">Review</div>
+            </li>
+            <li class="active">
+                <div class="icon bg-mm">
                     <i class="font-icon font-icon-card"></i>
                 </div>
                 <div class="caption">Date & Time</div>
@@ -178,7 +184,7 @@
 
     </div>
 
-    <button type="button" class="btn btn-rounded btn-mm float-left">← Back</button>
+    <button type="button" class="btn btn-rounded btn-mm float-left" onclick="window.history.back();">← Back</button>
     <button type="submit" class="btn btn-rounded float-right btn-mm">Finish <i class="fa fa-check"></i></button>
     </form>
 </section>

@@ -109,7 +109,8 @@
                         <div>{{$order->comrade ? $order->comrade->c_name : '-'}}</div>
                     </td>
                     <td>
-                        <div class="text-{{$order->status == 'cancel' ? 'danger': 'success'}}">{{$order->status == 'cancel' ? 'Cancel': 'Success'}}</div>
+                        <div class="text-{{$order->status == 'cancel' ? 'danger': 'success'}}">
+                            {{$order->status == 'cancel' ? 'Cancel': 'Success'}}</div>
                     </td>
                     <?php $i++ ?>
                 </tr>
@@ -138,6 +139,7 @@
                     <thead class="bg-mm-light">
                         <tr>
                             <td>Service</td>
+                            <td>Quantity</td>
                             <td>Price</td>
                             <td>Adition Price</td>
                             <td>Total Price</td>
@@ -148,8 +150,9 @@
                         @foreach($services as $service)
                         <tr>
                             <td>{{$service->service_name}} - {{$service->service_details_name}} </td>
+                            <td>{{$service->quantity}}</td>
                             <td>{{$service->price}}</td>
-                            <td>{{$service->aditional_price}}</td>
+                            <td>{{$service->quantity > 1 ? $service->aditional_price : 0}}</td>
                             <td>{{$service->total_price}}</td>
                         </tr>
                         @endforeach

@@ -17,17 +17,10 @@ class comradeController extends Controller
 {
     public function index()
     {
-        $comrades = User::find(Auth::user()->id)->comrades;
-        $allowcatedOrders = $comrades->first()->serviceSystem->where('status', '!=',  '5');
-        $activeOrders = $comrades->first()->serviceSystem->where('status', '!=',  '5')->first();
-        if ($activeOrders) {
-            //$sumOrder = DB::table('bookings')->select(DB::raw("SUM(quantity) as total_quantity, SUM(total_price) as total_price"))->where('order_id', $activeOrders->order_id)->get();
-            $sumOrder = OrderDetails::find($activeOrders->order_id);
-        } else {
-            $sumOrder = '';
-            $allord = '';
-            return view('comrade.index', compact('allowcatedOrders', 'sumOrder', 'allord'));
-        }
+        $comrades = User::find(Auth::user()->id)->comrades->first();
+       // $allowcatedOrders = $comrades->first()->serviceSystem->where('status', '!=',  '5');
+        $allowcatedOrders = OrderDetails::where('sp_comrade_id',$comrades->id)->where('status', '!=',  '5')->where('status', '!=',  'cancel')->get();
+      //  return $allowcatedOrders;
         return view('comrade.index', compact('allowcatedOrders', 'sumOrder'));
     }
 

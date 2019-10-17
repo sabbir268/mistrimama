@@ -11,7 +11,7 @@
     }
 
     .new-signup {
-        background-image: url("<?php echo e(asset('slider-images/plumbing.webp')); ?>");
+        /* background-image: url("<?php echo e(asset('slider-images/plumbing.webp')); ?>"); */
         background-repeat: no-repeat;
         background-origin: content-box;
         background-position: center;
@@ -41,6 +41,10 @@
     .socila-box>li:hover>a {
         color: #f3b400;
         opacity: 1;
+    }
+
+    .invalid-feedback{
+        color: red;
     }
 
 
@@ -130,11 +134,11 @@
             margin: 17px;
         }
 
-        .promotion > img {
+        .promotion>img {
             padding: 0% 0% !important;
         }
 
-            
+
 
         .mmtopforce {
             margin-top: 90px;
@@ -164,8 +168,8 @@
 
 
                 <div class="col-md-8 promotion ">
-                    <img style="padding: 10% 0%;transform: scale(1.1,1.2);" src="<?php echo e(asset('uploads/promoimage/Sign_Up.png')); ?>"
-                        alt="" class="img-responsive">
+                    <img style="padding: 10% 0%;transform: scale(1.1,1.2);"
+                        src="<?php echo e(asset('uploads/promoimage/Sign_Up.png')); ?>" alt="" class="img-responsive">
                 </div>
                 <!-- Left part start -->
 
@@ -207,20 +211,19 @@
                                                 class="form-control<?php echo e($errors->has('phone_no') ? ' is-invalid' : ''); ?>"
                                                 name="phone_no" value="<?php echo e(old('phone_no')); ?>" minLength="11"
                                                 maxLength="11" placeholder="Mobile Number" required>
-
-                                            <?php if($errors->has('phone_no')): ?>
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong><?php echo e($errors->first('phone_no')); ?></strong>
-                                            </span>
-                                            <?php endif; ?>
                                         </div>
+                                        <?php if($errors->has('phone_no')): ?>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong><?php echo e($errors->first('phone_no')); ?></strong>
+                                        </span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <i class="input-group-addon fa fa-envelope"></i>
                                             <input id="email" type="email"
                                                 class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>"
-                                                name="email" placeholder="Email" value="<?php echo e(old('email')); ?>" >
+                                                name="email" placeholder="Email" value="<?php echo e(old('email')); ?>">
                                         </div>
 
                                         <?php if($errors->has('email')): ?>

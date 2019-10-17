@@ -30,7 +30,7 @@
                 </div>
                 <div class="caption">Services</div>
             </li>
-            <li class="">
+            <li class="active">
                 <div class="icon bg-mm">
                     <i class="fa fa-list-ul"></i>
                 </div>
@@ -51,44 +51,71 @@
         </ul>
     </div>
 
-    <header class="steps-numeric-title">All Services</header>
+    
     <section class="bg-white rounde  ">
-        <header class="col-md-10 offset-md-1 card-header bg-light">Total: <span class="grand_total" id="grand_total">0.00</span>৳</header>
-        <div class="col-md-10 offset-md-1 p-1 border" style="height:280px;overflow-y: scroll;">
-            <?php $__currentLoopData = $Sub_categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-            <?php echo csrf_field(); ?>
-            <div class="card mb-1 pl-3">
-                <div class="card-body ">
-                    <input type="hidden" name="ID" value="<?php echo e($data->id); ?>">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div style="cursor:pointer" class="row pt-0 pm-0" data-toggle="collapse" data-target="#collapsePanel<?php echo e($data->id); ?>" aria-expanded="false" aria-controls="collapseExample">
-                                <h5 class="mb-0"> <span class="rounded-circle  text-mm  "><i class="fa fa-cube"></i></span> <?php echo e($data->name); ?></h5>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center pt-2">
-                            
-                            <span style="cursor :pointer" class="bg-mm pl-3 pr-3 pt-1 pb-1 text-white ml-3 rounded addRemove" data-id="<?php echo e($data->id); ?>" id="addRemove<?php echo e($data->id); ?>">ADD</span>
-                        </div>
-                    </div>
-
-                    <div class="row collapse mb-0 text-left" id="collapsePanel<?php echo e($data->id); ?>">
-                        
-                        
-                        
-                        
-                        
-                    </div>
+        <header class="col-md-10 offset-md-1 card-header bg-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="float-left"><b>Selected Services</b></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="float-right">Total: <span class="grand_total"
+                            id="grand_total"><?php echo e($totalPrice); ?></span>৳</span>
                 </div>
             </div>
+        </header>
+        <div class="col-md-10 offset-md-1 p-1 border" style="height:280px;overflow-y: scroll;">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>সার্ভিস</th>
+                        <th>ইউনিট চার্জ</th>
+                        <th>অতিঃ ইউনিট চার্জ</th>
+                        <th>পরিমান</th>
+                        <th>মোট</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $__currentLoopData = $addedService; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr>
+                        <td class="text-left">
+                            <?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
+                        <td>
+                            
 
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo e($booking->price); ?>
+
+                        </td>
+                        <td>
+                            
+                                <?php echo e($booking->quantity > 1 ? $booking->aditional_price : 0); ?>
+
+                        </td>
+                        <td>
+                            
+                                <?php echo e($booking->quantity); ?>
+
+                        </td>
+                        <td>
+                            <input min="30" data-id="<?php echo e($booking->id); ?>" type="text" style="width:90%"
+                                class="text-center form-control form-control-sm total_price"
+                                value="<?php echo e($booking->total_price); ?>" id="">
+                                <span style="display:none" class="text-danger alert-<?php echo e($booking->id); ?>">Minimum price shoulbe BDT 30/-</span>
+                        </td>
+                        
+                    </tr>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tbody>
+
+                <tfoot>
+                </tfoot>
+            </table>
         </div>
     </section>
 
     
-    <button type="button" id="dateTime" class="btn btn-rounded float-right btn-mm"> <a href="#" class="text-white"> Next →</a></button>
+    <button type="button" id="dateTime" class="btn btn-rounded float-right btn-mm"> <a href="#" class="text-white"> Next
+            →</a></button>
 
 </section>
 
@@ -108,33 +135,34 @@
 <script src="<?php echo e(asset('dashboard/js/lib/daterangepicker/daterangepicker.js')); ?>"></script>
 
 <script>
-    $('.addRemove').click(function() {
-        $id = $(this).data('id');
+    $('.total_price').keyup(function(){
+        $id  = $(this).data('id');
+        $price = $(this).val();
+        if($price < 30){
+            $('.alert-'+$id).show();
+        }else{
+            $('.alert-'+$id).hide();
+        }
         $.ajax({
-            url: "<?php echo e(route('add.sub-service-details')); ?>",
+            url: "<?php echo e(route('service.price.change')); ?>",
             type: 'post',
             data: {
                 "_token": "<?php echo e(csrf_token()); ?>",
-                "id": $id
+                "id": $id,
+                "price": $price
             },
             dataType: 'html',
             success: function(response) {
-                $('#showModal').html(response);
-                $('#exampleModal').modal({
-                    show: true,
-                    backdrop: 'static',
-                    keyboard: false
-                    });
-                
+              console.log(response);
             }
         });
-    });
+    }); 
 
     $('#dateTime').click(function() {
         if($('#grand_total').html() == '0.00' || $('#grand_total').html() == '' || $('#grand_total').html() == '0'){
             alert('Select service first!');
         }else{
-            window.location.href = "<?php echo e(route('service.review')); ?>";
+            window.location.href = "<?php echo e(route('date.time')); ?>";
         }
     });
 

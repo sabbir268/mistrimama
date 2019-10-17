@@ -502,7 +502,7 @@
                                         {{ $order->user ? $order->user->name : $order->name }}
                                     </strong>
                                     <input type="text" name="user_id"
-                                        value="{{ $order->user ? $order->user->id : '-' }}" hidden>
+                                        value="{{ $order->user ? $order->user->id : 0 }}" hidden>
                                 </div>
                             </div>
                         </div>

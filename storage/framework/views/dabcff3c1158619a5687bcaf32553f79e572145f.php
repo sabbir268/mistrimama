@@ -1,9 +1,8 @@
-@extends('admin.cms.template')
-@section('body')
+<?php $__env->startSection('body'); ?>
 
 <h1 class="page-title">Booking
     <small></small>
-    <!--    <a href="{{ route('cms.create') }}" class="btn btn-primary float-right"> Create </a>-->
+    <!--    <a href="<?php echo e(route('cms.create')); ?>" class="btn btn-primary float-right"> Create </a>-->
 </h1>
 <div class="row">
     <div class="col-md-12">
@@ -28,9 +27,6 @@
                         </th>
                         <th>
                             <div>Extra Charge</div>
-                        </th>
-                        <th>
-                            <div>Discount</div>
                         </th>
                         <th>
                             <div>Total Amount</div>
@@ -82,31 +78,28 @@
 
                     </tr>
                     <?php $i = 1 ?>
-                    @foreach ($orders as $order )
+                    <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td>
-                            <div>{{$i}} </div>
+                            <div><?php echo e($i); ?> </div>
                         </td>
                         <td>
-                            <div>{{$order->orders_no}}</div>
+                            <div><?php echo e($order->orders_no); ?></div>
                         </td>
                         <td>
                             <div>
-                                <button data-toggle="modal" data-target="#orderDetailsModal{{$order->id}}"
+                                <button data-toggle="modal" data-target="#orderDetailsModal<?php echo e($order->id); ?>"
                                     class="btn btn-success btn-sm">View Details</button>
                             </div>
                         </td>
                         <td>
-                            <div>BDT {{$order->total_price}}</div>
+                            <div>BDT <?php echo e($order->total_price); ?></div>
                         </td>
                         <td>
-                            <div>BDT {{$order->extra_charge}}</div>
+                            <div>BDT <?php echo e($order->extra_charge); ?></div>
                         </td>
                         <td>
-                            <div>BDT {{$order->disc}}</div>
-                        </td>
-                        <td>
-                            <div>BDT {{($order->total_price + $order->extra_charge) - $order->disc}}</div>
+                            <div>BDT <?php echo e($order->total_price + $order->extra_charge); ?></div>
                         </td>
                         <?php 
                             if($order->provider){
@@ -120,67 +113,70 @@
                             ?>
 
                         <td>
-                            <div>BDT {{$order->provider ? $spam : 0}}</div>
+                            <div>BDT <?php echo e($order->provider ? $spam : 0); ?></div>
                         </td>
 
                         <td>
-                            <div>BDT {{($order->provider ? $mmc : 0) - $order->disc}}</div>
+                            <div>BDT <?php echo e($order->provider ? $mmc : 0); ?></div>
                         </td>
 
                         <td>
-                            <div>{{date('d-m-Y',strtotime($order->order_date))}}</div>
+                            <div><?php echo e(date('d-m-Y',strtotime($order->order_date))); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->order_time}}</div>
+                            <div><?php echo e($order->order_time); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->area}}</div>
+                            <div><?php echo e($order->area); ?></div>
                         </td>
                         <td>
                             <div>
-                                {{date('d-m-Y',strtotime(explode(' ',$order->orders_place_time)[0]))}}/{{explode(' ',$order->orders_place_time)[1]}}
+                                <?php echo e(date('d-m-Y',strtotime(explode(' ',$order->orders_place_time)[0]))); ?>/<?php echo e(explode(' ',$order->orders_place_time)[1]); ?>
+
                             </div>
                         </td>
                         <td>
                             <div>
-                                {{date('d-m-Y',strtotime(explode(' ',$order->sp_accept_time)[0]))}}/{{explode(' ',$order->sp_accept_time)[1]}}
+                                <?php echo e(date('d-m-Y',strtotime(explode(' ',$order->sp_accept_time)[0]))); ?>/<?php echo e(explode(' ',$order->sp_accept_time)[1]); ?>
+
                             </div>
                         </td>
                         <td>
-                            <div>{{$order->name}}</div>
+                            <div><?php echo e($order->name); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->address}}</div>
+                            <div><?php echo e($order->address); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->phone}}</div>
+                            <div><?php echo e($order->phone); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->provider ? $order->provider->name : '-'}}</div>
+                            <div><?php echo e($order->provider ? $order->provider->name : '-'); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->provider ? $order->provider->phone_no : '-' }}</div>
+                            <div><?php echo e($order->provider ? $order->provider->phone_no : '-'); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->comrade ? $order->comrade->c_name :  '-'}}</div>
+                            <div><?php echo e($order->comrade ? $order->comrade->c_name :  '-'); ?></div>
                         </td>
                         <td>
-                            <div>{{$order->comrade ? $order->comrade->c_phone_no : '-'}}</div>
+                            <div><?php echo e($order->comrade ? $order->comrade->c_phone_no : '-'); ?></div>
                         </td>
                         <?php $i++ ?>
                     </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 </table>
-                {{ $orders->links() }}
+                <?php echo e($orders->links()); ?>
+
             </div>
             <!--.box-typical-body-->
         </section>
         <!--.box-typical-dashboard-->
     </div>
 
-    @foreach ($orders as $order )
-    <div class="modal fade" id="orderDetailsModal{{$order->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="modal fade" id="orderDetailsModal<?php echo e($order->id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -202,15 +198,15 @@
                         </thead>
                         <tbody>
                             <?php $services = $order->bookings()->get() ?>
-                            @foreach($services as $service)
+                            <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td>{{$service->service_name}} - {{$service->service_details_name}} </td>
-                                <td>{{$service->quantity}}</td>
-                                <td>{{$service->price}}</td>
-                                <td>{{$service->quantity > 1 ? $service->aditional_price : 0}}</td>
-                                <td>{{$service->total_price}}</td>
+                                <td><?php echo e($service->service_name); ?> - <?php echo e($service->service_details_name); ?> </td>
+                                <td><?php echo e($service->quantity); ?></td>
+                                <td><?php echo e($service->price); ?></td>
+                                <td><?php echo e($service->quantity > 1 ? $service->aditional_price : 0); ?></td>
+                                <td><?php echo e($service->total_price); ?></td>
                             </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -220,7 +216,8 @@
             </div>
         </div>
     </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.cms.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

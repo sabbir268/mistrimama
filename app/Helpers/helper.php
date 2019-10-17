@@ -395,7 +395,7 @@ function promocheck($id, $am)
 
             $promouser->uses_count = $promouser->uses_count + 1;
             $promouser->save();
-            
+
             if ($promo->up_to < $discount) {
                 return $promo->up_to;
             } else {
@@ -449,4 +449,25 @@ function availComrade($sp_id, $cate_id)
     $comrade = \App\Models\service_providers_comrads::where('s_id', $sp_id)->where('category', $cate_id)->get();
 
     return $comrade;
+}
+
+
+function base64_to_image($base64_string, $output_file)
+{
+    // open the output file for writing
+    $output_file = $_SERVER['DOCUMENT_ROOT'].'/uploads/'.$output_file;
+    $ifp = fopen($output_file, 'wb');
+
+    // split the string on commas
+    // $data[ 0 ] == "data:image/png;base64"
+    // $data[ 1 ] == <actual base64 string>
+    $data = explode(',', $base64_string);
+
+    // we could add validation here with ensuring count( $data ) > 1
+    fwrite($ifp, base64_decode($data[1]));
+
+    // clean up the file resource
+    fclose($ifp);
+
+    return $output_file;
 }

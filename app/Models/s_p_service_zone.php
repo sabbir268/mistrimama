@@ -8,6 +8,6 @@ class s_p_service_zone extends Model
 {
     public function zones()
     {
-        return $this->hasMany('App\Zone', 'id');
+        return $this->hasMany('App\Zone', 'id','zone');
     }
 }

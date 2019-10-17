@@ -27,6 +27,12 @@ class AuthController extends Controller
             $bookingController = new BookingController();
             return  $bookingController->OrderConfirmDone($request);
         }
+
+        if($request->has('user_type') && $request->user_type == 'self_login'){
+           // return 0;
+            return $this->doLogin($request);
+        }
+        //return $request;
         // $request->phone_no = "+88".$request['phone_no'];
         $rules = [
             'name' => 'required|string',
@@ -44,8 +50,9 @@ class AuthController extends Controller
             // return $user->phone_no = $phone = "+88".$request['phone_no'];
             $refcode = strtolower(substr(str_replace(" ","",str_replace(".","",$request->name)),0,5)). rand(0, 9) . generateRandomString(3);
             $user->ref_code =  $refcode;
+            $user->area =  $request->area;
             $user->password = Hash::make($request->input('password'));
-            if ($user->save()) {
+            if ($user->save()){
                 if ($request->has('reason')) {
                     $roles = new user_roles();
                     $roles->user_id = $user->id;

@@ -365,7 +365,7 @@
                                 </td>
                                 <?php endif; ?>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-mm" id="new_service" data-order_id="<?php echo e($actord->id); ?>"
+                                    <button class="btn btn-sm btn-mm new_service" id="new_service" data-order_id="<?php echo e($actord->id); ?>"
                                         data-category_id="<?php echo e($actord->category_id); ?>"> <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
@@ -405,8 +405,9 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস </th>
-                                        <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
+                                        <th>মূল্য</th>
+                                        <th>অতিরিক্ত মূল্য</th>
                                         <th>টোটাল মূল্য </th>
                                     </tr>
                                 </thead>
@@ -414,10 +415,10 @@
                                     <?php $__currentLoopData = $order->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
-                                        <td><?php echo e($booking->price); ?></td>
                                         <td><?php echo e($booking->quantity); ?></td>
-                                        <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
-                                            - 1))); ?> <?php endif; ?></td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->quantity > 1 ? $booking->aditional_price : 0); ?></td>
+                                        <td><?php echo e($booking->total_price); ?></td>
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
@@ -634,9 +635,10 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস </th>
-                                        <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
-                                        <th>মোট মূল্য </th>
+                                        <th>মূল্য</th>
+                                        <th>অতিরিক্ত মূল্য</th>
+                                        <th>টোটাল মূল্য </th>
                                         <th>একশন </th>
                                     </tr>
                                 </thead>
@@ -644,10 +646,10 @@
                                     <?php $__currentLoopData = $actOrder->bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($booking->service_name); ?>(<?php echo e($booking->service_details_name); ?>)</td>
-                                        <td><?php echo e($booking->price); ?></td>
                                         <td><?php echo e($booking->quantity); ?></td>
-                                        <td><?php if($booking->quantity >= 1): ?> <?php echo e($booking->price + ($booking->aditional_price*($booking->quantity
-                                                - 1))); ?> <?php endif; ?></td>
+                                        <td><?php echo e($booking->price); ?></td>
+                                        <td><?php echo e($booking->quantity > 1 ? $booking->aditional_price : 0); ?></td>
+                                        <td><?php echo e($booking->total_price); ?></td>
                                         <td>
                                             <?php if($actOrder->status > 1): ?>
                                             <button class="btn btn-rounded btn-success-outline btn-sm
@@ -765,7 +767,7 @@
         });
 
 
-        $('#new_service').click(function(){
+        $('.new_service').click(function(){
             $category_id = $(this).data('category_id');
             $order_id = $(this).data('order_id');
             $.ajax({

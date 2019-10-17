@@ -113,7 +113,7 @@ class espController extends Controller
     public function jobHistory()
     {
         $providers = User::find(Auth::user()->id)->serviceProvider->first();
-        $orders = OrderDetails::where('sp_id', '=', $providers->id)->orderBy('id', 'desc')->paginate(8);
+        $orders = OrderDetails::where('sp_id', '=', $providers->id)->where('status','=','5')->where('status','!=','cancel')->orderBy('id', 'desc')->paginate(25);
         return view('esp.job-history', compact('orders', 'providers'));
     }
 
@@ -131,8 +131,8 @@ class espController extends Controller
         } else {
             $from = ['user', 'guest', 'admin', 'special'];
         }
-        //sabbir
-        $orders = OrderDetails::where('sp_id', '=', $providers->id)->whereBetween('order_date', [$dateFrom, $dateTo])->whereIn('order_from', $from)->paginate(10);
+        
+        $orders = OrderDetails::where('sp_id', '=', $providers->id)->where('status','=','5')->where('status','!=','cancel')->whereBetween('order_date', [$dateFrom, $dateTo])->whereIn('order_from', $from)->paginate(10);
         return view('esp.job-all', compact('orders', 'providers', 'orderFrom'));
     }
 
@@ -230,7 +230,8 @@ class espController extends Controller
         $comrade =  new Comrades();
 
         $sp_id = User::find(Auth::user()->id)->sp->id;
-
+        //Sabbir
+        $ServiceProvider = ServiceProvider::find($sp_id);
 
         $user = new User();
 
@@ -243,127 +244,51 @@ class espController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('error', 'Something went wrong!');
         } else {
-            $user->name = $request->c_name;
-            $user->email = $request->email;
-            $user->phone_no = $request->c_phone_no;
-            $pass =  $request->password;
-            $user->password = Hash::make($pass);
-            $user->status = '2';
-            $success = $user->save();
 
-            $ur = new UR();
-            $ur->user_id = $user->id;
-            $ur->roles_id = 6;
-            $ur->save();
+            $comrade->c_name = $request->c_name;
+            $comrade->s_id = $sp_id;
+            $comrade->c_phone_no = $request->c_phone_no;
+            $comrade->email = $request->email;
+            $comrade->c_nid = $request->c_nid;
+            $comrade->category = $request->category;
+            $comrade->comrade_code = $ServiceProvider->sp_code.$comrade->where('s_id',$sp_id)->count() + 1;
 
-            if ($success) {
+            /** Image upload  profile picture  */
+            $c_pic = "c_pic" . time() . ".jpg";
+            base64_to_image($request->c_pic, $c_pic); // base64 to image save
+            $comrade->c_pic =  asset('/uploads') . "/" . $c_pic;
 
-                $comrade->c_name = $request->c_name;
-                $comrade->s_id = $sp_id;
-                $comrade->user_id = $user->id;
-                $comrade->c_phone_no = $request->c_phone_no;
-                $comrade->email = $request->email;
-                $comrade->c_nid = $request->c_nid;
-                $comrade->category = $request->category;
+            /** Image upload nid front picture  */
+            $c_nic_back = "c_nic_back" . time() . ".jpg";
+            base64_to_image($request->c_nic_back, $c_nic_back); // base64 to image save
+            $comrade->c_nic_back = asset('/uploads') . "/" . $c_nic_back;
+            /** Image upload nid front picture  */
+            $c_nic_front = "c_nic_front" . time() . ".jpg";
+            base64_to_image($request->c_nic_front, $c_nic_front); // base64 to image save
+            $comrade->c_nic_front = asset('/uploads') . "/" . $c_nic_front;
+            
+            // return 'ok';
 
+            if ($comrade->save()) {
 
+                $user->name = $request->c_name;
+                $user->email = $request->email;
+                $user->phone_no = $request->c_phone_no;
+                $pass =  $request->password;
+                $user->password = Hash::make($pass);
+                $user->status = '2';
+                $success = $user->save();
 
-                // $comrade->c_pic = $request->c_pic;
-                // $comrade->c_nic_back = $request->c_nic_back;
-                // $comrade->c_nic_back = $request->c_nic_back;
-
-                 $destinationPath = public_path('/uploads/SP/');
-
-                // $image = $request->file('image');
-                // $input['imagename'] = time().'.'.$image->getClientOriginalExtension();    
-                // $img = Image::make($image->getRealPath());
-                // $img->resize(250, 250, function ($constraint) {
-                //     $constraint->aspectRatio();
-                // })->save($destinationPath.'/'.$input['imagename']);
-
-                // $image->move($destinationPath, $input['imagename']);
-
-                if ($request->hasFile('c_pic')) {
-                    $image = $request->file('c_pic');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
-
-                    //  $image->move($destinationPath, $input['imagename']);
-
-                    $img->resize(300, 300, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
-
-                    $comrade->c_pic = asset('/uploads/SP/') . "/" . $input['imagename'];
-                    // $imageName1 = uniqid();
-                    // event(new ImageUploadEvent($request->file('c_pic'), $imageName1));
-                    // $comrade->c_pic = asset('/uploads/SP/') . "/" . $imageName1 . '.' . $request->file('c_pic')->getClientOriginalExtension();
-                }
-
-                if ($request->hasFile('c_nic_back')) {
-                    $image = $request->file('c_nic_back');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
-                    //  $image->move($destinationPath, $input['imagename']);
-                    $img->resize(250, 250, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
+                $ur = new UR();
+                $ur->user_id = $user->id;
+                $ur->roles_id = 6;
+                $ur->save();
 
 
+                if ($success) {
+                    $comrade->user_id = $user->id;
+                    $comrade->save();
 
-                    $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $input['imagename'];
-
-                    // $imageName2 = uniqid();
-                    // event(new ImageUploadEvent($request->file('c_nic_back'), $imageName2));
-                    // $comrade->c_nic_back = asset('/uploads/SP/') . "/" . $imageName2 . '.' .        $request->file('c_nic_back')->getClientOriginalExtension();
-                }
-
-
-                if ($request->hasFile('c_nic_front')) {
-                    $image = $request->file('c_nic_front');
-                    $input['imagename'] = time() . '.' . $image->getClientOriginalExtension();
-                    $img = Image::make($image->getRealPath());
-                    //  $image->move($destinationPath, $input['imagename']);
-                    $img->resize(250, 250, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $input['imagename']);
-
-
-
-                    $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $input['imagename'];
-
-                    // $imageName3 = uniqid();
-                    // event(new ImageUploadEvent($request->file('c_nic_front'), $imageName3));
-                    // $comrade->c_nic_front = asset('/uploads/SP/') . "/" . $imageName3 . '.' . $request->file('c_nic_front')->getClientOriginalExtension();
-                }
-
-
-                // if ($request->hasFile('c_nic_front')) {
-                //     $pic1 = $request->file('c_nic_front');
-                //     $pic1->move('uploads/SP', $pic1->getClientOriginalName());
-                //     $comrade->c_nic_front = $pic1->getClientOriginalName();
-                // }
-
-                // if ($request->hasFile('c_nic_back')) {
-                //     $pic2 = $request->file('c_nic_back');
-                //     $pic2->move('uploads/SP', $pic2->getClientOriginalName());
-                //     $comrade->c_nic_back = $pic2->getClientOriginalName();
-                // }
-
-
-
-                // if ($comrade->save()) {
-                //     $msgText = "Welcome to Mistri Mama Comrade. Login To your account. \n Phone No: " . $request->c_phone_no . "\n Password: " . $pass;
-                //     SMS::send($request->c_phone_no, $msgText);
-
-                //     $request->session()->flash('success', 'New Comrade Added !');
-                //     return back();
-                // } else {
-                //     $request->session()->flash('error', 'Something went worng. Try Again!');
-                //     return back();
-                // }
-
-                if ($comrade->save()) {
                     $request->session()->flash('success', 'Comrade added successfully');
                     return back();
                 } else {
@@ -420,7 +345,7 @@ class espController extends Controller
 
         $totalOrderValueSelf = OrderDetails::where('sp_id', '=', $providers->id)->whereIn('order_from', [auth()->user()->roles->first()->role, 'comrade'])->get()->sum('total_price');
 
-        $totalOrderValueMm = OrderDetails::where('sp_id', '=', $providers->id)->whereIn('order_from', ['user', 'guest', 'admin', 'special'])->get()->sum('total_price');
+        $totalOrderValueMm = OrderDetails::where('sp_id', '=', $providers->id)->where('status','5')->whereIn('order_from', ['user', 'guest', 'admin', 'special'])->get()->sum('total_price');
 
 
 

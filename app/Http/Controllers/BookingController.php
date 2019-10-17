@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\ServiceAllocatorController;
 
 use Illuminate\Http\Request;
 use App\Booking;
-use App\BookingService;
 use Auth;
 use DB;
 use Session;
@@ -302,6 +301,31 @@ class BookingController extends Controller
     // }
 
 
+    /** This is only for service provider order. */
+
+    // sabbir
+    public function serviceReview(){
+        $addedService = Booking::where('order_id',Session::get('order_id'))->distinct('sub_categories_id')->get();
+        $order = Order::find(Session::get('order_id'));
+        $totalPrice = Booking::where('order_id', Session::get('order_id'))->sum('total_price');
+        // return $addedService;
+        return view('esp.order.service-review',compact('addedService','totalPrice'));
+    }
+
+    public function priceChange(Request $request){
+      //  return $request;
+      return $booking = DB::table('bookings')->where('id', $request->id)->update(['total_price' => $request->price]);
+       
+        
+        if($booking){
+            return 'Price Updated'; 
+        }else{
+            return 'Something worng';
+        }
+
+    }
+
+
 
     /** ******************Third step************************  */
     public function ShowDateTime()
@@ -413,6 +437,8 @@ class BookingController extends Controller
             // $order->save();
         }
 
+        
+
         if ($request->type == 'others') {
             $order->area = $request->area;
             $order->others_name = $request->others_name;
@@ -432,9 +458,10 @@ class BookingController extends Controller
 
             // $order->save();
         }
-        
+
+       
         if ($request->type == 'self') {
-           $order->area = auth()->user()->area;
+            $order->area = auth()->user()->area;
             $order->type = 'self';
         }
 
@@ -443,9 +470,22 @@ class BookingController extends Controller
         if (Auth::check()) {
             $order->user_id = auth()->user()->id;
             $order->order_from = auth()->user()->roles->first()->role;
+            
+            if(checkRole(auth()->user()->id, 'special') ){
+                $order->ref_code = auth()->user()->ref_code;
+            }
+            
         }else{
             $order->user_id = 0;
             $order->order_from = 'guest';
+        }
+
+        if($request->has('area') && $request->area == 'outside_dhaka' ){
+            $order->extra_charge = $order->extra_charge + 500; // add extra 500 taka for outside dhaka.
+        }
+
+        if($request->has('comments')){
+            $order->comments = $request->comments;
         }
 
 
@@ -462,9 +502,7 @@ class BookingController extends Controller
         } elseif(Auth::check() && (auth()->user()->roles->first()->role == 'user' || auth()->user()->roles->first()->role == 'special_user')) {
             return redirect()->route('dashboard');
         }else{
-            return '<h1>Your order is placed. You will get confirmation SMS soon....Rdirecting to Home page.</h1> <script> window.location.href = "/" </script>';
-            
-
+            return '<h1>Your order is placed. You will get confirmation SMS soon....</h1> <script> window.location.href = "/user" </script>';
         }
     }
 
@@ -482,6 +520,9 @@ class BookingController extends Controller
 
         $order->status = 'cancel';
         $order->save();
+        if(checkRole(auth()->user()->id, 'admin')){
+            return redirect()->route('booking.index');
+        }
         return redirect()->route('dashboard');
     }
 

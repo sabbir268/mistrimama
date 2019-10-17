@@ -44,6 +44,10 @@
         opacity: 1;
     }
 
+    .invalid-feedback {
+        color: red;
+    }
+
 
     /* Base for label styling */
     [type="checkbox"]:not(:checked),
@@ -131,11 +135,11 @@
             margin: 17px;
         }
 
-        .promotion > img {
+        .promotion>img {
             padding: 0% 0% !important;
         }
 
-            
+
 
         .mmtopforce {
             margin-top: 90px;
@@ -165,8 +169,8 @@
 
 
                 <div class="col-md-8 promotion ">
-                    <img style="padding: 10% 0%;transform: scale(1.1,1.2);" src="{{asset('uploads/promoimage/Sign_Up.png')}}"
-                        alt="" class="img-responsive">
+                    <img style="padding: 10% 0%;transform: scale(1.1,1.2);"
+                        src="{{asset('uploads/promoimage/Sign_Up.png')}}" alt="" class="img-responsive">
                 </div>
                 <!-- Left part start -->
 
@@ -188,13 +192,12 @@
                                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                 name="name" value="{{ old('name') }}" placeholder="Name" required
                                                 autofocus>
-
-                                            @if ($errors->has('name'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('name'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
 
                                     <div class="col-md-12">
@@ -207,28 +210,25 @@
                                                 class="form-control{{ $errors->has('phone_no') ? ' is-invalid' : '' }}"
                                                 name="phone_no" value="{{ old('phone_no') }}" minLength="11"
                                                 maxLength="11" placeholder="Mobile Number" required>
-
-                                            @if ($errors->has('phone_no'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('phone_no') }}</strong>
-                                            </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('phone_no'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('phone_no') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <i class="input-group-addon fa fa-envelope"></i>
                                             <input id="email" type="email"
                                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                                name="email" placeholder="Email" value="{{ old('email') }}" >
+                                                name="email" placeholder="Email" value="{{ old('email') }}">
                                         </div>
-
                                         @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>
                                         </span>
                                         @endif
-
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group">
@@ -236,13 +236,12 @@
                                             <input id="password" type="password"
                                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                                 name="password" placeholder="Password" required>
-
-                                            @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group">
@@ -277,12 +276,12 @@
                                                 <option value="Uttara"> Uttara</option>
                                                 <option value="Vatara"> Vatara</option>
                                             </select>
-                                            @if ($errors->has('area'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('area') }}</strong>
-                                            </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('area'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('area') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group">

@@ -377,7 +377,7 @@
                                 </td>
                                 @endif
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-mm" id="new_service" data-order_id="{{$actord->id}}"
+                                    <button class="btn btn-sm btn-mm new_service" id="new_service" data-order_id="{{$actord->id}}"
                                         data-category_id="{{$actord->category_id}}"> <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
@@ -421,8 +421,9 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস </th>
-                                        <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
+                                        <th>মূল্য</th>
+                                        <th>অতিরিক্ত মূল্য</th>
                                         <th>টোটাল মূল্য </th>
                                     </tr>
                                 </thead>
@@ -430,10 +431,10 @@
                                     @foreach ($order->bookings as $booking)
                                     <tr>
                                         <td>{{$booking->service_name}}({{$booking->service_details_name}})</td>
-                                        <td>{{$booking->price}}</td>
                                         <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                            - 1)) }} @endif</td>
+                                        <td>{{$booking->price}}</td>
+                                        <td>{{$booking->quantity > 1 ? $booking->aditional_price : 0}}</td>
+                                        <td>{{$booking->total_price}}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -652,9 +653,10 @@
                                 <thead>
                                     <tr>
                                         <th>সার্ভিস </th>
-                                        <th>সার্ভিস মূল্য </th>
                                         <th>পরিমান </th>
-                                        <th>মোট মূল্য </th>
+                                        <th>মূল্য</th>
+                                        <th>অতিরিক্ত মূল্য</th>
+                                        <th>টোটাল মূল্য </th>
                                         <th>একশন </th>
                                     </tr>
                                 </thead>
@@ -662,10 +664,10 @@
                                     @foreach ($actOrder->bookings as $booking)
                                     <tr>
                                         <td>{{$booking->service_name}}({{$booking->service_details_name}})</td>
-                                        <td>{{$booking->price}}</td>
                                         <td>{{$booking->quantity}}</td>
-                                        <td>@if ($booking->quantity >= 1) {{$booking->price + ($booking->aditional_price*($booking->quantity
-                                                - 1)) }} @endif</td>
+                                        <td>{{$booking->price}}</td>
+                                        <td>{{$booking->quantity > 1 ? $booking->aditional_price : 0}}</td>
+                                        <td>{{$booking->total_price}}</td>
                                         <td>
                                             @if($actOrder->status > 1)
                                             <button class="btn btn-rounded btn-success-outline btn-sm
@@ -785,7 +787,7 @@
         });
 
 
-        $('#new_service').click(function(){
+        $('.new_service').click(function(){
             $category_id = $(this).data('category_id');
             $order_id = $(this).data('order_id');
             $.ajax({

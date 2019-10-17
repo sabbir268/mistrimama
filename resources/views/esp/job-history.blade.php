@@ -98,7 +98,7 @@
 
 
                         <td>
-                            <div>{{$spam}}</div>
+                            <div>{{  $order->order_from == 'esp' || $order->order_from == 'comrade' ? $tam  : $spam }}</div>
                         </td>
 
                         <td>
@@ -113,7 +113,7 @@
                             </div>
                         </td>
                         <td>
-                            <div>{{$order->user->name}}</div>
+                            <div>{{$order->name}}</div>
                         </td>
 
                         <td>
@@ -147,7 +147,8 @@
                     <thead>
                         <tr>
                             <td>সার্ভিস </td>
-                            <td>মূল্য </td>
+                            <td>পরিমান</td>
+                            <td>মূল্য</td>
                             <td>অতিরিক্ত মূল্য </td>
                             <td>মোট মূল্য </td>
                             <td>অবস্থা </td>
@@ -158,8 +159,9 @@
                         @foreach($services as $service)
                         <tr>
                             <td>{{$service->service_name}} - {{$service->service_details_name}} </td>
+                            <td>{{$service->quantity}}</td>
                             <td>{{$service->price}}</td>
-                            <td>{{$service->aditional_price}}</td>
+                            <td>{{$service->quantity > 1 ? $service->aditional_price : 0}}</td>
                             <td>{{$service->total_price}}</td>
                             <td><span
                                     class={{$service->status == 1 ? "text-success " : "text-danger "}}}>{{$service->status == 1 ? "কাজ করা হয়েছে " : "কাজ করা হয় নি "}}

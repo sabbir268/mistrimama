@@ -33,6 +33,12 @@
                 </div>
                 <div class="caption">Services</div>
             </li>
+            <li class="">
+                <div class="icon bg-mm">
+                    <i class="fa fa-list-ul"></i>
+                </div>
+                <div class="caption">Review</div>
+            </li>
             <li>
                 <div class="icon bg-mm">
                     <i class="font-icon font-icon-card"></i>

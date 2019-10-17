@@ -6,11 +6,13 @@
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/separate/elements/steps.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
-<?php if(Auth::check()): ?>
 <?php $__env->startSection('topbar'); ?>
+<?php if(Auth::check()): ?>
 <?php echo $__env->make('user.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php $__env->stopSection(); ?>
+<?php else: ?>
+<?php echo $__env->make('user.topbar-guest', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php endif; ?>
+<?php $__env->stopSection(); ?>
 
 <?php if(Auth::check()): ?>
 <?php $__env->startSection('sidebar'); ?>
@@ -90,7 +92,7 @@
                         
 
                         <input type="text" class="from-control" name="order_time" id="order_time1" style="    display: block;
-                        width: 94%;
+                        width: 88%;
                         padding: .375rem .75rem;
                         font-size: 1rem;
                         line-height: 1.5;
@@ -99,10 +101,11 @@
                         background-clip: padding-box;
                         border: 1px solid #f3b400;
                         border-radius: .25rem;
-                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                        margin-left: 20px;">
 
                         <input type="text" class="from-control" name="order_time" id="order_time2" style="  display: none;
-                        width: 94%;
+                        width: 88%;
                         padding: .375rem .75rem;
                         font-size: 1rem;
                         line-height: 1.5;
@@ -111,7 +114,8 @@
                         background-clip: padding-box;
                         border: 1px solid #f3b400;
                         border-radius: .25rem;
-                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                        margin-left: 20px;">
                     </div>
                 </div>
             </div>

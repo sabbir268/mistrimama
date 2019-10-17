@@ -32,6 +32,12 @@
                 </div>
                 <div class="caption">Services</div>
             </li>
+            <li class="">
+                <div class="icon bg-mm">
+                    <i class="fa fa-list-ul"></i>
+                </div>
+                <div class="caption">Review</div>
+            </li>
             <li>
                 <div class="icon bg-mm">
                     <i class="font-icon font-icon-card"></i>
@@ -154,7 +160,7 @@
         if($('#grand_total').html() == '0.00' || $('#grand_total').html() == '' || $('#grand_total').html() == '0'){
             alert('Select service first!');
         }else{
-            window.location.href = "{{route('date.time')}}";
+            window.location.href = "{{route('service.review')}}";
         }
     });
 

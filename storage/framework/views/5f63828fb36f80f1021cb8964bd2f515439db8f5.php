@@ -46,10 +46,9 @@
                                 <tr>
                                     <th>Photographs</th>
                                     <?php $passport = $serviceProvider->passport; ?>
-                                    <td class="logoWrap"><img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($passport); ?>" class="logoImg"
-                                            alt="" title=""></td>
+                                    <td class="logoWrap"><img src="<?php echo e($passport); ?>" class="logoImg" alt="" title=""></td>
                                 </tr>
-                                
+
                                 <tr>
                                     <th>NID No.</th>
                                     
@@ -58,8 +57,7 @@
                                 <tr>
                                     <th>TIN certificate or trade license: *</th>
                                     <?php $tin = $serviceProvider->tin_cer; ?>
-                                    <td class="logoWrap"><img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($tin); ?>" class="logoImg"
-                                            alt="" title=""></td>
+                                    <td class="logoWrap"><img src="<?php echo e($tin); ?>" class="logoImg" alt="" title=""></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,10 +66,12 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                    <img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($serviceProvider->nic_front); ?>" alt="NIC FRONT" class="img-responsive">
+                                <img style="height:150px" src="<?php echo e($serviceProvider->nic_front); ?>" alt="NIC FRONT"
+                                    class="img-responsive">
                             </div>
                             <div class="card-body">
-                                    <img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($serviceProvider->nic_front); ?>" alt="NIC FRONT" class="img-responsive">
+                                <img style="height:150px" src="<?php echo e($serviceProvider->nic_front); ?>" alt="NIC FRONT"
+                                    class="img-responsive">
                             </div>
                         </div>
                     </div>
@@ -88,32 +88,6 @@
                 </div>
             </div>
             <div class="portlet-body flip-scroll">
-                <header>
-                    <h4>Service Information</h4>
-                </header>
-                <table class="table table-bordered table-striped table-condensed flip-content">
-                    <thead>
-                        <th>Category </th>
-                        <th>Name</th>
-                        <th>Price </th>
-                        <th>Mistri Mama Commission</th>
-                        <th>SP Amount </th>
-
-                    </thead>
-
-                    <tbody>
-                        <?php $__currentLoopData = $serviceProvider->services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
-                            <td><?php echo e($service->category->name); ?></td>
-                            <td><?php echo e($service->subCategory->name); ?></td>
-                            <td><?php echo e($service->s_price); ?> </td>
-                            <td><?php echo e($service->s_comm); ?></td>
-                            <td><?php echo e($service->s_desp); ?></td>
-                        </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </tbody>
-                </table>
-
                 <header>
                     <h4>Zone and Cluster</h4>
                 </header>
@@ -150,133 +124,129 @@
                     </div>
                 </div>
 
+                <header>
+                    <h4>Registered Services</h4>
+                </header>
+
                 <div class="row">
-                    <div class="col-md-12">
-                        <header>
-                            <h4>Time Scedule</h4>
-                        </header>
+                    <div class="col-md-6">
                         <table class="table table-bordered table-striped table-condensed flip-content">
                             <thead>
-                                <th>Day</th>
-                                <th>Available Time</th>
+                                <th>Category</th>
                             </thead>
-
                             <tbody>
-                                <?php $__currentLoopData = $serviceProvider->time; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $daytime): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $serviceProvider->Category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td><?php echo e($daytime->days->days); ?></td>
-                                    <td><?php echo e($daytime->time); ?>-<?php echo e($daytime->end_time); ?></td>
+                                    <td><?php echo e($category->category()->first()->name); ?></td>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
+
+                
+
+    </div>
+</div>
+</div>
+<div class="col-md-12">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Payment Information
 
             </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs"></i>Payment Information
-
-                </div>
-            </div>
-            <div class="portlet-body flip-scroll">
-                <table class="table table-bordered table-striped table-condensed flip-content">
-                    <tbody>
-                        <tr>
-                            <th>Mobile Banking</th>
-                            <td>
-                                <?= $serviceProvider->mobile_banking ?>
-                            </td>
-                        </tr>
+        <div class="portlet-body flip-scroll">
+            <table class="table table-bordered table-striped table-condensed flip-content">
+                <tbody>
+                    <tr>
+                        <th>Mobile Banking</th>
+                        <td>
+                            <?= $serviceProvider->mobile_banking ?>
+                        </td>
+                    </tr>
 
 
-                        <tr>
-                            <th>MFS Account Number </th>
-                            <td><?php echo e($serviceProvider->mfs_account); ?></td>
-                        </tr>
+                    <tr>
+                        <th>MFS Account Number </th>
+                        <td><?php echo e($serviceProvider->mfs_account); ?></td>
+                    </tr>
 
 
 
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
-    <?php if($serviceProvider->type != 4): ?>
-    <div class="col-md-12">
-        <!-- BEGIN SAMPLE TABLE PORTLET-->
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs"></i>Comrade Information
-                </div>
-            </div>
-            <div class="portlet-body flip-scroll">
-                <?php $__currentLoopData = $serviceProvider->comrads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <table class="table table-bordered table-striped table-condensed flip-content">
-                    <tbody>
-                        <tr>
-                            <th>Name</th>
-                            <td>
-                                <?= $comrad->c_name ?>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Phone No</th>
-                            <td>
-                                <?= $comrad->c_phone_no ?>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Alt Phone No</th>
-                            <td>
-                                <?= $comrad->c_alt_phone_no ?>
-                            </td>
-                        </tr>
-
-
-
-                        <tr>
-                            <th>Nic Front</th>
-                            <?php $nic_front_com = $comrad->c_nic_front; ?>
-
-                            <td class="logoWrap"><img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($nic_front_com); ?>" class="logoImg"
-                                    alt="Nic back"></td>
-                        </tr>
-                        <tr>
-                            <th>Nic Back</th>
-                            <?php $nic_back_com = $comrad->c_nic_back; ?>
-
-                            <td class="logoWrap"><img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($nic_back_com); ?>" class="logoImg"
-                                    alt="Nic back"></td>
-                        </tr>
-                        <tr>
-                            <th>Passport</th>
-
-                            <?php $nic_passport = $comrad->c_passport; ?>
-
-                            <td class="logoWrap"><img src="<?php echo e(url('uploads/SP')); ?>/<?php echo e($nic_passport); ?>" class="logoImg"
-                                    alt="Nic back"></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php if($serviceProvider->type != 4): ?>
+<div class="col-md-12">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Comrade Information
             </div>
         </div>
-    </div>
+        <div class="portlet-body flip-scroll">
+            <?php $__currentLoopData = $serviceProvider->comrads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comrad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <table class="table table-bordered table-striped table-condensed flip-content">
+                <tbody>
+                    <tr style="background-color:#ddd">
+                        <th>Name</th>
+                        <td>
+                            <?= $comrad->c_name ?>
+                        </td>
+                    </tr>
 
-    <?php endif; ?>
+                    <tr>
+                        <th>Phone No</th>
+                        <td>
+                            <?= $comrad->c_phone_no ?>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Alt Phone No</th>
+                        <td>
+                            <?= $comrad->c_alt_phone_no ?>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <th>Nic Front</th>
+                        <?php $nic_front_com = $comrad->c_nic_front; ?>
+
+                        <td class="logoWrap"><img src="<?php echo e($nic_front_com); ?>" class="logoImg" alt="Nic back"></td>
+                    </tr>
+                    <tr>
+                        <th>Nic Back</th>
+                        <?php $nic_back_com = $comrad->c_nic_back; ?>
+
+                        <td class="logoWrap"><img src="<?php echo e($nic_back_com); ?>" class="logoImg" alt="Nic back"></td>
+                    </tr>
+                    <tr>
+                        <th>Passport</th>
+
+                        <?php $nic_passport = $comrad->c_passport; ?>
+
+                        <td class="logoWrap"><img src="<?php echo e($nic_passport); ?>" class="logoImg" alt="Nic back"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    </div>
+</div>
+
+<?php endif; ?>
 </div>
 </div>
 <style>

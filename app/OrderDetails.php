@@ -31,12 +31,12 @@ class OrderDetails extends Model
         return $this->belongsTo('App\ServiceSystem','id','order_id');
     }
 
-    public function getNameAttribute()
+     public function getNameAttribute()
     {
         if($this->type == 'others'){
             return $this->others_name;
         }
-            return $this->user->name;
+            return $this->user ? $this->user->name : "-";
     }
 
     public function getPhoneAttribute()
@@ -44,7 +44,7 @@ class OrderDetails extends Model
         if($this->type == 'others'){
             return $this->others_phone;
         }
-            return $this->user->phone_no;
+            return $this->user ? $this->user->phone_no : "-";
     }
 
     public function getAddressAttribute()
@@ -52,14 +52,21 @@ class OrderDetails extends Model
         if($this->type == 'others'){
             return $this->others_addr;
         }
-            return $this->user->address;
+            return $this->user ? $this->user->address : "-";
+    }
+
+    public function setAreaAttribute()
+    {
+        if($this->type == 'others'){
+            return $this->area;
+        }
+            return $this->user ? $this->user->area : "-";
     }
 
     public function getTotalPriceAttribute()
     {
             return $this->bookings->where('status',1)->sum('total_price');
     }
-
 
     public function provider()
     {
@@ -69,4 +76,6 @@ class OrderDetails extends Model
     {
         return $this->belongsTo('App\Models\service_providers_comrads', 'sp_comrade_id');
     }
+
+
 }

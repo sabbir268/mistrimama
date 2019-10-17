@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
 @endsection
 
-@if(Auth::check())
 @section('topbar')
+@if(Auth::check())
 @include('user.topbar')
-@endsection
+@else
+@include('user.topbar-guest')
 @endif
+@endsection
 
 @if(Auth::check())
 @section('sidebar')

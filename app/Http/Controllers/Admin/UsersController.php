@@ -9,9 +9,12 @@ use App\User;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use DB;
-class UsersController extends Controller {
 
-    public function index(Request $request) {
+class UsersController extends Controller
+{
+
+    public function index(Request $request)
+    {
 
         $query = User::where('user_type', 4);
         if ($request->name) {
@@ -34,11 +37,13 @@ class UsersController extends Controller {
         return view('admin.users.index', compact('models'));
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         return view('admin.users.create');
     }
 
-    public function store(UserUpdate $request) {
+    public function store(UserUpdate $request)
+    {
         try {
             $input = $request->all();
             $input['user_type'] = 4;
@@ -51,18 +56,21 @@ class UsersController extends Controller {
         }
     }
 
-    public function show($id) {
+    public function show($id)
+    {
 
         $model = User::where('user_type', 4)->findOrFail($id);
         return view('admin.users.show', ['model' => $model]);
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $model = User::where('user_type', 4)->findOrFail($id);
         return view('admin.users.edit', compact('model'));
     }
 
-    public function update(UserUpdate $request, $id) {
+    public function update(UserUpdate $request, $id)
+    {
         try {
             $model = User::where('user_type', 4)->findOrFail($id);
 
@@ -76,7 +84,8 @@ class UsersController extends Controller {
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //\Session::flash('error', 'Action not allow!');
         //return redirect()->back();
         $role = User::findOrFail($id);
@@ -84,11 +93,13 @@ class UsersController extends Controller {
         return redirect()->back();
     }
 
-    public function changePassword() {
+    public function changePassword()
+    {
         return view('admin.users.changepassword');
     }
 
-    public function postChangePassword(Request $request) {
+    public function postChangePassword(Request $request)
+    {
         $validatedData = $request->validate([
             //  'current_password' => 'required',
             'password' => 'required',
@@ -101,12 +112,14 @@ class UsersController extends Controller {
         return redirect()->back();
     }
 
-    public function forgotpasswordlink($id) {
+    public function forgotpasswordlink($id)
+    {
 
         return view('auth.forgotpassword', ['id' => $id]);
     }
 
-    public function postforgotpasswordpost(Request $request) {
+    public function postforgotpasswordpost(Request $request)
+    {
         $input = $request->all();
         $userid = $input['id'];
 
@@ -123,7 +136,8 @@ class UsersController extends Controller {
         return redirect()->back();
     }
 
-    public function CustomerValidation(Request $request) {
+    public function CustomerValidation(Request $request)
+    {
 
         $message = [
             "password.regex" => "Password must have minimum of one capital letter number and special character.",
@@ -131,13 +145,13 @@ class UsersController extends Controller {
         ];
 
         $validator = Validator::make($request->all(), [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'phone' => 'required|numeric',
-                    //'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$@$^,&*(?:;")#%]).*$/',
-                    'password' => 'required|min:6',
-                    'confirm_password' => 'required|same:password',
-                        ], $message);
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric',
+            //'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$@$^,&*(?:;")#%]).*$/',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password',
+        ], $message);
         if ($validator->fails()) {
             $errors = $validator->errors()->toArray();
             $validationError = validationError($errors);
@@ -147,7 +161,8 @@ class UsersController extends Controller {
         }
     }
 
-    public function Register(Request $request) {
+    public function Register(Request $request)
+    {
 
 
         DB::beginTransaction();
@@ -165,12 +180,12 @@ class UsersController extends Controller {
                 $subscription = \App\SubscriptionPlan::where('subscription_type', 1)->first();
                 if ($subscription) {
                     if ($subscription->trial_days > 0) {
-                        $subscriptionDetails = $model->newSubscription('main','plan_E23byBh1xfQdjb')
-                                ->trialDays($subscription->trial_days)
-                                ->create($request->stripetoken);
+                        $subscriptionDetails = $model->newSubscription('main', 'plan_E23byBh1xfQdjb')
+                            ->trialDays($subscription->trial_days)
+                            ->create($request->stripetoken);
                     } else {
-                        $subscriptionDetails = $model->newSubscription('main','plan_E23byBh1xfQdjb')
-                                ->create($request->stripetoken);
+                        $subscriptionDetails = $model->newSubscription('main', 'plan_E23byBh1xfQdjb')
+                            ->create($request->stripetoken);
                     }
                     if ($subscriptionDetails) {
                         $stripe_id = $subscriptionDetails->stripe_id;
@@ -196,5 +211,6 @@ class UsersController extends Controller {
             DB::rollback();
         }
     }
+
 
 }

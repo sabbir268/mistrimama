@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/lobipanel.min.css')}}">
 <link rel="stylesheet" href="{{asset('dashboard/css/lib/jqueryui/jquery-ui.min.css')}}">
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/pages/widgets.min.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/fonts/dropify.woff">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/fonts/dropify.ttf">
 @endsection
 
 @section('topbar')
@@ -53,6 +56,9 @@
                                 <div>নাম </div>
                             </th>
                             <th>
+                                <div>কোড</div>
+                            </th>
+                            <th>
                                 <div>ফোন নাম্বার </div>
                             </th>
                             <th>
@@ -72,6 +78,7 @@
                             <td><img style="height:50px;width:50px" src="{{$comrade->c_pic}}" class="rounded-circle"
                                     alt="some"></td>
                             <td>{{$comrade->c_name}}</td>
+                            <td>{{$comrade->comrade_code}}</td>
                             <td>{{$comrade->c_phone_no}}</td>
                             <td>{{$comrade->email}}</td>
                             <td>{{$comrade->c_nid}}</td>
@@ -173,6 +180,11 @@
                                 </div>
                             </div>
 
+                            <div class="form-group mb-1">
+                                <label class="control-label" for="c_pic">ছবি :</label>
+                                <input type="file"  id="c_pic" class="dropify" placeholder="Chose file">
+                            </div>
+
                         </div>
                         {{-- openKCFinder --}}
                         <div class="col-md-6">
@@ -183,30 +195,17 @@
                                         placeholder="Ex: 1992324234234" required>
                                 </div>
                             </div>
-                            <div class="form-group mb-1">
-                                <label class="control-label" for="c_pic">ছবি :</label>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text rounded-0" for="">Choose file</label>
-                                    <input type="file" name="c_pic" class="form-control" id="inputGroupFile02" 
-                                        placeholder="Chose file">
-                                </div>
-                            </div>
+
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_front">NID সামনের ছবি :</label>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text rounded-0" for="">Choose file</label>
-                                    <input type="file" name="c_nic_front" class="form-control" id="inputGroupFile02"
-                                         placeholder="Chose file">
-                                </div>
+                                <input type="file"  id="c_nic_front" class="dropify"
+                                    placeholder="Chose file">
+
                             </div>
                             <div class="form-group mb-1">
                                 <label class="control-label" for="c_nic_back">NID পিছনের ছবি :</label>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text rounded-0" for="">Choose file</label>
-                                    <input type="file" name="c_nic_back" class="form-control" id="inputGroupFile02"
+                                <input type="file"  id="c_nic_back" class="dropify"
                                     placeholder="Chose file">
-                                </div>
-
                             </div>
 
 
@@ -236,6 +235,74 @@
             //replace the "Choose a file" label
             $(this).next('.custom-file-label').html(fileName);
         })
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script>
+    var drEvent = $('.dropify').dropify();
+
+    drEvent.on('dropify.afterClear', function(event, element){
+         $(this).attr('type','file');
+        // $('#' + $id).attr('type', 'file');
+    });
+</script>
+<script>
+    function resizeImage(id) {
+    var file = event.target.files[0];
+    // Ensure it's an image
+    if (file.type.match(/image.*/)) {
+        //  console.log('An image has been loaded');
+        // Load the image
+        var reader = new FileReader();
+        reader.onload = function (readerEvent) {
+            var image = new Image();
+            image.onload = function (imageEvent) {
+
+                // Resize the image
+                var canvas = document.createElement('canvas'),
+                    max_size = 544,// TODO : pull max size from a site config
+                    width = image.width,
+                    height = image.height;
+                if (width > height) {
+                    if (width > max_size) {
+                        height *= max_size / width;
+                        width = max_size;
+                    }
+                } else {
+                    if (height > max_size) {
+                        width *= max_size / height;
+                        height = max_size;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+                var dataUrl = canvas.toDataURL('image/jpeg');
+                $.event.trigger({
+                    type: "imageResized",
+                    url: dataUrl,
+                    id: id
+                });
+            }
+            image.src = readerEvent.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+$(document).on("imageResized", function (event) {
+    if (event.url) {
+        $b64 = event.url;
+        $id = event.id;
+         $html = '<input type="text" name="'+$id+'" value="'+$b64+'">';
+        $('#'+ $id).after($html);
+    }
+});
+
+$('input[type="file"]').change(function () {
+    $id = $(this).attr('id');
+    resizeImage($id);
+});
 </script>
 
 @endsection

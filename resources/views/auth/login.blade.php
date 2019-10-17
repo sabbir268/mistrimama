@@ -30,18 +30,22 @@
         padding-bottom: 0px !important;
     }
 
-    .socila-box{
+    .socila-box {
         font-size: 16px;
         padding: 0% 14%;
     }
-    .socila-box>li>a{
-        color:#fff;
+
+    .socila-box>li>a {
+        color: #fff;
         opacity: 0.7;
     }
 
-    .socila-box>li:hover>a{
+    .socila-box>li:hover>a {
         color: #f3b400;
         opacity: 1;
+    }
+    .invalid-feedback {
+        color: red;
     }
 
 
@@ -116,7 +120,7 @@
     }
 
     /* accessibility */
-    .dropdown-toggle{
+    .dropdown-toggle {
         margin: -1px 1px !important;
         border: 1px solid #f3b400 !important;
         border-left: 0px !important;
@@ -124,7 +128,7 @@
     }
 
 
-    .mmtopforce{
+    .mmtopforce {
         margin-top: 118px;
     }
 
@@ -134,15 +138,14 @@
             margin: 17px;
         }
 
-        .promotion > img {
-                padding: 0% 4% !important;
+        .promotion>img {
+            padding: 0% 4% !important;
         }
 
         .mmtopforce {
             margin-top: 90px;
         }
     }
-
 
 </style>
 <div class="page-content">
@@ -163,7 +166,7 @@
 
     <div class="section-content profiles-content new-signup">
         <div class="container">
-            <div class="row mmtopforce" >
+            <div class="row mmtopforce">
                 <div class="col-md-8 promotion " style=" padding: 0px;">
                     <img style="padding: 9% 5%;transform: scale(1.2,1.3);"
                         src="{{asset('uploads/promoimage/promo_image.png')}}" alt="" class="img-responsive">
@@ -191,17 +194,17 @@
                                         <div class="input-group"> <i class="input-group-addon fa fa-phone"></i>
                                             <span class="input-group-addon"
                                                 style=" border-right: 0px !important;padding: 7px;">+88</span>
-                                            <input style="border-left: 0px !important;padding-left: 2px;"  id="phone_no"
+                                            <input style="border-left: 0px !important;padding-left: 2px;" id="phone_no"
                                                 type="phone"
                                                 class="form-control{{ $errors->has('phone_no') ? ' is-invalid' : '' }}"
                                                 name="phone_no" value="{{ old('phone_no') }}" type=""
                                                 placeholder="Phone Number" required autofocus>
-                                            @if ($errors->has('phone_no'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('phone_no') }}</strong>
-                                            </span>
-                                            @endif
                                         </div>
+                                        @if ($errors->has('phone_no'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('phone_no') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -209,14 +212,14 @@
                                         <div class="input-group"> <i class="input-group-addon fa fa-lock"></i>
                                             <input id="password" type="password"
                                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                                name="password" placeholder="Password" style="padding-left: 20px !important;" required>
-
-                                            @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                            @endif
+                                                name="password" placeholder="Password"
+                                                style="padding-left: 20px !important;" required>
                                         </div>
+                                        @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
 

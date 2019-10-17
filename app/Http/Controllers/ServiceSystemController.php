@@ -27,7 +27,12 @@ class ServiceSystemController extends Controller
             $order->status = $sts;
             $orderDetails = OrderDetails::find($ordId);
             if($sts == 3){
-                $order->disc = promocheck($order->user_id, $orderDetails->total_price);
+                if($order->order_from != 'special' || $order->order_from != 'user' ){
+                    $discountAmount = $order->disc != 0.00 ? (($orderDetails->total_price * $order->disc) /100) : 0.00; 
+                }else{
+                    $discountAmount = promocheck($order->user_id, $orderDetails->total_price);
+                }
+                $order->disc = $discountAmount;
                 
                 $msg = "Thank you so much for taking service from Mistri Mama. Your total payable bill amount is BDT ". $order->total_price  ."/-";
 
@@ -43,7 +48,7 @@ class ServiceSystemController extends Controller
             if($request->has('pay_type')){
                 $order->pay_type = $request->pay_type;
                 if($request->pay_type == 3){
-                    $data['total_amount'] = ($orderDetails->total_price + $orderDetails->extra_charge) - promocheck($orderDetails->user_id, $orderDetails->total_price); 
+                    $data['total_amount'] = ($orderDetails->total_price + $orderDetails->extra_charge) - $order->disc; 
                     $data['cus_name'] = $order->user->name; 
                     $data['cus_email'] = $order->user->email == null ? "info@mistrimama.com" : $order->user->email ; 
                     $data['cus_add1'] = $order->user->address; 
@@ -62,7 +67,6 @@ class ServiceSystemController extends Controller
             $order->save();
 
         }
-
         
 
 
@@ -73,7 +77,7 @@ class ServiceSystemController extends Controller
             $sp = ServiceProvider::find($request->service_provider_id);
             $user = User::find($request->client_id);
             $amount = ($request->amount * $sp->service_category)/100;
-            $account->amount = $amount;
+            $account->amount = $order->order_from == 'esp' || $order->order_from == 'comrade' ? 0 : $amount;
             $account->user_id = $sp->u_id;
             $account->trxno = generateRandomString(10);
             if($order->pay_type > 1 ){
@@ -83,26 +87,36 @@ class ServiceSystemController extends Controller
             }
             
             $account->details = 'Mistri Mama Commission ('.$sp->service_category.'%)';
-            $account->ref = $user->name;
+            $account->ref = $user ? $user->name : 'guest';
             $account->status = 'debit';
             $account->save();
 
             /** Discounted Price Adjustment */
             if($order->disc != 0.00){
                 $account = new Account();
-                $account->amount = promocheck($order->user_id, $orderDetails->total_price);
+                $account->amount = $order->disc;
                 $account->user_id = $sp->u_id;
                 $account->trxno = generateRandomString(10);
                 $account->type = 'virtual';
                 $account->details = 'discount_adjust';
-                $account->ref = $user->name;
+                $account->ref = $user ? $user->name : 'guest';
                 $account->status = 'credit';
                 $account->save();
+
+                $accountdis = new Account();
+                $accountdis->amount = $order->disc;
+                $accountdis->user_id = 1;
+                $accountdis->trxno = generateRandomString(10);
+                $accountdis->type = 'virtual';
+                $accountdis->details = 'discount_adjust';
+                $accountdis->ref = "SP:". $sp->name;
+                $accountdis->status = 'debit';
+                $accountdis->save();
             }
 
             /** Mistrimama own account save */
             $accountmm = new Account();
-            $accountmm->amount =  $amount;
+            $accountmm->amount = $order->order_from == 'esp' || $order->order_from == 'comrade' ? 0 : $amount;
             $accountmm->user_id = 1;
             $accountmm->trxno = generateRandomString(10);
             $accountmm->type = 'virtual';
@@ -113,11 +127,12 @@ class ServiceSystemController extends Controller
 
             /** Sp Income own account save */
             $accountsp = new Account();
-            $accountsp->amount = $request->amount - $amount;
+            $accountsp->amount = $order->order_from == 'esp' || $order->order_from == 'comrade' ? $request->amount : $request->amount - $amount;
             $accountsp->user_id = $sp->u_id;
             $accountsp->trxno = generateRandomString(10);
-            $accountsp->details = 'Service Payment Recive';
-            $accountsp->ref = $user->name;
+            $accountsp->details = 'Service Payment Recive. Order#'.$order->order_no;
+            $accountsp->ref = $user ? $user->name : 'guest';
+
             if($order->pay_type > 1 ){
                 $accountsp->status = 'credit';
                 $accountsp->type = 'virtual';
@@ -142,8 +157,14 @@ class ServiceSystemController extends Controller
                 $rp->details = "Service referred (BDT". $request->amount .")";
                 $rp->save();
             }
-            
             // RewardPoint
+
+            /** Send notification to kushal boss for MM Ltd only */
+            if($sp->id == 2){
+                SMS::send('01313476474', 'Order#' . $order->order_no .' is finished successfully. Total amount recived: BDT '.$request->amount.'/-');
+            }
+            
+            
         }
 
         if ($request->has('s_sys_id')) {

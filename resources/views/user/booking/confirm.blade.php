@@ -4,16 +4,17 @@
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/flatpickr.min.css')}}">
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/vendor/bootstrap-daterangepicker.min.css')}}">
 <link rel="stylesheet" href="{{asset('dashboard/css/separate/elements/steps.min.css')}}">
-
-
-
 @endsection
 
-@if(Auth::check())
+
 @section('topbar')
+@if(Auth::check())
 @include('user.topbar')
-@endsection
+@else
+@include('user.topbar-guest')
 @endif
+@endsection
+
 
 @if(Auth::check())
 @section('sidebar')
@@ -61,8 +62,8 @@
         </ul>
     </div>
 
-    <header class="steps-numeric-title">Confrimation</header>
-    <div class="col-xl-6 offset-md-3 ">
+    <header class="steps-numeric-title">Confirmation</header>
+    <div class="col-xl-8 offset-md-2 ">
         {{-- <p class="text-center">
                 <strong>Your order has been place successfully.</strong> Please wait a momment for confirmation. <br>
                 <a href="{{route('add.order-confirm')}}" class="btn btn-link">Confirm Order</a>
@@ -71,6 +72,7 @@
         <form action="{{route('add.order-confirm')}}" method="POST">
             @csrf
             <div class="form-group">
+
                 <div class="checkbox-detailed text-left" id="self-checkbox">
                     <input type="radio" name="type" id="type-self" value="self" checked />
                     <label for="type-self">
@@ -82,13 +84,14 @@
                         </span>
                     </label>
                 </div>
+
                 <div class="checkbox-detailed text-left" id="others-checkbox">
                     <input type="radio" name="type" id="type-others" value="others" />
                     <label for="type-others">
                         <span class="checkbox-detailed-tbl">
                             <span class="checkbox-detailed-cell">
                                 <span class="checkbox-detailed-title">For Others</span>
-                                Order for Others.
+                                Order for Other.
                             </span>
                         </span>
                     </label>
@@ -126,7 +129,7 @@
                     <div class="form-group row">
                         <div class="col-xl-4 ">
                             <label class="form-label text-left">
-                                &nbsp;<i class="font-icon font-icon-map"></i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="font-icon font-icon-map"></i>
                                 Area
                                 {{-- Area <span class="invisible">Others</span> --}}
                             </label>
@@ -162,6 +165,7 @@
                                     <option value="Uttar Khan"> Uttar Khan</option>
                                     <option value="Uttara"> Uttara</option>
                                     <option value="Vatara"> Vatara</option>
+                                    <option value="outside_dhaka">Outside Dhaka</option>
                                 </select>
                             </div>
                         </div>
@@ -191,7 +195,7 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="input-group date">
-                            <textarea name="comments" class="form-control" id="comments" cols="100" rows="4"></textarea>
+                            <textarea name="comments" class="form-control m-0" id="comments" cols="100" rows="4"></textarea>
                             @if (Session::has('comments'))
                             <span class="text-danger pl-2">{{Session::get('comments')}}</span>
                             @endif
@@ -204,8 +208,8 @@
                 <div class="form-group row">
                     <div class="col-xl-4">
                         <label class="form-label ">
-                            <i class="font-icon font-icon-answer"></i>
-                            Referral Code &nbsp;&nbsp;<small> (optional)</small>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="font-icon font-icon-answer"></i>
+                            Referral Code <br><small> (optional)</small>
                         </label>
                     </div>
                     <div class="col-xl-8">
@@ -232,10 +236,30 @@
     @else
     <form action="{{route('user.do-register')}}" method="POST">
         @csrf
+
         <div class="form-group">
+            <div class="row guest" style="display:none">
+                <div class="col-md-6 offset-md-3">
+                    <div class="alert alert-warning alert-icon alert-close alert-dismissible fade show" role="alert">
+                        <i class="font-icon font-icon-warning"></i>
+                        <strong>N.B.</strong>You will miss many amazing things.
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-detailed text-left" id="login-checkbox">
+                <input type="radio" name="type" id="type-login" value="self" checked />
+                <label for="type-login">
+                    <span class="checkbox-detailed-tbl">
+                        <span class="checkbox-detailed-cell">
+                            <span class="checkbox-detailed-title">Login</span>
+                            Login to your account
+                        </span>
+                    </span>
+                </label>
+            </div>
 
             <div class="checkbox-detailed text-left" id="others-checkbox">
-                <input type="radio" name="type" id="type-others" value="self" checked />
+                <input type="radio" name="type" id="type-others" value="self" />
                 <label for="type-others">
                     <span class="checkbox-detailed-tbl">
                         <span class="checkbox-detailed-cell">
@@ -259,8 +283,9 @@
                 </label>
             </div>
 
+
             <div class="others-area" style="display:block">
-                <div class="form-group row">
+                <div class="form-group row name" style="display:none">
                     <div class="col-xl-4">
                         <label class="form-label">
                             <i class="font-icon font-icon-user"></i>
@@ -323,10 +348,10 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group  row area" style="display:none">
                     <div class="col-xl-4 ">
                         <label class="form-label text-left">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="font-icon font-icon-map"></i>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="font-icon font-icon-map"></i>
                             Area{{-- Area <span class="invisible">Others</span> --}}
                         </label>
                     </div>
@@ -361,6 +386,7 @@
                                 <option value="Uttar Khan"> Uttar Khan</option>
                                 <option value="Uttara"> Uttara</option>
                                 <option value="Vatara"> Vatara</option>
+                                <option value="outside_dhaka">Outside Dhaka</option>
                             </select>
                         </div>
 
@@ -372,10 +398,10 @@
                     </div>
                 </div>
 
-                <input type="text" name="user_type" id="user_type" value="user" hidden>
+                <input type="text" name="user_type" id="user_type" value="self_login" hidden>
                 <input type="text" name="reason" value="ok" hidden>
 
-                <div class="form-group row">
+                <div class="form-group row address" style="display:none">
                     <div class="col-xl-4">
                         <label class="form-label">
                             <i class="font-icon font-icon-map"></i>
@@ -389,6 +415,22 @@
                                 rows="3"></textarea>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row ">
+            <div class="col-xl-3">
+                <label class="form-label">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="font-icon font-icon-answer"></i>Comments
+                </label>
+            </div>
+            <div class="col-xl-6">
+                <div class="input-group date">
+                    <textarea name="comments" class="form-control" style="margin-left: 69px;" id="comments"  rows="4"></textarea>
+                    @if (Session::has('comments'))
+                    <span class="text-danger pl-2">{{Session::get('comments')}}</span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -435,7 +477,12 @@
         $('#others-checkbox').click(function() {
             if($('#type-others').is(':checked')) { 
                 $('.others-area').show();
+                $('.guest').hide();
                // $('.refer').hide();
+               $('.name').show();
+                $('.area').show();
+                $('.address').show();
+                $('.password').show();
                 $('#others_name').attr('required','true');
                 $('#others_phone').attr('required','true');
                 $('#others_addr').attr('required','true');
@@ -447,16 +494,36 @@
         $('#self-checkbox').click(function() {
             if($('#type-self').is(':checked')) { 
                 $('.others-area').hide();
+                $('.guest').hide();
                 $('#others_name').removeAttr('required');
                 $('#others_phone').removeAttr('required');
                 $('#others_addr').removeAttr('required');
+                
             }
         });
 
         $('#guest-checkbox').click(function(){
+            $('.others-area').show();
             $('.password').hide();
+            $('.login-area').hide();
+            $('.name').show();
+            $('.area').show();
+            $('.address').show();
+            $('.guest').show();
             $('#user_type').val('guest');
         });
+
+        $('#login-checkbox').click(function(){
+            $('.name').hide();
+            $('.area').hide();
+            $('.address').hide();
+            $('.password').show();
+            $('.guest').hide();
+            $('#user_type').val('self_login');
+            
+        });
+
+        
 
        // $('.others-area').show();
     });

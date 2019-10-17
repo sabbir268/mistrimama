@@ -436,6 +436,14 @@ class Service_provider extends Controller
 
                 $spsz->save();
             }
+            
+            // sp code generate 
+            $sp->sp_code = '1'.(strlen($spscl->cluster) == 1 ? '0'.$spscl->cluster : $spscl->cluster).(strlen($spsz->zones->first()->code) == 1 ? '0'.$spsz->zones->first()->code : $spsz->zones->first()->code).substr(time(), -3);
+            $sp->save();
+
+           // return $sp->sp_code;
+
+
 
 
             $days = $r->days;

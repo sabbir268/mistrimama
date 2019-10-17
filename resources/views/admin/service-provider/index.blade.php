@@ -13,16 +13,48 @@
                     <i class="fa fa-cogs"></i>Service Provider </div>
             </div>
             <div class="portlet-body flip-scroll">
+                <div class="row">
+                    <div class="col-md-8">
+                        {{$ServiceProviders->links()}}
+                    </div>
+                    {{-- <div class="col-md-3" style="display:block">
+                        <form action="">
+                            <div class="form-group" style="margin:0px">
+                                <div class="col-sm-9" style="padding:0px">
+                                    <select name="area" class="form-control">
+                                        @foreach ($area as $ar)
+                                        <option value="{{$ar->id}}">{{$ar->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                    </div> --}}
+                    <div class="col-md-4">
+                        <form action="{{route('admin.sp.search')}}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <div class="col-sm-9" style="padding:0px">
+                                    <input type="text" name="search" placeholder="Phone Number, Name............." class="form-control">
+                                </div>
+                                <button style="padding: 6px 0px;border-color: #337ab7;margin-top: 0px;"
+                                    class="control-label btn btn-primary col-sm-3" for="search"> <i
+                                        class="fa fa-search"></i> </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <table class="table table-bordered table-striped table-condensed flip-content">
                     <thead>
                         <tr>
                             <th>Sr</th>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Code</th>
                             <th>Type</th>
                             <th>Phone Number</th>
                             <th>Category</th>
                             <th>Status</th>
+                            <th>Total Comrades</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -34,12 +66,13 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$p->id}}</td>
                             <td>{{$p->name}}</td>
+                            <td>{{$p->sp_code}}</td>
                             <td>@if($p->type==0) ESP @else FSP @endif</td>
                             <td>{{$p->phone_no}}</td>
                             <td>
-                                @if($p->category )    
+                                @if($p->category )
                                 @foreach ($p->category as $cat)
-                                    <li>{{$cat->category->name}}</li>
+                                <li>{{$cat->category->name}}</li>
                                 @endforeach
                                 @endif
                             </td>
@@ -50,11 +83,14 @@
                                 <a href="{{url('deactivate/provider/'.$p->id)}}" data-toggle="tooltip"
                                     data-title="Click To De-Activate" class="btn btn-danger">De-Activate </a> @endif
                             </td>
+                            <td>{{$p->comrads ? count($p->comrads) : 0}}</td>
                             <td>
                                 <a href="{{route('service-provider.show',$p->id)}}" class="btn btn-info">Profile</a>
+                                @if(checkRole(auth()->user()->id, 'admin'))
                                 <button class="btn btn-success" data-toggle="modal"
                                     data-target="#addAmountMdl{{$p->id}}">Add
                                     Amount</button>
+                                @endif
                             </td>
 
                         </tr>
@@ -62,11 +98,6 @@
 
                     </tbody>
                 </table>
-
-{{$ServiceProviders->links()}}
-
-
-
             </div>
         </div>
     </div>
@@ -89,15 +120,15 @@
                     <div class="form-group">
                         <label for="amount">Amounts</label>
                         <input type="text" name="user_id" value="{{$p->u_id}}" hidden>
-                        <input type="number" class="form-control" id="amount" name="amount" 
-                            placeholder="Enter amount" required>
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount"
+                            required>
                     </div>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-            </form>
+                </form>
             </div>
         </div>
     </div>

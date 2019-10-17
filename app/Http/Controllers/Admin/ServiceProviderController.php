@@ -9,6 +9,9 @@ use DB;
 use App\Account;
 use App\User;
 use App\SMS;
+use App\Zone;
+use App\Cluster;
+use Illuminate\Support\Facades\Response;
 
 class ServiceProviderController extends Controller
 {
@@ -29,8 +32,38 @@ class ServiceProviderController extends Controller
 
 
         //$models = $query->orderBy('id', 'DESC')->paginate(20);
+        $area = Zone::all();
 
-        return view('admin.service-provider.index', compact('ServiceProviders'));
+        return view('admin.service-provider.index', compact('ServiceProviders','area'));
+    }
+
+    public function csv(Request $request)
+    {
+
+    
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=agent_users.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+        );
+
+        $data = ServiceProviders::orderBy('id', 'DESC');
+        
+        $columns = array('ID', 'Name', 'Phone Number', 'Area', 'Total Comrade');
+
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $item) {
+                fputcsv($file, array($item->id, $item->name, $item->phone_no, $item->zone->fisrt()->zone, count($item->comrads)));
+            }
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
+
     }
 
     public function create()
@@ -44,6 +77,13 @@ class ServiceProviderController extends Controller
     {
         $serviceProvider = ServiceProviders::find($id);
         return view('admin.service-provider.show', compact('serviceProvider'));
+    }
+
+    public function search(Request $request)
+    {
+        $ServiceProviders = ServiceProviders::where('name','like',$request->search)->orWhere('phone_no','like',$request->search)->paginate('20');
+      //  return $serviceProvider;
+      return view('admin.service-provider.index', compact('ServiceProviders'));
     }
 
 

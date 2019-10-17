@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use Auth;
 #use App\Events;
 use App\ViewsDetails;
@@ -14,6 +15,9 @@ use App\Vehicles;
 use Carbon\Carbon;
 use App\DrivingDetails;
 use App\Account;
+use App\Models\user_roles as UserRoles;
+use App\Models\roles;
+use Yajra\Datatables\Datatables;
 
 class HomeController extends Controller {
 
@@ -29,6 +33,8 @@ class HomeController extends Controller {
         $othersincome = Account::where('user_id', 1)->where('status', 'credit')->where('details','!=','service_comission')->sum('amount');
 
         $totalexpemce = Account::where('user_id', 1)->where('status', 'debit')->sum('amount');
+
+       // return $comission;
 
         return view('admin.home.home', compact('balance','comission','othersincome','totalexpemce'));
     }
@@ -84,10 +90,51 @@ class HomeController extends Controller {
         return view('admin.home.editprofile', compact('users'));
     }
     
-    public function registerUsers(){
-         $users = User::all();
-        return view('admin.users.index', compact('users'));
+    public function agentUsers(){
+         $users = roles::find(9)->users()->orderBy('id', 'DESC')->paginate(10);
+         $usersCount = roles::find(9)->users()->count();
+         //sabbir
+        // return $users;
+        return view('admin.users.agent', compact('users','usersCount'));
     }
+
+    public function agentUserAjax(){
+        $data = DB::select('SELECT * FROM users INNER JOIN user_roles ON user_roles.user_id = users.id WHERE user_roles.roles_id = 9');
+        return Datatables::of($data)->make(true);
+        // return Datatables::of(roles::find(9)->users()->orderBy('id', 'DESC')->get())->make(true);
+    }
+
+    public function agentUsersExport()
+    {
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=agent_users.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+        );
+
+        $data = DB::select('SELECT * FROM users INNER JOIN user_roles ON user_roles.user_id = users.id WHERE user_roles.roles_id = 9');
+        
+        $columns = array('ID', 'Name', 'Phone Number', 'Area', 'Address', 'MFS Type', 'MFS Number', 'Refer Code','Promoted By','Registerd Date/time');
+
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $item) {
+                fputcsv($file, array($item->id, $item->name, $item->phone_no, $item->area, $item->address, $item->mfs_type, $item->mfs_number,$item->ref_code,$item->promoter,$item->created_at));
+            }
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
+    }
+
+    public function normalUsers(){
+        $users = roles::find(2)->users()->orderBy('id', 'DESC')->paginate(10);
+        $usersCount = roles::find(2)->users()->count();
+       return view('admin.users.index', compact('users','usersCount'));
+   }
 
     public function updateProfile(Request $request) {
         $id = Auth::user()->id;

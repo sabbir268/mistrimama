@@ -9,7 +9,7 @@ class Order extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['name','phone','address','total_price'];
+    protected $appends = ['name','phone','address','total_price','app_total_price'];
 
     public function bookings()
     {
@@ -58,6 +58,19 @@ class Order extends Model
     public function getTotalPriceAttribute()
     {
             return $this->bookings->where('status',1)->sum('total_price');
+    }
+
+    public function getAppTotalPriceAttribute()
+    {
+            return $this->bookings->sum('total_price');
+    }
+
+    public function setAreaAttribute()
+    {
+        if($this->type == 'others'){
+            return $this->area;
+        }
+            return $this->user ? $this->user->area : "-";
     }
 
     // public function setAreaAttribute($val)

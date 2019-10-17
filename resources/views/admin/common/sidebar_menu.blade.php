@@ -66,20 +66,20 @@
 
         @if(checkRole(auth()->user()->id, 'admin') || checkRole(auth()->user()->id, 'editor') )
 
-        
-       {{-- <li class="nav-item  {{ menuActiveClass(['service-provider'],true) }} ">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="fa fa-gear"></i>
-                <span class="title">Service Provider</span>
-                <span class="arrow {{ menuActiveClass(['service-provider'],true) }}"></span>
-            </a>
-            <ul class="sub-menu">
-                <li class="nav-item {{ menuActiveClass(['service-provider'],true) }} ">
-                    <a href="{{ asset('/admin/service-provider') }}" class="nav-link ">
-                        <span class="title">Manage Service Provider</span>
-                    </a>
-                </li>
-            </ul>
+
+        {{-- <li class="nav-item  {{ menuActiveClass(['service-provider'],true) }} ">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="fa fa-gear"></i>
+            <span class="title">Service Provider</span>
+            <span class="arrow {{ menuActiveClass(['service-provider'],true) }}"></span>
+        </a>
+        <ul class="sub-menu">
+            <li class="nav-item {{ menuActiveClass(['service-provider'],true) }} ">
+                <a href="{{ asset('/admin/service-provider') }}" class="nav-link ">
+                    <span class="title">Manage Service Provider</span>
+                </a>
+            </li>
+        </ul>
         </li> --}}
 
         <li class="nav-item">
@@ -92,19 +92,19 @@
         <li class="nav-item  {{ menuActiveClass(['booking'],true) }} ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
-                <span class="title">Booking</span>
+                <span class="title">Order</span>
                 <span class="arrow {{ menuActiveClass(['booking'],true) }}"></span>
             </a>
             <ul class="sub-menu">
                 <li class="nav-item {{ menuActiveClass(['booking'],true) }} ">
                     <a href="{{ route('booking.index') }}" class="nav-link ">
-                        <span class="title">Manage Booking</span>
+                        <span class="title">Manage Order</span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ menuActiveClass(['booking'],true) }} ">
                     <a href="{{ route('booking.history') }}" class="nav-link ">
-                        <span class="title">Booking History</span>
+                        <span class="title">Order History</span>
                     </a>
                 </li>
             </ul>
@@ -112,18 +112,32 @@
 
         {{-- <li class="nav-item">
             <a href="{{url('admin/become-partner-show')}}" class="nav-link">
-                <i class="fa fa-gear"></i>
-                <span class="title">Become partners</span>
-                <span class="arrow {{ menuActiveClass(['booking'],false) }}"></span>
-            </a>
+        <i class="fa fa-gear"></i>
+        <span class="title">Become partners</span>
+        <span class="arrow {{ menuActiveClass(['booking'],false) }}"></span>
+        </a>
         </li> --}}
 
-        <li class="nav-item">
-            <a href="{{route('register-users')}}" class="nav-link">
+        <li class="nav-item {{ request()->is('admin/users*') ? 'active open' : '' }}">
+            <a href="javascript::void(0)" class="nav-link nav-toggle">
                 <i class="fa fa-gear"></i>
-                <span class="title">Registered Users</span>
-                <span class="arrow {{ menuActiveClass(['booking'],false) }}"></span>
+                <span class="title">All Users</span>
+                <span class="arrow"></span>
             </a>
+            <ul class="sub-menu">
+                <li class="nav-item {{ request()->is('admin/users/agent') ? 'active' : '' }}">
+                    <a href="{{route('users.agent')}}" class="nav-link">
+                        <span class="title">Agent User</span>
+                    </a>
+                </li>
+
+                <li class="nav-item {{ request()->is('admin/users') ? 'active' : '' }}">
+                    <a href="{{route('users.index')}}" class="nav-link ">
+                        <span class="title">Normal User</span>
+                    </a>
+                </li>
+            </ul>
+
         </li>
 
 

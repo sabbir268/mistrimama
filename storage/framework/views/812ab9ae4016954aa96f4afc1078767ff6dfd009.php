@@ -26,7 +26,7 @@
             <section class="box-typical">
 
                 <?php if($activeOrders->status == 0): ?>
-                <p class="p-5">Your order has been place. Wait for confirmation.</p>
+                <p class="p-5">Your order has been placed. Wait for confirmation.</p>
                 <?php endif; ?>
 
                 <?php if($activeOrders->status > 0): ?>

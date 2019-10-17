@@ -129,7 +129,7 @@
                             </div>
                         </td>
                         <td>
-                            <div>{{$order->user->name}}</div>
+                            <div>{{$order->name}}</div>
                         </td>
 
                         <td>

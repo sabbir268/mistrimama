@@ -97,7 +97,7 @@
 
 
                         <td>
-                            <div><?php echo e($spam); ?></div>
+                            <div><?php echo e($order->order_from == 'esp' || $order->order_from == 'comrade' ? $tam  : $spam); ?></div>
                         </td>
 
                         <td>
@@ -113,7 +113,7 @@
                             </div>
                         </td>
                         <td>
-                            <div><?php echo e($order->user->name); ?></div>
+                            <div><?php echo e($order->name); ?></div>
                         </td>
 
                         <td>
@@ -148,7 +148,8 @@
                     <thead>
                         <tr>
                             <td>সার্ভিস </td>
-                            <td>মূল্য </td>
+                            <td>পরিমান</td>
+                            <td>মূল্য</td>
                             <td>অতিরিক্ত মূল্য </td>
                             <td>মোট মূল্য </td>
                             <td>অবস্থা </td>
@@ -159,8 +160,9 @@
                         <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($service->service_name); ?> - <?php echo e($service->service_details_name); ?> </td>
+                            <td><?php echo e($service->quantity); ?></td>
                             <td><?php echo e($service->price); ?></td>
-                            <td><?php echo e($service->aditional_price); ?></td>
+                            <td><?php echo e($service->quantity > 1 ? $service->aditional_price : 0); ?></td>
                             <td><?php echo e($service->total_price); ?></td>
                             <td><span
                                     class=<?php echo e($service->status == 1 ? "text-success " : "text-danger "); ?>}><?php echo e($service->status == 1 ? "কাজ করা হয়েছে " : "কাজ করা হয় নি "); ?>
